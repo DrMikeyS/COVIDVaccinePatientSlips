@@ -1,0 +1,5 @@
+NhsNumber,Name,Age,DateOfBirth,SessionDate,StartTime,EndTime,Arrived,InvitingOds
+1234567890,"Smith, Michael",85y,01-12-1935,2020-12-18,18:00,18:10,True,A83011
+1234567890,"Jones, Davy",85y,01-01-1935,2020-12-18,18:00,18:10,True,A83011
+1234567890,"Lennon, John",85y,07-10-1950,2020-12-18,18:00,18:10,True,A83011
+1234567890,"Kay, Peter",85y,21-11-1972,2020-12-18,18:00,18:10,True,A83011
