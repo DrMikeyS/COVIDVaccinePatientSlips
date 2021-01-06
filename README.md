@@ -1,9 +1,17 @@
 
 # COVID Vaccine Patient Slip Generator
 A free tool that allows you to convert a CSV list of patients from AccuBook into a printable pack of patient slips to make using Pinnacle a breeze.
+![Sample of patient QR slip](https://github.com/DrMikeyS/COVIDVaccinePatientSlips/raw/main/demo.jpg =250x)
+*Sample Patient QR Slip*
 
-## Getting Started
-[See this video](https://youtu.be/GmWTVxI_sx4) for how the process works in detail.
+## Video Demo
+[See this video](https://youtu.be/GmWTVxI_sx4) for how the process works in detail. 
+
+##  Web Version (less secure)
+
+[Test drive a web based version](http://mikedavidsmith.com/covid-vaccine-qr-gen.html) of the system. While all the data is processed in the browser, there is the risk of data interception, so for real patient data please use the instructions below. There is a [dummy patient csv](https://raw.githubusercontent.com/DrMikeyS/COVIDVaccinePatientSlips/main/dummy-patient-list.csv) file you can download here to try it.
+
+## Run On You Computer (Secure)
 
  - [Download](https://github.com/DrMikeyS/COVIDVaccinePatientSlips/archive/main.zip) the file package
  - Open "index.html" in Chrome, Firefox or Safari
