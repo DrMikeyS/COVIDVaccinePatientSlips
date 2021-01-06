@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Patient List</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous"> <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-csv@1.0.11/src/jquery.csv.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lrsjng.jquery-qrcode/0.18.0/jquery-qrcode.min.js" integrity="sha512-P9oNnyfvOZrY1H0D5js+UcLZr+vLkX50glCUlpJAd/RL84+KBtGI4yvH5YVM5TejD+jbURwQq3C/7hgYWOo8bQ==" crossorigin="anonymous"></script>
+    <style>
+        .col-print-6 {
+            width: 50%;
+            float: left;
+            margin-bottom: 200px;
+        }
+
+        .page-break-clear {
+            clear: both;
+        }
+
+        .page-break {
+            page-break-after: always;
+            /* depreciating, use break-after */
+            break-after: page;
+            height: 0px;
+            display: block !important;
+        }
+
+        .qr-code canvas {
+            margin: 0 auto;
+            width: 128px;
+            height: 128px;
+        }
+
+        table {
+            text-align: center;
+            width: 100%;
+        }
+html,
+body {
+  height: 100%
+}
+    </style>
+</head>
+
+<body>
+
+        <div id="input-modal" class="h-100 row align-items-center justify-content-center">
+            <div class="col-sm-6">
+                <h1>COVID Vaccine Patient Slip Generator</h1>
+                <p>Upload a CSV list of patients from AccuBook and you will automatically be generated a printable pack of patient slips to make using Pinnacle a breeze.</p>
+
+                <p><a href="https://youtu.be/GmWTVxI_sx4">See this video</a> for instructions on how it works in detail.</p>
+
+                <p>No data is transferred anywhere when using this tool, all the process is done in your web browser so there are no IG concerns.</p>
+                <label for="filename">Add Patient List File:</label>
+                <input type="file" name="filename" id="filename" class="form-control-file">
+                <small class="form-text text-muted">This should be in csv format</small>
+            </div>
+        </div>
+        <div class="container-fluid">
+        <div id="patient-list" class="row">
+        </div>
+    </div>
+    <script>
+        
+        //Format date into the pinnacle format
+        function formatDate(date) {
+            var dateString = date;
+            var splitDate = dateString.split('-');
+            var month = splitDate[1] - 1; //Javascript months are 0-11
+            return new Date(splitDate[2], month, splitDate[0]).toLocaleDateString(
+                'en-gb', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                }
+            ).replace(/ /g, '-')
+        }
+        
+        
+        $("#filename").change(function(e) {
+            $("#input-modal").css('display', 'none');
+            
+            var ext = $("input#filename").val().split(".").pop().toLowerCase();
+            if ($.inArray(ext, ["csv"]) == -1) {
+                alert('Error');
+                return false;
+            }
+            if (e.target.files != undefined) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    csvResult = e.target.result;
+                    csvResult = $.csv.toObjects(csvResult);
+                    var i = 0;
+                    csvResult.forEach(function(patient, index) {
+                        if (i == 3) {
+                            end = `<div class="page-break-clear"></div><div class="page-break">&nbsp;</div>`;
+                            i = 0;
+                        } else {
+                            end = '';
+                            i++;
+                        }
+                        html = `<div class="col-print-6">
+                          <h1>` + patient.Name + `</h1>
+                          <p>Session Date: ` + patient.SessionDate + `</p>
+                            <p>Session Time: ` + patient.StartTime + `</p>
+                          <table>
+                          <tr>
+                          <td>DOB: ` + formatDate(patient.DateOfBirth) + `</td>
+                          <td>NHS: ` + patient.NhsNumber + `</td>
+                          </tr>
+                          <tr>
+                          <td><div class="qr-code" id="dob-qr-` + index + `"></div></td>
+                          <td><div class="qr-code" id="nhs-qr-` + index + `"></div></td>
+                          </tr>
+                          </table></div>` + end;
+                        $("#patient-list").append(html);
+                        $('#dob-qr-' + index).qrcode({text:formatDate(patient.DateOfBirth)});
+                        $('#nhs-qr-' + index).qrcode({text:patient.NhsNumber});
+                    });
+                    window.print(); 
+                };
+                reader.readAsText(e.target.files.item(0));
+            }
+            return false;
+        });
+
+    </script>
+</body>
+
+</html>
