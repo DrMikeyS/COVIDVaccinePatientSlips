@@ -14,7 +14,7 @@
         .col-print-6 {
             width: 50%;
             float: left;
-            margin-bottom: 200px;
+            margin-bottom: 150px;
         }
 
         .page-break-clear {
@@ -61,9 +61,8 @@ body {
                 <small class="form-text text-muted">This should be in csv format</small>
             </div>
         </div>
-        <div class="container-fluid">
-        <div id="patient-list" class="row">
-        </div>
+        <div class="container-fluid" id="patient-list">
+        
     </div>
     <script>
         
@@ -96,15 +95,21 @@ body {
                     csvResult = e.target.result;
                     csvResult = $.csv.toObjects(csvResult);
                     var i = 0;
+                    var fullhtml = '';
                     csvResult.forEach(function(patient, index) {
+                        if (i == 0) {
+                            start = `<div class="row">`;
+                        } else {
+                            start = '';
+                        }
                         if (i == 3) {
-                            end = `<div class="page-break-clear"></div><div class="page-break">&nbsp;</div>`;
+                            end = `</div><div class="page-break-clear"></div><div class="page-break">&nbsp;</div>`;
                             i = 0;
                         } else {
                             end = '';
                             i++;
                         }
-                        html = `<div class="col-print-6">
+                        html = start+`<div class="col-print-6">
                           <h1>` + patient.Name + `</h1>
                           <p>Session Date: ` + patient.SessionDate + `</p>
                             <p>Session Time: ` + patient.StartTime + `</p>
@@ -118,7 +123,10 @@ body {
                           <td><div class="qr-code" id="nhs-qr-` + index + `"></div></td>
                           </tr>
                           </table></div>` + end;
-                        $("#patient-list").append(html);
+                        fullhtml = fullhtml + html;
+                    });
+                    $("#patient-list").append(fullhtml);
+                    csvResult.forEach(function(patient, index) {
                         $('#dob-qr-' + index).qrcode({text:formatDate(patient.DateOfBirth)});
                         $('#nhs-qr-' + index).qrcode({text:patient.NhsNumber});
                     });
