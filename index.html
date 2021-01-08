@@ -5,16 +5,22 @@
     <title>Patient List</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous"> <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-csv@1.0.11/src/jquery.csv.min.js"></script>
     <!--<script src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.js"></script>-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lrsjng.jquery-qrcode/0.18.0/jquery-qrcode.min.js" integrity="sha512-P9oNnyfvOZrY1H0D5js+UcLZr+vLkX50glCUlpJAd/RL84+KBtGI4yvH5YVM5TejD+jbURwQq3C/7hgYWOo8bQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lrsjng.jquery-qrcode/0.18.0/jquery-qrcode.min.js"
+        integrity="sha512-P9oNnyfvOZrY1H0D5js+UcLZr+vLkX50glCUlpJAd/RL84+KBtGI4yvH5YVM5TejD+jbURwQq3C/7hgYWOo8bQ=="
+        crossorigin="anonymous"></script>
     <style>
         .col-print-6 {
             width: 50%;
             float: left;
-            height:450px;
+            height: 450px;
         }
 
         .page-break-clear {
@@ -39,33 +45,44 @@
             text-align: center;
             width: 100%;
         }
-html,
-body {
-  height: 100%
-}
+
+        html,
+        body {
+            height: 100%
+        }
     </style>
 </head>
 
 <body>
 
-        <div id="input-modal" class="h-100 row align-items-center justify-content-center">
-            <div class="col-sm-6">
-                <h1>COVID Vaccine Patient Slip Generator</h1>
-                <p>Upload a CSV list of patients from AccuBook and you will automatically be generated a printable pack of patient slips to make using Pinnacle a breeze.</p>
+    <div id="input-modal" class="h-100 row align-items-center justify-content-center">
+        <div class="col-sm-6">
+            <h1>COVID Vaccine Patient Slip Generator</h1>
+            <p>Upload a CSV list of patients from AccuBook and you will automatically be generated a printable pack of
+                patient slips to make using Pinnacle a breeze.</p>
 
-                <p><a href="https://youtu.be/GmWTVxI_sx4">See this video</a> for instructions on how it works in detail.</p>
+            <p><a href="https://youtu.be/GmWTVxI_sx4">See this video</a> for instructions on how it works in detail.</p>
 
-                <p>No data is transferred anywhere when using this tool, all the process is done in your web browser so there are no IG concerns.</p>
-                <label for="filename">Add Patient List File:</label>
-                <input type="file" name="filename" id="filename" class="form-control-file">
-                <small class="form-text text-muted">This should be in csv format</small>
-            </div>
+            <p>No data is transferred anywhere when using this tool, all the process is done in your web browser so
+                there are no IG concerns.</p>
+
+
+            <label for="filename">Add Patient List File:</label>
+            <input type="file" name="filename" id="filename" class="form-control-file">
+            <small class="form-text text-muted">This should be in csv format</small>
+            <p><strong>Options:</strong><br>
+                <input type="radio" id="sortbytime" name="sortType" value="sortbytime" checked>
+                <label for="sortbytime">Sort by Appointment Time</label><br>
+                <input type="radio" id="sortbyname" name="sortType" value="sortbyname">
+                <label for="sortbyname">Sort by Patient Surname</label><br>
+            </p>
         </div>
-        <div class="container-fluid" id="patient-list">
-        
+    </div>
+    <div class="container-fluid" id="patient-list">
+
     </div>
     <script>
-        
+
         //Format date into the pinnacle format
         function formatDate(date) {
             var dateString = date;
@@ -73,17 +90,33 @@ body {
             var month = splitDate[1] - 1; //Javascript months are 0-11
             return new Date(splitDate[2], month, splitDate[0]).toLocaleDateString(
                 'en-gb', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric'
-                }
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            }
             ).replace(/ /g, '-')
         }
-        
-        
-        $("#filename").change(function(e) {
+
+        //Sort list of patients alphabetically
+        function sortAlphabetical(objArray) {
+            function compare(a, b) {
+                if (a.Name < b.Name) {
+                    return -1;
+                }
+                if (a.Name > b.Name) {
+                    return 1;
+                }
+                return 0;
+            }
+
+            objArray.sort(compare);
+            return objArray;
+        }
+
+
+        $("#filename").change(function (e) {
             $("#input-modal").css('display', 'none');
-            
+
             var ext = $("input#filename").val().split(".").pop().toLowerCase();
             if ($.inArray(ext, ["csv"]) == -1) {
                 alert('Error');
@@ -91,12 +124,15 @@ body {
             }
             if (e.target.files != undefined) {
                 var reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     csvResult = e.target.result;
                     csvResult = $.csv.toObjects(csvResult);
+                    if ($('#sortbyname').is(':checked')) {
+                        csvResult = sortAlphabetical(csvResult);
+                    }
                     var i = 0;
                     var fullhtml = '';
-                    csvResult.forEach(function(patient, index) {
+                    csvResult.forEach(function (patient, index) {
                         if (i == 0) {
                             start = `<div class="row">`;
                         } else {
@@ -109,7 +145,7 @@ body {
                             end = '';
                             i++;
                         }
-                        html = start+`<div class="col-print-6">
+                        html = start + `<div class="col-print-6">
                           <h1>` + patient.Name + `</h1>
                           <p>Session Date: ` + patient.SessionDate + `</p>
                             <p>Session Time: ` + patient.StartTime + `</p>
@@ -126,11 +162,11 @@ body {
                         fullhtml = fullhtml + html;
                     });
                     $("#patient-list").append(fullhtml);
-                    csvResult.forEach(function(patient, index) {
-                        $('#dob-qr-' + index).qrcode({text:formatDate(patient.DateOfBirth)});
-                        $('#nhs-qr-' + index).qrcode({text:patient.NhsNumber});
+                    csvResult.forEach(function (patient, index) {
+                        $('#dob-qr-' + index).qrcode({ text: formatDate(patient.DateOfBirth) });
+                        $('#nhs-qr-' + index).qrcode({ text: patient.NhsNumber });
                     });
-                    window.print(); 
+                    window.print();
                 };
                 reader.readAsText(e.target.files.item(0));
             }
