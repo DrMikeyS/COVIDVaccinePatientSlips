@@ -10,7 +10,7 @@ A free tool that allows you to convert a CSV list of patients from AccuBook into
 
 ##  Web Version (less secure)
 
-[Test drive a web based version](http://mikedavidsmith.com/covid-vaccine-qr-gen.html) of the system. While all the data is processed in the browser, there is the risk of data interception, so for real patient data please use the instructions below. There is a [dummy patient csv](https://raw.githubusercontent.com/DrMikeyS/COVIDVaccinePatientSlips/main/dummy-patient-list.csv) file you can download here to try it.
+[Test drive a web based version](https://durhamstudenthealth.co.uk/qr) of the system. While all the data is processed in the browser, there is the risk of data interception, so for real patient data please use the instructions below. There is a [dummy patient csv](https://raw.githubusercontent.com/DrMikeyS/COVIDVaccinePatientSlips/main/dummy-patient-list.csv) file you can download here to try it.
 
 ## Run On You Computer (Secure)
 
