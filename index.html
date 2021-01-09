@@ -88,7 +88,11 @@
             var dateString = date;
             var splitDate = dateString.split('-');
             var month = splitDate[1] - 1; //Javascript months are 0-11
-            return new Date(splitDate[2], month, splitDate[0]).toLocaleDateString(
+            var fomattedDate = new Date()
+            fomattedDate.setDate(splitDate[0])
+            fomattedDate.setMonth(month)
+            fomattedDate.setFullYear(splitDate[2])
+            return fomattedDate.toLocaleDateString(
                 'en-gb', {
                 year: 'numeric',
                 month: 'short',
