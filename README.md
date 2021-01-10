@@ -15,7 +15,7 @@ A free tool that allows you to convert a CSV list of patients from AccuBook into
 ## Run On You Computer (Secure)
 
  - [Download](https://github.com/DrMikeyS/COVIDVaccinePatientSlips/archive/main.zip) the file package
- - Open "index.html" in Chrome, Firefox or Safari
+ - Open "index.html" or "fullpage.html" in Chrome, Firefox or Safari (Fullpage prints an A4 form version with QR codes for clinics that are recording on paper)
  - Export the "Session List" from AccuBook
  - Upload the CSV session list into the generator (index.html)
  - Print and cut out the patient slips
