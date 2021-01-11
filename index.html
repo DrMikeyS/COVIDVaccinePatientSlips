@@ -127,6 +127,30 @@
             return objArray;
         }
 
+        //Identify the column names
+        function identifyCSVKeys(CSVArray) {
+            var keys = Object.keys(CSVArray[0]);
+            var nhsno_key, dob_key, name_key;
+            keys.forEach(function(key) {
+                lkey = key.toLowerCase();
+                if (lkey.includes('nhs')) {
+                    nhsno_key = key;
+                }
+                if (lkey.includes('dob')) {
+                    dob_key = key;
+                } else if (lkey.includes('birth')) {
+                    dob_key = key;
+                }
+                if (lkey.includes('name')) {
+                    name_key = key;
+                }
+            });
+            return {
+                dob: dob_key,
+                name: name_key,
+                nhsno: nhsno_key
+            };
+        }
 
         $("#filename").change(function(e) {
             $("#input-modal").css('display', 'none');
@@ -141,6 +165,9 @@
                 reader.onload = function(e) {
                     csvResult = e.target.result;
                     csvResult = $.csv.toObjects(csvResult);
+                    
+                    var keys = identifyCSVKeys(csvResult);
+                    
                     if ($('#sortbyname').is(':checked')) {
                         csvResult = sortAlphabetical(csvResult);
                     }
@@ -160,13 +187,13 @@
                             i++;
                         }
                         html = start + `<div class="col-print-6">
-                          <h1>` + patient.Name + `</h1>
+                          <h1>` + patient[keys['name']] + `</h1>
                           <p>Session Date: ` + patient.SessionDate + `</p>
                             <p>Session Time: ` + patient.StartTime + `</p>
                           <table>
                           <tr>
-                          <td>DOB: ` + formatDate(patient.DateOfBirth) + `</td>
-                          <td>NHS: ` + patient.NhsNumber + `</td>
+                          <td>DOB: ` + formatDate(patient[keys['dob']]) + `</td>
+                          <td>NHS: ` + patient[keys['nhsno']] + `</td>
                           </tr>
                           <tr>
                           <td><div class="qr-code" id="dob-qr-` + index + `"></div></td>
@@ -178,10 +205,10 @@
                     $("#patient-list").append(fullhtml);
                     csvResult.forEach(function(patient, index) {
                         $('#dob-qr-' + index).qrcode({
-                            text: formatDate(patient.DateOfBirth)
+                            text: formatDate(patient[keys['dob']])
                         });
                         $('#nhs-qr-' + index).qrcode({
-                            text: patient.NhsNumber
+                            text: patient[keys['nhsno']]
                         });
                     });
                     window.print();

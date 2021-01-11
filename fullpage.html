@@ -127,22 +127,46 @@
             return objArray;
         }
 
+        //Identify the column names
+        function identifyCSVKeys(CSVArray) {
+            var keys = Object.keys(CSVArray[0]);
+            var nhsno_key, dob_key, name_key;
+            keys.forEach(function(key) {
+                lkey = key.toLowerCase();
+                if (lkey.includes('nhs')) {
+                    nhsno_key = key;
+                }
+                if (lkey.includes('dob')) {
+                    dob_key = key;
+                } else if (lkey.includes('birth')) {
+                    dob_key = key;
+                }
+                if (lkey.includes('name')) {
+                    name_key = key;
+                }
+            });
+            return {
+                dob: dob_key,
+                name: name_key,
+                nhsno: nhsno_key
+            };
+        }
         
         //Function generate HTML
-        function genHTML(patient, index){
+        function genHTML(patient, index,keys){
             return `        <h1>Vaccine Record Form</h1>
         <table class="table table-bordered">
             <tr>
                 <td>Name</td>
-                <td>` + patient.Name + `</td>
+                <td>` + patient[keys['name']] + `</td>
                 <td>Address</td>
                 <td></td>
             </tr>
             <tr>
                 <td>NHS No.</td>
-                <td>` + patient.NhsNumber + `</td>
+                <td>` + patient[keys['nhsno']] + `</td>
                 <td>DOB</td>
-                <td>` + formatDate(patient.DateOfBirth) + `</td>
+                <td>` + formatDate(patient[keys['dob']]) + `</td>
             </tr>
             <tr>
                 <td></td>
@@ -274,21 +298,24 @@
                 reader.onload = function(e) {
                     csvResult = e.target.result;
                     csvResult = $.csv.toObjects(csvResult);
+                    
+                    var keys = identifyCSVKeys(csvResult);
+                    
                     if ($('#sortbyname').is(':checked')) {
                         csvResult = sortAlphabetical(csvResult);
                     }
                     var fullhtml = '';
                     csvResult.forEach(function(patient, index) {
-                        html = genHTML(patient, index);
+                        html = genHTML(patient, index,keys);
                         fullhtml = fullhtml + html;
                     });
                     $("#patient-list").append(fullhtml);
                     csvResult.forEach(function(patient, index) {
-                        $('#dob-qr-' + index).qrcode({
-                            text: formatDate(patient.DateOfBirth)
+                         $('#dob-qr-' + index).qrcode({
+                            text: formatDate(patient[keys['dob']])
                         });
                         $('#nhs-qr-' + index).qrcode({
-                            text: patient.NhsNumber
+                            text: patient[keys['nhsno']]
                         });
                     });
                     window.print();
