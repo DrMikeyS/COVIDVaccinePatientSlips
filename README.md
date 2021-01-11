@@ -4,7 +4,7 @@ A free tool that allows you to convert a CSV list of patients into a printable p
 
 | Sample QR Slip  | Sample Full Page Form With QR |
 | ------------- | ------------- |
-| ![](https://github.com/DrMikeyS/COVIDVaccinePatientSlips/raw/main/demo.jpg?raw=true)   | ![](https://github.com/DrMikeyS/COVIDVaccinePatientSlips/raw/main/demo_full.jpg?raw=true)  |
+| ![](https://github.com/DrMikeyS/COVIDVaccinePatientSlips/raw/main/demo.jpg?raw=true)   | ![](https://github.com/DrMikeyS/COVIDVaccinePatientSlips/raw/main/demo_full1.jpg?raw=true)  |
 
 
 ## Video Demo
