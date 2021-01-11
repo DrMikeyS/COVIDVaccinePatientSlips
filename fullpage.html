@@ -53,8 +53,7 @@
 <div id="input-modal" class="h-100 row align-items-center justify-content-center">
         <div class="col-sm-6">
             <h1>COVID Vaccine Patient Slip Generator</h1>
-            <p>Upload a CSV list of patients from AccuBook and you will automatically be generated a printable pack of
-                patient slips to make using Pinnacle a breeze.</p>
+            <p>Upload a CSV list of patients into a printable pack of patient slips to make using Pinnacle a breeze.</p>
 
             <p><a href="https://youtu.be/GmWTVxI_sx4">See this video</a> for instructions on how it works in detail.</p>
 
@@ -80,10 +79,26 @@
     </div>
     <script>
         //Format date into the pinnacle format
-        function formatDate(date) {
-            var dateString = date;
-            var splitDate = dateString.split('-');
-            var month = splitDate[1] - 1; //Javascript months are 0-11
+        function getMonthFromString(mon) {
+            return new Date(Date.parse(mon + " 1, 2012")).getMonth() + 1
+        }
+
+        function formatDate(dateString) {
+            if (dateString.includes('-')) {
+                var splitDate = dateString.split('-');
+            } else if (dateString.includes('.')) {
+                var splitDate = dateString.split('.');
+            } else if (dateString.includes('/')) {
+                var splitDate = dateString.split('/');
+            }
+            //Seperate out month
+            var month = splitDate[1];
+            //Convert text month to int
+            var regExp = /[a-zA-Z]/g;
+            if (regExp.test(month)) {
+                month = getMonthFromString(month)
+            }
+            month = month - 1 //Javascript months are 0-11
             var fomattedDate = new Date()
             fomattedDate.setDate(splitDate[0])
             fomattedDate.setMonth(month)
@@ -96,7 +111,6 @@
                 }
             ).replace(/ /g, '-')
         }
-
         //Sort list of patients alphabetically
         function sortAlphabetical(objArray) {
             function compare(a, b) {

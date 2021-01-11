@@ -5,17 +5,12 @@
     <title>Patient List</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-csv@1.0.11/src/jquery.csv.min.js"></script>
     <!--<script src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.js"></script>-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lrsjng.jquery-qrcode/0.18.0/jquery-qrcode.min.js"
-        integrity="sha512-P9oNnyfvOZrY1H0D5js+UcLZr+vLkX50glCUlpJAd/RL84+KBtGI4yvH5YVM5TejD+jbURwQq3C/7hgYWOo8bQ=="
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lrsjng.jquery-qrcode/0.18.0/jquery-qrcode.min.js" integrity="sha512-P9oNnyfvOZrY1H0D5js+UcLZr+vLkX50glCUlpJAd/RL84+KBtGI4yvH5YVM5TejD+jbURwQq3C/7hgYWOo8bQ==" crossorigin="anonymous"></script>
     <style>
         .col-print-6 {
             width: 50%;
@@ -50,6 +45,7 @@
         body {
             height: 100%
         }
+
     </style>
 </head>
 
@@ -58,8 +54,7 @@
     <div id="input-modal" class="h-100 row align-items-center justify-content-center">
         <div class="col-sm-6">
             <h1>COVID Vaccine Patient Slip Generator</h1>
-            <p>Upload a CSV list of patients from AccuBook and you will automatically be generated a printable pack of
-                patient slips to make using Pinnacle a breeze.</p>
+            <p>Upload a a CSV list of patients into a printable pack of patient slips to make using Pinnacle a breeze.</p>
 
             <p><a href="https://youtu.be/GmWTVxI_sx4">See this video</a> for instructions on how it works in detail.</p>
 
@@ -82,22 +77,37 @@
 
     </div>
     <script>
-
         //Format date into the pinnacle format
-        function formatDate(date) {
-            var dateString = date;
-            var splitDate = dateString.split('-');
-            var month = splitDate[1] - 1; //Javascript months are 0-11
+        function getMonthFromString(mon) {
+            return new Date(Date.parse(mon + " 1, 2012")).getMonth() + 1
+        }
+
+        function formatDate(dateString) {
+            if (dateString.includes('-')) {
+                var splitDate = dateString.split('-');
+            } else if (dateString.includes('.')) {
+                var splitDate = dateString.split('.');
+            } else if (dateString.includes('/')) {
+                var splitDate = dateString.split('/');
+            }
+            //Seperate out month
+            var month = splitDate[1];
+            //Convert text month to int
+            var regExp = /[a-zA-Z]/g;
+            if (regExp.test(month)) {
+                month = getMonthFromString(month)
+            }
+            month = month - 1 //Javascript months are 0-11
             var fomattedDate = new Date()
             fomattedDate.setDate(splitDate[0])
             fomattedDate.setMonth(month)
             fomattedDate.setFullYear(splitDate[2])
             return fomattedDate.toLocaleDateString(
                 'en-gb', {
-                year: 'numeric',
-                month: 'short',
-                day: 'numeric'
-            }
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                }
             ).replace(/ /g, '-')
         }
 
@@ -118,7 +128,7 @@
         }
 
 
-        $("#filename").change(function (e) {
+        $("#filename").change(function(e) {
             $("#input-modal").css('display', 'none');
 
             var ext = $("input#filename").val().split(".").pop().toLowerCase();
@@ -128,7 +138,7 @@
             }
             if (e.target.files != undefined) {
                 var reader = new FileReader();
-                reader.onload = function (e) {
+                reader.onload = function(e) {
                     csvResult = e.target.result;
                     csvResult = $.csv.toObjects(csvResult);
                     if ($('#sortbyname').is(':checked')) {
@@ -136,7 +146,7 @@
                     }
                     var i = 0;
                     var fullhtml = '';
-                    csvResult.forEach(function (patient, index) {
+                    csvResult.forEach(function(patient, index) {
                         if (i == 0) {
                             start = `<div class="row">`;
                         } else {
@@ -166,9 +176,13 @@
                         fullhtml = fullhtml + html;
                     });
                     $("#patient-list").append(fullhtml);
-                    csvResult.forEach(function (patient, index) {
-                        $('#dob-qr-' + index).qrcode({ text: formatDate(patient.DateOfBirth) });
-                        $('#nhs-qr-' + index).qrcode({ text: patient.NhsNumber });
+                    csvResult.forEach(function(patient, index) {
+                        $('#dob-qr-' + index).qrcode({
+                            text: formatDate(patient.DateOfBirth)
+                        });
+                        $('#nhs-qr-' + index).qrcode({
+                            text: patient.NhsNumber
+                        });
                     });
                     window.print();
                 };
