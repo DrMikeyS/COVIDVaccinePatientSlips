@@ -130,7 +130,7 @@
         //Identify the column names
         function identifyCSVKeys(CSVArray) {
             var keys = Object.keys(CSVArray[0]);
-            var nhsno_key, dob_key, name_key;
+            var nhsno_key, dob_key, name_key,address_key;
             keys.forEach(function(key) {
                 lkey = key.toLowerCase();
                 if (lkey.includes('nhs')) {
@@ -144,11 +144,15 @@
                 if (lkey.includes('name')) {
                     name_key = key;
                 }
+                if (lkey.includes('address')) {
+                    address_key = key;
+                }
             });
             return {
                 dob: dob_key,
                 name: name_key,
-                nhsno: nhsno_key
+                nhsno: nhsno_key,
+                address: address_key
             };
         }
         
@@ -160,7 +164,7 @@
                 <td>Name</td>
                 <td>` + patient[keys['name']] + `</td>
                 <td>Address</td>
-                <td></td>
+                <td>` + patient[keys['address']] + `</td>
             </tr>
             <tr>
                 <td>NHS No.</td>
