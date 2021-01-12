@@ -18,7 +18,7 @@ A free tool that allows you to convert a CSV list of patients into a printable p
 
  - [Download](https://github.com/DrMikeyS/COVIDVaccinePatientSlips/archive/main.zip) the file package
  - Open "index.html" or "fullpage.html" in Chrome, Firefox or Safari (Fullpage prints an A4 form version with QR codes for clinics that are recording on paper)
- - Export the "Session List" from AccuBook or generate a CSV file with headings for: NhsNumber,	Name,	DateOfBirth,	SessionDate,	StartTime
+ - Export the "Session List" from AccuBook or generate a CSV file with headings for: NhsNumber,	Name,	DateOfBirth (Optional:	SessionDate,	StartTime, Address)
  - Upload the CSV session list into the generator (index.html)
  - Print and cut out the patient slips
  - Use barcode scanners to scan DOB and NHS number into Health Outcomes 
