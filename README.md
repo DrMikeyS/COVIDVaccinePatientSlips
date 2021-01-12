@@ -8,7 +8,7 @@ A free tool that allows you to convert a CSV list of patients into a printable p
 
 
 ## Video Demo
-[See this video](https://youtu.be/GmWTVxI_sx4) for how the process works in detail. 
+[See this video](https://www.youtube.com/watch?v=GmWTVxI_sx4#t=50s) for how the process works in detail. 
 
 ##  Web Version (less secure)
 
