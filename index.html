@@ -6,71 +6,68 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="scripts/css/bootstrap.min.css">
+    <link rel="stylesheet" href="scripts/css/style.css">
     <script src="scripts/js/jquery-3.5.1.min.js"></script>
     <script src="scripts/js/bootstrap.bundle.min.js"></script>
     <script src="scripts/js/jquery.csv.min.js"></script>
     <script src="scripts/js/jquery-qrcode.min.js"></script>
     <script src="scripts/js/functions.js"></script>
-    <style>
-        .col-print-6 {
-            width: 50%;
-            float: left;
-            height: 450px;
-        }
-
-        .page-break-clear {
-            clear: both;
-        }
-
-        .page-break {
-            page-break-after: always;
-            /* depreciating, use break-after */
-            break-after: page;
-            height: 0px;
-            display: block !important;
-        }
-
-        .qr-code canvas {
-            margin: 0 auto;
-            width: 128px;
-            height: 128px;
-        }
-
-        table {
-            text-align: center;
-            width: 100%;
-        }
-
-        html,
-        body {
-            height: 100%
-        }
-
-    </style>
 </head>
 
 <body>
 
     <div id="input-modal" class="h-100 row align-items-center justify-content-center">
         <div class="col-sm-6">
-            <h1>COVID Vaccine Patient Slip Generator</h1>
-            <p>Upload a a CSV list of patients into a printable pack of patient slips to make using Pinnacle a breeze.</p>
-
-            <p><a href="https://youtu.be/GmWTVxI_sx4">See this video</a> for instructions on how it works in detail.</p>
-
-            <p>No data is transferred anywhere when using this tool, all the process is done in your web browser so
-                there are no IG concerns.</p>
-
-
+            <h1>COVID Vaccine QR Generator</h1>
+            <p>A free tool that allows you to convert a CSV list of patients into a printable pack of patient slips to make using Pinnacle a breeze.</p>
+            <table>
+                <thead>
+                <tr>
+                <th>Sample QR Slip</th>
+                <th>Sample Full Page Form With QR</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                <td><a href="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/raw/main/demo.jpg?raw=true" target="_blank" rel="noopener noreferrer"><img src="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/raw/main/demo.jpg?raw=true" alt="" /></a></td>
+                <td><a href="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/raw/main/demo_full1.jpg?raw=true" target="_blank" rel="noopener noreferrer"><img src="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/raw/main/demo_full1.jpg?raw=true" alt="" /></a></td>
+                </tr>
+                </tbody>
+                </table>
+                <p></p>
+                <hr>
+            <h2>Convert your list</h2>
             <label for="filename">Add Patient List File:</label>
             <input type="file" name="filename" id="filename" class="form-control-file">
             <small class="form-text text-muted">This should be in csv format</small>
             <p><strong>Options:</strong><br>
-                <input type="radio" id="sortbytime" name="sortType" value="sortbytime" checked>
-                <label for="sortbytime">Sort by Appointment Time</label><br>
-                <input type="radio" id="sortbyname" name="sortType" value="sortbyname">
-                <label for="sortbyname">Sort by Patient Surname</label><br>
+                <table class="text-left">
+                    <tr>
+                        <td><input type="radio" id="sortbytime" name="sortType" value="sortbytime" checked>
+                            <label for="sortbytime">No Sorting of CSV File</label><br>
+                            <input type="radio" id="sortbyname" name="sortType" value="sortbyname">
+                            <label for="sortbyname">Sort by Patient Surname</label><br></td>
+                        <td><input type="radio" id="slipStyle" name="reportType" value="slipStyle" checked>
+                            <label for="slipStyle">Slip Format</label><br>
+                            <input type="radio" id="formStyle" name="reportType" value="formStyle">
+                            <label for="formStyle">Full Page Form Format</label><br></td>
+                    </tr>
+                </table>
             </p>
+
+            
+<hr>
+<h3><a id="user-content-video-demo" class="anchor" href="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/blob/main/README.md#video-demo" aria-hidden="true"></a>Video Demo</h3>
+<p><a href="https://www.youtube.com/watch?v=GmWTVxI_sx4#t=50s" rel="nofollow">See this video</a>&nbsp;for how the process works in detail.</p>
+<h3><a id="user-content-web-version-less-secure" class="anchor" href="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/blob/main/README.md#web-version-less-secure" aria-hidden="true"></a>Instructions</h3>
+<ul>
+<li>Export the "Session List" from AccuBook or generate a CSV file with headings for: NhsNumber, Name, DateOfBirth (Optional: SessionDate, StartTime, Address)</li>
+<li>Upload the CSV session list into the generator</li>
+<li>Print out the patient slips</li>
+<li>Use barcode scanners to scan DOB and NHS number into Outcomes4Health</li>
+</ul>
+<h3><a id="user-content-ig-and-security" class="anchor" href="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/blob/main/README.md#ig-and-security" aria-hidden="true"></a>IG and Security</h3>
+<p>No data is transferred anywhere when using this tool, all the process is done in your web browser. The tool uses some open source libraries to work. Using the tool is entirely at your own risk.</p>
         </div>
     </div>
     <div class="container-fluid" id="patient-list">
@@ -96,8 +93,12 @@
                     if ($('#sortbyname').is(':checked')) {
                         csvResult = sortAlphabetical(csvResult);
                     }
-                   
-                    $("#patient-list").append(genPatientSlipSegmentHTML(csvResult,keys));
+                    if ($('#formStyle').is(':checked')) {
+                        var fullhtml = genFormHTML(csvResult,keys);
+                    }else{
+                        var fullhtml = genPatientSlipSegmentHTML(csvResult,keys);
+                    }
+                    $("#patient-list").append(fullhtml);
                     
                     genQRCodes(csvResult,keys);
                     window.print();
