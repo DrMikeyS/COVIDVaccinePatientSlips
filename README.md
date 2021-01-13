@@ -1,5 +1,5 @@
 
-# COVID Vaccine Patient Slip Generator
+# COVID Vaccine QR Generator
 A free tool that allows you to convert a CSV list of patients into a printable pack of patient slips to make using Pinnacle a breeze.
 
 | Sample QR Slip  | Sample Full Page Form With QR |
