@@ -1,0 +1,37 @@
+.col-print-6 {
+    width: 50%;
+    float: left;
+    height: 450px;
+}
+
+.page-break-clear {
+    clear: both;
+}
+
+.page-break {
+    page-break-after: always;
+    /* depreciating, use break-after */
+    break-after: page;
+    height: 0px;
+    display: block !important;
+}
+
+.qr-code canvas {
+    margin: 0 auto;
+    width: 128px;
+    height: 128px;
+}
+
+table {
+    text-align: center;
+    width: 100%;
+}
+
+html,
+body {
+    height: 100%
+}
+
+.vaccine-form table{
+    text-align: left;
+}
