@@ -1,5 +1,12 @@
- //Format date into the pinnacle format
- function getMonthFromString(mon) {
+//Warn user if using IE
+var isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
+if (isIE11) {
+    alert('This system does not work with Internet Explorer. Please use Google Chrome or Firefox.')
+}
+
+
+//Format date into the pinnacle format
+function getMonthFromString(mon) {
     return new Date(Date.parse(mon + " 1, 2012")).getMonth() + 1
 }
 
@@ -52,7 +59,7 @@ function sortAlphabetical(objArray) {
 function identifyCSVKeys(CSVArray) {
     var keys = Object.keys(CSVArray[0]);
     var nhsno_key, dob_key, name_key;
-    keys.forEach(function(key) {
+    keys.forEach(function (key) {
         lkey = key.toLowerCase();
         if (lkey.includes('nhs')) {
             nhsno_key = key;
@@ -73,10 +80,10 @@ function identifyCSVKeys(CSVArray) {
     };
 }
 
-function genPatientSlipSegmentHTML(csvResult,keys){
+function genPatientSlipSegmentHTML(csvResult, keys) {
     var i = 0;
     var fullhtml = '';
-    csvResult.forEach(function(patient, index) {
+    csvResult.forEach(function (patient, index) {
         if (i == 0) {
             start = `<div class="row">`;
         } else {
@@ -108,8 +115,8 @@ function genPatientSlipSegmentHTML(csvResult,keys){
     return fullhtml;
 }
 
-function genQRCodes(csvResult,keys){
-csvResult.forEach(function(patient, index) {
+function genQRCodes(csvResult, keys) {
+    csvResult.forEach(function (patient, index) {
         $('#dob-qr-' + index).qrcode({
             text: formatDate(patient[keys['dob']])
         });
@@ -119,17 +126,17 @@ csvResult.forEach(function(patient, index) {
     });
 }
 
-function genFormHTML(csvResult,keys){
+function genFormHTML(csvResult, keys) {
     var fullhtml = '';
-    csvResult.forEach(function(patient, index) {
-        html = genFullPageHTML(patient, index,keys);
+    csvResult.forEach(function (patient, index) {
+        html = genFullPageHTML(patient, index, keys);
         fullhtml = fullhtml + html;
     });
     return fullhtml;
 }
 
 
-function genFullPageHTML(patient, index,keys){
+function genFullPageHTML(patient, index, keys) {
     return `<div class="vaccine-form"><h1>Vaccine Record Form</h1>
 <table class="table table-bordered">
     <tr>
