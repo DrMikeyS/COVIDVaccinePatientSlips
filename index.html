@@ -27,6 +27,9 @@
                 <div class="card-body">
                     <h3>Background Information</h3>
                     <hr>
+                    <div class="alert alert-info" role="alert">
+                        This will not run in Internet Explorer. All other browsers should be fine.
+                      </div>
                     <h4>Updates and download</h4>
                     <p>The latest version can be downloaded from the <a href="https://github.com/DrMikeyS/COVIDVaccinePatientSlips">GitHub repo.</a></p>
                     <h4>Video Guide</h4>
@@ -81,11 +84,37 @@
 
             <p>For this final step, add your CSV file containing your patient list. The file is not uploaded anywhere
                 and is processed entirely within your web browser.</p>
-            <label class="btn btn-primary btn-block">
+            <label class="btn btn-primary btn-block my-4">
                 Choose File <input type="file" name="filename" id="filename" type="file" hidden>
             </label>
 
-
+            <div class="card">
+                <div class="card-body">
+                    <h3>What should the .csv file Look Like?</h3>
+                    <p>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>NHS Number</th>
+                                    <th>Date Of Birth</th>
+                                    <th>StartTime*</th>
+                                    <th>SessionDate*</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Bloggs, Joe</td>
+                                        <td>123 456 1234</td>
+                                        <td>12/01/1956</td>
+                                        <td>18:30</td>
+                                        <td>08/01/2021</td>
+                                    </tr>
+                        </table>
+                    </p>
+                    <p>*Optional</p>
+                    <p>The only field that has to have the exact title is "Name". All other fields will be soft matched. Dates can be in any format.</p>
+                <p>Additional fields can be included but will be ignored.</p>    
+                </div>
+                    </div>
         </div>
     </div>
     <div class="container-fluid" id="patient-list">
