@@ -11,18 +11,17 @@ Looking up patients in Outcomes4Health takes so long many vaccine sites are pre-
 
 
 ## Video Demo
-[See this video](https://www.youtube.com/watch?v=GmWTVxI_sx4#t=50s) for how the process works in detail. 
+[See this video](https://www.youtube.com/watch?v=pA-5K7eZB7Q) for how the process works in detail. 
 
-##  Web Version (less secure)
+##  Web Version
 
-[Test drive a web based version](https://durhamstudenthealth.co.uk/qr) of the system. While all the data is processed in the browser, there is the risk of data interception, so for real patient data please use the instructions below. There is a [dummy patient csv](https://raw.githubusercontent.com/DrMikeyS/COVIDVaccinePatientSlips/main/dummy-patient-list.csv) file you can download here to try it.
+[Use the web based version](https://durhamstudenthealth.co.uk/qr) of the system. There is a [dummy patient csv](https://raw.githubusercontent.com/DrMikeyS/COVIDVaccinePatientSlips/main/dummy-patient-list.csv) file you can download here to try it.
 
-## Run On You Computer (Secure)
+## Run On You Computer
 
  - [Download](https://github.com/DrMikeyS/COVIDVaccinePatientSlips/archive/main.zip) the file package
  - Open "index.html" in Chrome, Firefox or Safari 
- - Export the "Session List" from AccuBook or generate a CSV file with headings for: NhsNumber,	Name,	DateOfBirth (Optional:	SessionDate,	StartTime, Address)
- - Upload the CSV session list into the generator
+ - Follow the on-screen instructions
  - Print out the patient slips
  - Use barcode scanners to scan DOB and NHS number into Outcomes4Health
 

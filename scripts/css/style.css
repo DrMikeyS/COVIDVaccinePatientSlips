@@ -35,3 +35,7 @@ body {
 .vaccine-form table{
     text-align: left;
 }
+
+#page-2,#page-3,#page-4{
+    display:none;
+}

@@ -16,78 +16,147 @@
 
 <body>
 
-   <div id="input-modal" class="container mt-5">
-        <div>
+    <div id="input-modal" class="container mt-5">
+        <div id="page-1">
             <h1>COVID Vaccine QR Generator</h1>
             <p>A free tool that allows you to convert a CSV list of patients into a printable pack of patient slips to make using Pinnacle a breeze.</p>
-        
-                <p></p>
-                <hr>
-            <h2>Convert your list</h2>
-            <label for="filename">Add Patient List File:</label>
-            <input type="file" name="filename" id="filename" class="form-control-file">
-            <small class="form-text text-muted">This should be in csv format</small>
-            <p><strong>Options:</strong><br>
-                <table class="text-left">
-                    <tr>
-                        <td><input type="radio" id="sortbytime" name="sortType" value="sortbytime" checked>
-                            <label for="sortbytime">No Sorting of CSV File</label><br>
-                            <input type="radio" id="sortbyname" name="sortType" value="sortbyname">
-                            <label for="sortbyname">Sort by Patient Surname</label><br></td>
-                        <td><input type="radio" id="slipStyle" name="reportType" value="slipStyle" checked>
-                            <label for="slipStyle">Slip Format</label><br>
-                            <input type="radio" id="formStyle" name="reportType" value="formStyle">
-                            <label for="formStyle">Full Page Form Format</label><br></td>
-                    </tr>
-                </table>
-            </p>
 
+            <p><button type="button" class="btn btn-primary btn-block my-4" id="get-started">Get Started</button></p>
+
+            <div class="card">
+                <div class="card-body">
+                    <h3>Background Information</h3>
+                    <hr>
+                    <h4>Updates and download</h4>
+                    <p>The latest version can be downloaded from the <a href="https://github.com/DrMikeyS/COVIDVaccinePatientSlips">GitHub repo.</a></p>
+                    <h4>Video Guide</h4>
+                    <p><a href="https://www.youtube.com/watch?v=pA-5K7eZB7Q" rel="nofollow">See this
+                            video</a>&nbsp;for how the process works in detail.</p>
+                    <h4>IG and Security</h4>
+                    <p>No data is transferred anywhere when using this tool, all the process is done in your web browser. The tool uses some open source libraries to work. Using the tool is entirely at your own risk. It is provided under an MIT License.</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="page-2">
+            <div class="progress mb-3">
+                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 33%;" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100">Step 1 of 3</div>
+              </div>
+            <h2>How do you want the list to look?</h2>
+            <table>
+                <tbody>
+                    <tr>
+                        <td><img src="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/raw/main/demo.jpg?raw=true"
+                                alt="" /></td>
+                        <td><img src="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/raw/main/demo_full1.jpg?raw=true"
+                                alt="" /></td>
+                    </tr>
+                    <tr>
+                        <td><button type="button" class="btn btn-primary" id="small-qr">Small QR Slips</button></td>
+                        <td><button type="button" class="btn btn-primary" id="full-page">Full Page Form</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div id="page-3">
+            <div class="progress mb-3">
+                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 66%;" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100">Step 2 of 3</div>
+              </div>
+              <p></p>
+            <h2>How do you want to sort the results?</h2>
             
-<hr>
-<h3><a id="user-content-video-demo" class="anchor" href="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/blob/main/README.md#video-demo" aria-hidden="true"></a>Video Demo</h3>
-<p><a href="https://www.youtube.com/watch?v=GmWTVxI_sx4#t=50s" rel="nofollow">See this video</a>&nbsp;for how the process works in detail.</p>
-<h3><a id="user-content-web-version-less-secure" class="anchor" href="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/blob/main/README.md#web-version-less-secure" aria-hidden="true"></a>Instructions</h3>
-<ul>
-<li>Export the "Session List" from AccuBook or generate a CSV file with headings for: NhsNumber, Name, DateOfBirth (Optional: SessionDate, StartTime, Address)</li>
-<li>Upload the CSV session list into the generator</li>
-<li>Print out the patient slips</li>
-<li>Use barcode scanners to scan DOB and NHS number into Outcomes4Health</li>
-</ul>
-<h3><a id="user-content-ig-and-security" class="anchor" href="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/blob/main/README.md#ig-and-security" aria-hidden="true"></a>IG and Security</h3>
-<p>No data is transferred anywhere when using this tool, all the process is done in your web browser. The tool uses some open source libraries to work. Using the tool is entirely at your own risk.</p>
+
+            <p><button type="button" class="btn btn-primary btn-block" id="sort-alphabetical">Sort
+                    Alphabetically</button></p>
+                    <p><button type="button" class="btn btn-primary btn-block" id="no-sort">No Sorting</button>
+                        <small class="form-text text-muted">If using AccuBook, choose this option to sort by order of
+                            appointment.</small>
+                    </p>
+        </div>
+        <div id="page-4">
+            <div class="progress mb-3">
+                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Step 3 of 3</div>
+              </div>
+            <h2>Add your CSV File</h2>
+
+            <p>For this final step, add your CSV file containing your patient list. The file is not uploaded anywhere
+                and is processed entirely within your web browser.</p>
+            <label class="btn btn-primary btn-block">
+                Choose File <input type="file" name="filename" id="filename" type="file" hidden>
+            </label>
+
+
         </div>
     </div>
     <div class="container-fluid" id="patient-list">
 
     </div>
     <script>
-      
-        $("#filename").change(function(e) {
-            $("#input-modal").css('display', 'none');
+        var formStyle, sortAlphabetically;
+        $("#get-started").click(function () {
+            $("#page-1").hide();
+            $("#page-2").fadeIn();
+        });
+
+        $("#small-qr").click(function () {
+            $("#page-2").hide();
+            $("#page-3").fadeIn();
+            formStyle = 'small-qr'
+        });
+
+        $("#full-page").click(function () {
+            $("#page-2").hide();
+            $("#page-3").fadeIn();
+            formStyle = 'full-page'
+        });
+
+        $("#no-sort").click(function () {
+            $("#page-3").hide();
+            $("#page-4").fadeIn();
+            sortAlphabetically = false;
+        });
+
+        $("#sort-alphabetical").click(function () {
+            $("#page-3").hide();
+            $("#page-4").fadeIn();
+            sortAlphabetically = true;
+        });
+
+        function generateAlert(text, elementToAppendTo, type = 'danger') {
+            var alertHTML = `<div class="alert alert-` + type + `" role="alert">
+                `+ text + `
+                </div>`;
+            console.log(alertHTML);
+            $(elementToAppendTo).prepend(alertHTML);
+        }
+
+        $("#filename").change(function (e) {
+
 
             var ext = $("input#filename").val().split(".").pop().toLowerCase();
             if ($.inArray(ext, ["csv"]) == -1) {
-                alert('Error');
+                generateAlert('Error: The file type is not CSV.', '#page-4')
                 return false;
             }
             if (e.target.files != undefined) {
+                $("#input-modal").css('display', 'none');
                 var reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     csvResult = e.target.result;
                     csvResult = $.csv.toObjects(csvResult);
                     var keys = identifyCSVKeys(csvResult);
 
-                    if ($('#sortbyname').is(':checked')) {
+                    if (sortAlphabetically) {
                         csvResult = sortAlphabetical(csvResult);
                     }
-                    if ($('#formStyle').is(':checked')) {
-                        var fullhtml = genFormHTML(csvResult,keys);
-                    }else{
-                        var fullhtml = genPatientSlipSegmentHTML(csvResult,keys);
+                    if (formStyle == 'full-page') {
+                        var fullhtml = genFormHTML(csvResult, keys);
+                    } else {
+                        var fullhtml = genPatientSlipSegmentHTML(csvResult, keys);
                     }
                     $("#patient-list").append(fullhtml);
-                    
-                    genQRCodes(csvResult,keys);
+
+                    genQRCodes(csvResult, keys);
                     window.print();
                 };
                 reader.readAsText(e.target.files.item(0));
