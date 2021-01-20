@@ -18,8 +18,12 @@ function formatDate(dateString) {
     } else if (dateString.includes('/')) {
         var splitDate = dateString.split('/');
     }
-    //Seperate out month
+    //Seperate out month and year
     var month = splitDate[1];
+    var year = splitDate[2];
+    if(year.length==2){
+    	year = '19'+year;
+    }
     //Convert text month to int
     var regExp = /[a-zA-Z]/g;
     if (regExp.test(month)) {
@@ -27,9 +31,9 @@ function formatDate(dateString) {
     }
     month = month - 1 //Javascript months are 0-11
     var fomattedDate = new Date()
+    fomattedDate.setFullYear(year)
     fomattedDate.setDate(splitDate[0])
     fomattedDate.setMonth(month)
-    fomattedDate.setFullYear(splitDate[2])
     return fomattedDate.toLocaleDateString(
         'en-gb', {
             year: 'numeric',
