@@ -42,10 +42,10 @@ function formatDate(dateString) {
 //Sort list of patients alphabetically
 function sortAlphabetical(objArray) {
     function compare(a, b) {
-        if (a.Name < b.Name) {
+        if (a.Name.toLowerCase() < b.Name.toLowerCase()) {
             return -1;
         }
-        if (a.Name > b.Name) {
+        if (a.Name.toLowerCase() > b.Name.toLowerCase()) {
             return 1;
         }
         return 0;
