@@ -74,7 +74,13 @@ function identifyCSVKeys(CSVArray) {
             dob_key = key;
         }
         if (lkey.includes('name')) {
+            //do not include if the column name has a "name" that is referencing something other than patient
+            if(lkey.includes('organisation')){}else
+            if(lkey.includes('organization')){}else
+            if(lkey.includes('practice')){}else
+            if(lkey.includes('pcn')){}else{
             name_key = key;
+        }
         }
     });
     return {
@@ -101,7 +107,7 @@ function genPatientSlipSegmentHTML(csvResult, keys) {
             i++;
         }
         html = start + `<div class="col-print-6">
-          <h1>` + patient.Name + `</h1>
+          <h1>` + patient[keys['name']] + `</h1>
           <p>Session Date: ` + patient.SessionDate + `</p>
             <p>Session Time: ` + patient.StartTime + `</p>
           <table>
@@ -145,7 +151,7 @@ function genFullPageHTML(patient, index, keys) {
 <table class="table table-bordered">
     <tr>
         <td>Name</td>
-        <td>` + patient.Name + `</td>
+        <td>` + patient[keys['name']] + `</td>
         <td>Address</td>
         <td>` + patient[keys['address']] + `</td>
     </tr>
