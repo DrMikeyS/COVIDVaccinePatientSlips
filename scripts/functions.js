@@ -191,7 +191,7 @@ function genFullPageHTML(patient, index, keys) {
         <td></td>
     </tr>
     <tr>
-        <td>4. Are you or have you been in a trial of a potential coronavirus vaccine?</td>
+        <td>4. Have you already had a COVID vaccine (or are you in a trial)?</td>
         <td></td>
         <td></td>
     </tr>
@@ -210,7 +210,16 @@ function genFullPageHTML(patient, index, keys) {
         <td></td>
         <td></td>
     </tr>
+    </table>
 
+<table class="table table-bordered">
+    <tr>
+        <td>Screening Questions Completed by:</td>
+        <td>Vaccinator (who is registered HCP) | Other HCP (please add name, signature and date below)</td>
+        </tr><tr>
+        <td colspan="2"><p></p></td>
+    </tr>
+</table>
     <table class="table table-bordered">
         <tr>
             <th colspan="2">Consent</th>
@@ -232,42 +241,38 @@ function genFullPageHTML(patient, index, keys) {
 
     <table class="table table-bordered">
         <tr>
-            <th colspan="2">Vaccination Details</th>
+            <th colspan="4">Vaccination Details</th>
         </tr>
         <tr>
-            <td>Date of Vaccination</td>
-            <td>` + patient.SessionDate + `</td>
-
+        <td colspan="2">Dose Round</td>
+        <td colspan="2"> First    |    Second</td>
         </tr>
         <tr>
             <td>Time of Vaccination (24hr)</td>
-            <td>
-            </td>
-        </tr>
-        <tr>
-            <td>Batch Number
-            </td>
             <td></td>
+            <td>Date of Vaccination</td>
+            <td>` + patient.SessionDate + `</td>
         </tr>
         <tr>
-            <td>Administration Site
-            </td>
-            <td>               Left    |    Right   |      Deltoid   |      Thigh</td>
+            <td colspan="2">Batch Number and Brand</td>
+            <td colspan="2"></td>
         </tr>
         <tr>
-            <td>Any Adverse Effects (blank for none) or other comments
-            </td>
-            <td></td>
+            <td colspan="2">Administration Site</td>
+            <td colspan="2">               Left    |    Right   |      Deltoid   |      Thigh</td>
         </tr>
         <tr>
-            <td>Vaccinator Name
-            </td>
-            <td></td>
+            <td colspan="2">Any Adverse Effects (blank for none) or other comments</td>
+            <td colspan="2"></td>
         </tr>
         <tr>
-            <td>Vaccine not given (reason)
+            <td colspan="2">Vaccinator Name</td>
+            <td colspan="2"></td>
+        </tr>
+        <tr>
+            <td colspan="2">Vaccine not given (reason)
             </td>
-            <td>Unwell | Contraindicated | Did not consent</td>
+            <td colspan="2">Unwell | Contraindicated | Did not consent</td>
         </tr>
     </table>
     </div>
