@@ -93,6 +93,7 @@ function identifyCSVKeys(CSVArray) {
 function genPatientSlipSegmentHTML(csvResult, keys) {
     var i = 0;
     var fullhtml = '';
+    
     csvResult.forEach(function (patient, index) {
         if (i == 0) {
             start = `<div class="row">`;
@@ -106,10 +107,18 @@ function genPatientSlipSegmentHTML(csvResult, keys) {
             end = '';
             i++;
         }
+        sessiondate = '';
+        if (patient.SessionDate !== undefined) {
+            sessiondate=patient.SessionDate;
+        }
+        sessiontime = '';
+        if (patient.StartTime !== undefined) {
+            sessiontime=patient.StartTime;
+        }
         html = start + `<div class="col-print-6">
           <h1>` + patient[keys['name']] + `</h1>
-          <p>Session Date: ` + patient.SessionDate + `</p>
-            <p>Session Time: ` + patient.StartTime + `</p>
+          <p>Session Date: ` + sessiondate + `</p>
+            <p>Session Time: ` + sessiontime + `</p>
           <table>
           <tr>
           <td>DOB: ` + formatDate(patient[keys['dob']]) + `</td>
@@ -147,13 +156,27 @@ function genFormHTML(csvResult, keys) {
 
 
 function genFullPageHTML(patient, index, keys) {
+    var address='';
+    if (patient[keys['address']] !== undefined) {
+        address=patient[keys['address']];
+    }
+    var sessiondate = '';
+    if (patient.SessionDate !== undefined) {
+        sessiondate=patient.SessionDate;
+    }
+    var RegisteredPracticeName = '';
+    if (patient.RegisteredPracticeName !== undefined) {
+        RegisteredPracticeName=patient.RegisteredPracticeName;
+    }
+    
+
     return `<div class="vaccine-form"><h1>Vaccine Record Form</h1>
 <table class="table table-bordered">
     <tr>
         <td>Name</td>
         <td>` + patient[keys['name']] + `</td>
         <td>Address</td>
-        <td>` + patient[keys['address']] + `</td>
+        <td>` + address + `</td>
     </tr>
     <tr>
         <td>NHS No.</td>
@@ -171,7 +194,7 @@ function genFullPageHTML(patient, index, keys) {
         <td>Sex</td>
         <td></td>
         <td>GP Practice</td>
-        <td></td>
+        <td>`+RegisteredPracticeName+`</td>
     </tr>
 </table>
 
@@ -257,7 +280,7 @@ function genFullPageHTML(patient, index, keys) {
             <td>Time of Vaccination (24hr)</td>
             <td></td>
             <td>Date of Vaccination</td>
-            <td>` + patient.SessionDate + `</td>
+            <td>` + sessiondate + `</td>
         </tr>
         <tr>
             <td colspan="2">Batch Number and Brand</td>
