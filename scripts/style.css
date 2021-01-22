@@ -43,7 +43,9 @@ body {
 }
 
 /*Stickers page*/
-
+.stickers{
+    margin-top:17px;
+}
 .stickers .qr-code canvas {
     width: 30px;
     height: 30px;
@@ -56,11 +58,16 @@ body {
 .patientName{
     font-weight:bold;
     margin-bottom:0;
+    padding-top:10px;
 }
 .stickers .col-sm-4 {
-    padding-left: 30px;
-    padding-top: 40px;
+    padding-left: 40px;
+    height: 264px;
 }
 .stickers table{
     text-align: left;
+}
+.sticker-qrs{
+    margin-top:8px;
+    text-align: center;
 }

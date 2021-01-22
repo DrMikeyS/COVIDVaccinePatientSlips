@@ -100,7 +100,7 @@ function genPatientStickersHTML(csvResult, keys,batchNumber,vaccineType) {
         } else {
             start = '';
         }
-        if (i == 17) {
+        if (i == 14) {
             end = `</div><div class="page-break-clear"></div><div class="page-break">&nbsp;</div>`;
             i = 0;
         } else {
@@ -127,7 +127,7 @@ function genPatientStickersHTML(csvResult, keys,batchNumber,vaccineType) {
             <td>Date:</td>
             <td>Batch:</td>
             </tr></table>
-          <table style="text-align:center;margin-top:10px;">
+          <table class="sticker-qrs">
           <tr>
           <td>DOB:</td>
           <td>NHS No:</td>
