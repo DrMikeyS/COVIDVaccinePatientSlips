@@ -217,6 +217,10 @@ function genFullPageHTML(patient, index, keys) {
     if (patient.SessionDate !== undefined) {
         sessiondate=patient.SessionDate;
     }
+    var sessiontime = '';
+    if (patient.StartTime !== undefined) {
+        sessiontime=patient.StartTime;
+    }
     var RegisteredPracticeName = '';
     if (patient.RegisteredPracticeName !== undefined) {
         RegisteredPracticeName=patient.RegisteredPracticeName;
@@ -331,7 +335,7 @@ function genFullPageHTML(patient, index, keys) {
         </tr>
         <tr>
             <td>Time of Vaccination (24hr)</td>
-            <td></td>
+            <td>`+sessiontime+`</td>
             <td>Date of Vaccination</td>
             <td>` + sessiondate + `</td>
         </tr>
