@@ -47,7 +47,7 @@
 
         <div id="page-2">
             <div class="progress mb-3">
-                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 33%;" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100">Step 1 of 3</div>
+                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 33%;" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             <h2>How do you want the list to look?</h2>
             <table>
@@ -57,17 +57,38 @@
                                 alt="" /></td>
                         <td><img src="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/raw/main/demo_full1.jpg?raw=true"
                                 alt="" /></td>
+                                <td><img src="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/raw/main/demo_stickers.jpg?raw=true"
+                                    alt="" /></td>
                     </tr>
                     <tr>
                         <td><button type="button" class="btn btn-primary" id="small-qr">Small QR Slips</button></td>
                         <td><button type="button" class="btn btn-primary" id="full-page">Full Page Form</button></td>
+                        <td><button type="button" class="btn btn-primary" id="sticker">Patient Stickers</button></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <div id="page-2a">
+            <div class="progress mb-3">
+                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 66%;" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <p></p>
+            <h2>Information for the cards</h2>
+            <p><label for="vaccine-type">Vaccine Type</label><select class="form-control" id="vaccine-type">
+                <option>Pfizer-BioNTech</option>
+                <option>AstraZeneca</option>
+              </select></p>
+            <p><label for="batch-number">Batch Number</label><input type="text" class="form-control" id="batch-number" placeholder="Batch Number"></p>
+            <p><button type="button" class="btn btn-primary btn-block" id="continue">Continue</button></p>
+        </div>
         <div id="page-3">
             <div class="progress mb-3">
-                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 66%;" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100">Step 2 of 3</div>
+                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 66%;" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
               <p></p>
             <h2>How do you want to sort the results?</h2>
@@ -82,7 +103,7 @@
         </div>
         <div id="page-4">
             <div class="progress mb-3">
-                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">Step 3 of 3</div>
+                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             <h2>Add your CSV File</h2>
 
@@ -143,6 +164,17 @@
             formStyle = 'full-page'
         });
 
+        $("#sticker").click(function () {
+            $("#page-2").hide();
+            $("#page-2a").fadeIn();
+            formStyle = 'sticker'
+        });
+        $("#continue").click(function () {
+            $("#page-2a").hide();
+            $("#page-3").fadeIn();
+            formStyle = 'sticker'
+        });
+
         $("#no-sort").click(function () {
             $("#page-3").hide();
             $("#page-4").fadeIn();
@@ -184,7 +216,11 @@
                     }
                     if (formStyle == 'full-page') {
                         var fullhtml = genFormHTML(csvResult, keys);
-                    } else {
+                    } else if(formStyle == 'sticker'){
+                        var batchNumber = $("#batch-number").val();
+                        var vaccineType = $("select#vaccine-type option:checked").val();
+                        var fullhtml = genPatientStickersHTML(csvResult, keys,batchNumber,vaccineType);
+                    }else{
                         var fullhtml = genPatientSlipSegmentHTML(csvResult, keys);
                     }
                     $("#patient-list").append(fullhtml);

@@ -90,6 +90,59 @@ function identifyCSVKeys(CSVArray) {
     };
 }
 
+function genPatientStickersHTML(csvResult, keys,batchNumber,vaccineType) {
+    var i = 0;
+    var fullhtml = '';
+    
+    csvResult.forEach(function (patient, index) {
+        if (i == 0) {
+            start = `<div class="row stickers">`;
+        } else {
+            start = '';
+        }
+        if (i == 17) {
+            end = `</div><div class="page-break-clear"></div><div class="page-break">&nbsp;</div>`;
+            i = 0;
+        } else {
+            end = '';
+            i++;
+        }
+        sessiondate = '';
+        if (patient.SessionDate !== undefined) {
+            sessiondate=patient.SessionDate;
+        }
+        sessiontime = '';
+        if (patient.StartTime !== undefined) {
+            sessiontime=patient.StartTime;
+        }
+        html = start + `<div class="col-sm-4">
+          <p class="patientName">` + patient[keys['name']] + `</p>
+          Vaccine Type: <strong>`+vaccineType+`</strong><br>
+          First Dose:  ` + sessiondate + ` Batch: `+batchNumber+`
+          <table>
+          <tr>
+          <td colspan="2">Second Dose </td>
+            </tr>
+            <tr>
+            <td>Date:</td>
+            <td>Batch:</td>
+            </tr></table>
+          <table style="text-align:center;margin-top:10px;">
+          <tr>
+          <td>DOB:</td>
+          <td>NHS No:</td>
+          </tr>
+          <tr>
+          <td><div class="qr-code" id="dob-qr-` + index + `"></div></td>
+          <td><div class="qr-code" id="nhs-qr-` + index + `"></div></td>
+          </tr>
+          </table></div>` + end;
+        fullhtml = fullhtml + html;
+    });
+    return fullhtml;
+}
+
+
 function genPatientSlipSegmentHTML(csvResult, keys) {
     var i = 0;
     var fullhtml = '';

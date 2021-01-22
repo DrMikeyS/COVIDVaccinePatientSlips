@@ -22,6 +22,8 @@
     height: 128px;
 }
 
+
+
 table {
     text-align: center;
     width: 100%;
@@ -36,6 +38,29 @@ body {
     text-align: left;
 }
 
-#page-2,#page-3,#page-4{
+#page-2,#page-3,#page-4, #page-2a{
     display:none;
+}
+
+/*Stickers page*/
+
+.stickers .qr-code canvas {
+    width: 30px;
+    height: 30px;
+}
+
+.stickers html{
+    font-size:0.8em;
+}
+
+.patientName{
+    font-weight:bold;
+    margin-bottom:0;
+}
+.stickers .col-sm-4 {
+    padding-left: 30px;
+    padding-top: 40px;
+}
+.stickers table{
+    text-align: left;
 }
