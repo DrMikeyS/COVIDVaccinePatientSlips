@@ -44,11 +44,11 @@ body {
 
 /*Stickers page*/
 .stickers{
-    margin-top:17px;
+    margin-top:8px;
 }
 .stickers .qr-code canvas {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
 }
 
 .stickers html{
@@ -62,12 +62,16 @@ body {
 }
 .stickers .col-sm-4 {
     padding-left: 40px;
-    height: 264px;
-}
-.stickers table{
-    text-align: left;
+    height: 247px;
+    max-height: 247px
 }
 .sticker-qrs{
     margin-top:8px;
-    text-align: center;
+    font-size: 0.8em;
+}
+.second-dose{
+    text-align: left;
+}
+.semi-bold{
+    font-weight: 500;
 }

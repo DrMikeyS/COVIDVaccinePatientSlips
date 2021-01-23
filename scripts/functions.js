@@ -118,10 +118,10 @@ function genPatientStickersHTML(csvResult, keys,batchNumber,vaccineType) {
         html = start + `<div class="col-sm-4">
           <p class="patientName">` + patient[keys['name']] + `</p>
           Vaccine Type: <strong>`+vaccineType+`</strong><br>
-          First Dose:  ` + sessiondate + ` Batch: `+batchNumber+`
-          <table>
+          <span class="semi-bold">First Dose</span>:  ` + sessiondate + ` ` + sessiontime + ` <br>Batch: `+batchNumber+`
+          <table class="second-dose">
           <tr>
-          <td colspan="2">Second Dose </td>
+          <td colspan="2" class="semi-bold">Second Dose </td>
             </tr>
             <tr>
             <td>Date:</td>
@@ -129,8 +129,8 @@ function genPatientStickersHTML(csvResult, keys,batchNumber,vaccineType) {
             </tr></table>
           <table class="sticker-qrs">
           <tr>
-          <td>DOB:</td>
-          <td>NHS No:</td>
+          <td>DOB:` + formatDate(patient[keys['dob']]) + `</td>
+          <td>NHS No:` + patient[keys['nhsno']] + `</td>
           </tr>
           <tr>
           <td><div class="qr-code" id="dob-qr-` + index + `"></div></td>
