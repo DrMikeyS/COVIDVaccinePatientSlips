@@ -6,7 +6,7 @@ A free tool that allows you to convert a CSV list of patients into a printable p
 Looking up patients in Outcomes4Health takes so long many vaccine sites are pre-registering patients (which takes hours). Part of the issue is transcribing NHS number and DOB (in the very specific format it demands). This takes your list of patients for a vaccine session and for each patient generates a slip with a QR code for their DOB and NHS Number so they can be entered into Outcomes4Health rapidly using barcode scanners that vaccine sites have available. 
 
 | Sample QR Slip  | Sample Full Page Form With QR | Sample Sticker QR |
-| ------------- | ------------- |
+| ------------- | ------------- | ------------- |
 | ![](https://github.com/DrMikeyS/COVIDVaccinePatientSlips/raw/main/img/demo.jpg?raw=true)   | ![](https://github.com/DrMikeyS/COVIDVaccinePatientSlips/raw/main/img/demo_full1.jpg?raw=true)  | ![](https://github.com/DrMikeyS/COVIDVaccinePatientSlips/raw/main/img/demo_sticker.jpg?raw=true)  |
 
 
