@@ -104,6 +104,9 @@ function genPatientStickersHTML(csvResult, keys,batchNumber,vaccineType) {
     var fullhtml = '';
     
     csvResult.forEach(function (patient, index) {
+        if(!patient[keys['name']]){
+            return;
+        }
         if (i == 0) {
             start = `<div class="row stickers">`;
         } else {
@@ -157,6 +160,9 @@ function genPatientSlipSegmentHTML(csvResult, keys) {
     var fullhtml = '';
     
     csvResult.forEach(function (patient, index) {
+        if(!patient[keys['name']]){
+            return;
+        }
         if (i == 0) {
             start = `<div class="row">`;
         } else {
@@ -198,6 +204,9 @@ function genPatientSlipSegmentHTML(csvResult, keys) {
 
 function genQRCodes(csvResult, keys) {
     csvResult.forEach(function (patient, index) {
+        if(!patient[keys['dob']]){
+            return; //exit loop if no DOB
+        }
         $('#dob-qr-' + index).qrcode({
             text: formatDate(patient[keys['dob']])
         });
@@ -210,6 +219,9 @@ function genQRCodes(csvResult, keys) {
 function genFormHTML(csvResult, keys) {
     var fullhtml = '';
     csvResult.forEach(function (patient, index) {
+        if(!patient[keys['name']]){
+            return;
+        }
         html = genFullPageHTML(patient, index, keys);
         fullhtml = fullhtml + html;
     });
