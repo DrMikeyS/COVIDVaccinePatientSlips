@@ -151,6 +151,14 @@
 
     </div>
     <script>
+        //Error logging
+        window.onerror = function(error) {
+            $("#patient-list").append(`<div class="alert alert-warning" role="alert">
+                <strong>Error:</strong> `+error+`<br>
+                Contact mike@mikedavidsmith.com if you keep getting this error for support.
+              </div>`);
+        };
+
         var formStyle, sortAlphabetically;
         $("#get-started").click(function () {
             $("#page-1").hide();
