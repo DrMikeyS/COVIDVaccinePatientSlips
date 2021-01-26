@@ -173,7 +173,7 @@
 
         $("#full-page").click(function () {
             $("#page-2").hide();
-            $("#page-3").fadeIn();
+            $("#page-2a").fadeIn();
             formStyle = 'full-page'
         });
 
@@ -185,7 +185,6 @@
         $("#continue").click(function () {
             $("#page-2a").hide();
             $("#page-3").fadeIn();
-            formStyle = 'sticker'
         });
 
         $("#no-sort").click(function () {
@@ -223,15 +222,16 @@
                     csvResult = e.target.result;
                     csvResult = $.csv.toObjects(csvResult);
                     var keys = identifyCSVKeys(csvResult);
+                    var batchNumber = $("#batch-number").val();
+                    var vaccineType = $("select#vaccine-type option:checked").val();
 
                     if (sortAlphabetically) {
                         csvResult = sortAlphabetical(csvResult);
                     }
                     if (formStyle == 'full-page') {
-                        var fullhtml = genFormHTML(csvResult, keys);
+                        var fullhtml = genFormHTML(csvResult, keys,batchNumber,vaccineType);
                     } else if(formStyle == 'sticker'){
-                        var batchNumber = $("#batch-number").val();
-                        var vaccineType = $("select#vaccine-type option:checked").val();
+                        
                         var fullhtml = genPatientStickersHTML(csvResult, keys,batchNumber,vaccineType);
                     }else{
                         var fullhtml = genPatientSlipSegmentHTML(csvResult, keys);

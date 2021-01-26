@@ -216,20 +216,20 @@ function genQRCodes(csvResult, keys) {
     });
 }
 
-function genFormHTML(csvResult, keys) {
+function genFormHTML(csvResult, keys,batchNumber,vaccineType) {
     var fullhtml = '';
     csvResult.forEach(function (patient, index) {
         if(!patient[keys['name']]){
             return;
         }
-        html = genFullPageHTML(patient, index, keys);
+        html = genFullPageHTML(patient, index, keys,batchNumber,vaccineType);
         fullhtml = fullhtml + html;
     });
     return fullhtml;
 }
 
 
-function genFullPageHTML(patient, index, keys) {
+function genFullPageHTML(patient, index, keys,batchNumber,vaccineType) {
     var address='';
     if (patient[keys['address']] !== undefined) {
         address=patient[keys['address']];
@@ -362,8 +362,8 @@ function genFullPageHTML(patient, index, keys) {
             <td>` + sessiondate + `</td>
         </tr>
         <tr>
-            <td colspan="2">Batch Number and Brand</td>
-            <td colspan="2"></td>
+            <td colspan="2">Vaccine Brand and Batch Number</td>
+            <td colspan="2">`+vaccineType+` `+batchNumber+`</td>
         </tr>
         <tr>
             <td colspan="2">Administration Site</td>
