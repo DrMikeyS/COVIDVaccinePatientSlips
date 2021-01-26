@@ -262,37 +262,32 @@ function genFullPageHTML(patient, index, keys) {
         <th>No</th>
     </tr>
     <tr>
-        <td>1. Are you currently unwell with fever?</td>
+        <td>1. Are you currently unwell with fever, symptoms of COVID-19 or a positive test in the last 28 days?</td>
         <td></td>
         <td></td>
     </tr>
     <tr>
-        <td>2. Have you ever had any serious allergic reaction?</td>
+        <td>2. Have you ever had any serious allergic reaction or do you carry an EpiPen?</td>
         <td></td>
         <td></td>
     </tr>
     <tr>
-        <td>3. Have you ever been prescribed an adrenaline autoinjector such as EpiPen?</td>
+        <td>3. Have you already had a COVID vaccine (or are you in a trial)?</td>
         <td></td>
         <td></td>
     </tr>
     <tr>
-        <td>4. Have you already had a COVID vaccine (or are you in a trial)?</td>
+        <td>4. Are you, or could you be pregnant, breastfeeding or planning to become pregnant in the next three months?</td>
         <td></td>
         <td></td>
     </tr>
     <tr>
-        <td>5. Are you, or could you be pregnant, breastfeeding or planning to become pregnant in the next three months?</td>
+        <td>5. Are you taking anticoagulant medication, or do you have a bleeding disorder?</td>
         <td></td>
         <td></td>
     </tr>
     <tr>
-        <td>6. Are you taking anticoagulant medication, or do you have a bleeding disorder?</td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>7. Have you had any vaccinations in the last seven days?</td>
+        <td>6. Have you had any vaccinations in the last seven days?</td>
         <td></td>
         <td></td>
     </tr>
