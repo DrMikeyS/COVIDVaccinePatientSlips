@@ -257,10 +257,11 @@ function genFullPageHTML(patient, index, keys) {
         <td><div class="qr-code" id="dob-qr-` + index + `"></div></td>
     </tr>
     <tr>
-        <td>Sex</td>
-        <td></td>
+        
         <td>GP Practice</td>
         <td>`+RegisteredPracticeName+`</td>
+        <td></td>
+        <td></td>
     </tr>
 </table>
 
