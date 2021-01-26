@@ -62,11 +62,19 @@ function sortAlphabetical(objArray) {
 //Identify the column names
 function identifyCSVKeys(CSVArray) {
     var keys = Object.keys(CSVArray[0]);
-    var nhsno_key, dob_key, name_key;
+    var nhsno_key, dob_key, name_key,address_key;
     keys.forEach(function (key) {
         lkey = key.toLowerCase();
         if (lkey.includes('nhs')) {
             nhsno_key = key;
+        }
+        if (lkey.includes('address')) {
+            if(lkey.includes('organisation')){}else
+            if(lkey.includes('organization')){}else
+            if(lkey.includes('practice')){}else
+            if(lkey.includes('pcn')){}else{
+                address_key = key;
+            }
         }
         if (lkey.includes('dob')) {
             dob_key = key;
@@ -86,7 +94,8 @@ function identifyCSVKeys(CSVArray) {
     return {
         dob: dob_key,
         name: name_key,
-        nhsno: nhsno_key
+        nhsno: nhsno_key,
+        address: address_key
     };
 }
 
@@ -291,6 +300,11 @@ function genFullPageHTML(patient, index, keys) {
         <td></td>
         <td></td>
     </tr>
+    <tr>
+    <td>7. Ethnicity and is patient a social or health worker or a care home resident?</td>
+    <td></td>
+    <td></td>
+</tr>
     </table>
 
 <table class="table table-bordered">
