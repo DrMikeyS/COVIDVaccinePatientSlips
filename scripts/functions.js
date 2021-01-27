@@ -40,7 +40,7 @@ function formatDate(dateString) {
             month: 'short',
             day: 'numeric'
         }
-    ).replace(/ /g, '-')
+    ).replace(/ /g, '-').replace("Sept", "Sep")
 }
 
 //Sort list of patients alphabetically
