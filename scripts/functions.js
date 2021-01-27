@@ -86,6 +86,8 @@ function identifyCSVKeys(CSVArray) {
             if(lkey.includes('organisation')){}else
             if(lkey.includes('organization')){}else
             if(lkey.includes('practice')){}else
+            if(lkey.includes('first')){}else
+            if(lkey.includes('sur')){}else
             if(lkey.includes('pcn')){}else{
             name_key = key;
         }
