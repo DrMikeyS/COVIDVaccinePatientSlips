@@ -272,18 +272,20 @@ function genFullPageHTML(patient, index, keys,batchNumber,vaccineType) {
         <td>` + address + `</td>
     </tr>
     <tr>
-        <td>NHS No.</td>
-        <td>` + patient[keys['nhsno']] + `</td>
+        
         <td>DOB</td>
         <td>` + formatDate(patient[keys['dob']]) + `</td>
+        <td>NHS No.</td>
+        <td>` + patient[keys['nhsno']] + `</td>
     </tr>
     <tr>
-        <td></td>
-        <td><div class="qr-code" id="nhs-qr-` + index + `"></div></td>
-        <td></td>
+    <td></td>
         <td><div class="qr-code" id="dob-qr-` + index + `"></div>
         <div class="qr-code single-qr" id="single-qr-` + index + `"></div>
         </td>
+        <td></td>
+        <td><div class="qr-code" id="nhs-qr-` + index + `"></div></td>
+        
     </tr>
     <tr>
         
