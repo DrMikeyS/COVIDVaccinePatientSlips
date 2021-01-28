@@ -18,8 +18,12 @@
 
 .qr-code canvas {
     margin: 0 auto;
-    width: 128px;
-    height: 128px;
+    width: 100px;
+    height: 100px;
+}
+.single-qr{
+    text-align:center;
+    display:none;
 }
 
 

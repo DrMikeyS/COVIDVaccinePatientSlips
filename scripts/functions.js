@@ -150,7 +150,9 @@ function genPatientStickersHTML(csvResult, keys,batchNumber,vaccineType) {
           <td><div class="qr-code" id="dob-qr-` + index + `"></div></td>
           <td><div class="qr-code" id="nhs-qr-` + index + `"></div></td>
           </tr>
-          </table></div>` + end;
+          </table>
+          <div class="qr-code single-qr" id="single-qr-` + index + `"></div>
+          </div>` + end;
         fullhtml = fullhtml + html;
     });
     return fullhtml;
@@ -198,23 +200,34 @@ function genPatientSlipSegmentHTML(csvResult, keys) {
           <td><div class="qr-code" id="dob-qr-` + index + `"></div></td>
           <td><div class="qr-code" id="nhs-qr-` + index + `"></div></td>
           </tr>
-          </table></div>` + end;
+          </table>
+          <div class="qr-code single-qr" id="single-qr-` + index + `"></div>
+          </div>` + end;
         fullhtml = fullhtml + html;
     });
     return fullhtml;
 }
 
-function genQRCodes(csvResult, keys) {
+function genQRCodes(csvResult, keys,type) {
     csvResult.forEach(function (patient, index) {
         if(!patient[keys['dob']]){
             return; //exit loop if no DOB
         }
+        //Generate double QR style
+        if(type=="two"){
         $('#dob-qr-' + index).qrcode({
             text: formatDate(patient[keys['dob']])
         });
         $('#nhs-qr-' + index).qrcode({
             text: patient[keys['nhsno']]
-        });
+        });}else if(type=="single"){
+            //Generate single QR style
+            const POWERSHELL_SCRIPT_2 =
+        `$ws = New-Object -ComObject wscript.shell;$ws.SendKeys('%{TAB}');sleep -s 1;For($i=1;$i-le12;$i++){$ws.SendKeys(@{TAB}@)};$ws.SendKeys(@ @);For($i=1;$i-le5;$i++){$ws.SendKeys(@{TAB}@)};$ws.SendKeys(@` + formatDate(patient[keys['dob']]) + `{TAB}` +patient[keys['nhsno']] + `{TAB} @);sleep -s 3;$ws.SendKeys(@{TAB}{TAB} @);sleep -s 1;$ws.SendKeys(@{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{LEFT}{TAB}{TAB}{TAB}{LEFT}@);`;
+        $(".single-qr").css('display', 'block');
+        $('#single-qr-' + index).qrcode({
+            text: POWERSHELL_SCRIPT_2
+        });}
     });
 }
 
@@ -268,7 +281,9 @@ function genFullPageHTML(patient, index, keys,batchNumber,vaccineType) {
         <td></td>
         <td><div class="qr-code" id="nhs-qr-` + index + `"></div></td>
         <td></td>
-        <td><div class="qr-code" id="dob-qr-` + index + `"></div></td>
+        <td><div class="qr-code" id="dob-qr-` + index + `"></div>
+        <div class="qr-code single-qr" id="single-qr-` + index + `"></div>
+        </td>
     </tr>
     <tr>
         
@@ -278,6 +293,7 @@ function genFullPageHTML(patient, index, keys,batchNumber,vaccineType) {
         <td></td>
     </tr>
 </table>
+
 
 <table class="table table-bordered">
     <tr>

@@ -53,28 +53,41 @@
                 <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 33%;" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             <h2>How do you want the list to look?</h2>
-            <table>
-                <tbody>
-                    <tr>
-                        <td><img src="img/demo.jpg"
-                                alt="" /></td>
-                        <td><img src="img/demo_full1.jpg"
-                                alt="" /></td>
-                                <td><img src="img/demo_sticker.jpg"
-                                    alt="" /></td>
-                    </tr>
-                    <tr>
-                        <td><button type="button" class="btn btn-primary" id="small-qr">Small QR Slips</button></td>
-                        <td><button type="button" class="btn btn-primary" id="full-page">Full Page Form</button></td>
-                        <td><button type="button" class="btn btn-primary" id="sticker">Patient Stickers</button><br><i>To use on patient vaccine record cards.</i></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
+              <div class="row text-center">
+            <div class="col-sm-4">
+                <p><img src="img/demo.jpg"/></p>
+                <p><button type="button" class="btn btn-primary" id="small-qr">Small QR Slips</button></p>
+            </div>
+            <div class="col-sm-4">
+                <p><img src="img/demo_full1.jpg"/></p>
+                <p><button type="button" class="btn btn-primary" id="full-page">Full Page Form</button></p>
+            </div>
+            <div class="col-sm-4">
+                <p><img src="img/demo_sticker.jpg"/></p>
+                <p><button type="button" class="btn btn-primary" id="sticker">Patient Stickers</button><br>
+                    <i>To use on patient vaccine record cards.</i></p>
+            </div>
+        </div>
+
+            <div class="card">
+                <div class="card-body">
+            <p><span style="color:red">Beta Testing Option</span></p>
+            <p>The single QR option is slightly more tricky to use, but could save more time. <a href="https://youtu.be/18Ch_6xFHbo#t=39">This video</a> demonstrates how ti can be used.</p>
+            <p>This is very much in testing mode at the moment, for a busy clinic, I suggest sticking to the default option.</p>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="qr-type-two" checked>
+                <label class="form-check-label" for="qr-type-two">
+                  2 QR codes for DOB and NHS number (default)
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="flexRadioDefault" id="qr-type-single">
+                <label class="form-check-label" for="qr-type-single">
+                    Single QR Code to use with Powershell
+                </label>
+              </div>
+            </div>
+            </div>
         </div>
         <div id="page-2a">
             <div class="progress mb-3">
@@ -184,6 +197,7 @@
             $("#page-2a").fadeIn();
             formStyle = 'sticker'
         });
+
         $("#continue").click(function () {
             $("#page-2a").hide();
             $("#page-3").fadeIn();
@@ -210,8 +224,9 @@
         }
 
         $("#filename").change(function (e) {
-
-
+            var type="two";
+            if($('#qr-type-single').is(':checked')) { type="single"; }
+            
             var ext = $("input#filename").val().split(".").pop().toLowerCase();
             if ($.inArray(ext, ["csv"]) == -1) {
                 generateAlert('Error: The file type is not CSV.', '#page-4')
@@ -240,7 +255,7 @@
                     }
                     $("#patient-list").append(fullhtml);
 
-                    genQRCodes(csvResult, keys);
+                    genQRCodes(csvResult, keys,type);
                     window.print();
                 };
                 reader.readAsText(e.target.files.item(0));
