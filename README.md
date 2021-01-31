@@ -25,5 +25,9 @@ Looking up patients in Outcomes4Health takes so long many vaccine sites are pre-
  - Print out the patient slips
  - Use barcode scanners to scan DOB and NHS number into Outcomes4Health
 
+## Pinnacle Auto Entry
+
+[Here is another ](PINNACLE-AUTOENTRY.md) guide to automating Pinnacle a little furhter.
+
 ## IG and Security
 No data is transferred anywhere when using this tool, all the process is done in your web browser. The tool uses some open source libraries to work. Using the tool is entirely at your own risk.
