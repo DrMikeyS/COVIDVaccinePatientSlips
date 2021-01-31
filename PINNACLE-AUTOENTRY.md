@@ -12,7 +12,7 @@ Using software built into windows called "Powershell", you send the computer som
 4. Open up Powershell (Start Menu->Type "Powershell") and paste the code below into it (CTRL+V)
 5. Watch as the boxes tick themselves
 
-## Powershell Code
+## Smple Powershell Code
 The code below automatically selects that the patient is not a Care Worker/Carer etc. and is "White British". Clearly you need to adjust the boxes if that is not the case.
 ```vb
 Add-Type -AssemblyName System.Windows.Forms;[System.Windows.Forms.SendKeys]::SendWait('%{TAB}');$ws = New-Object -ComObject wscript.shell;sleep -s 1;$ws.SendKeys(" ");sleep -s 4;$ws.SendKeys("{TAB}{TAB} ");sleep -s 1;$ws.SendKeys("{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{LEFT}{TAB}{TAB}{TAB}{LEFT}");sleep -s 1;$ws.SendKeys("{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB} {TAB}{TAB} {TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB} {TAB} {TAB} {TAB}{TAB}{TAB} {TAB}{TAB} {TAB} ");
