@@ -1,5 +1,5 @@
 # Pinnacle Auto Entry
-##Background
+## Background
 Ticking boxes in Pinnacle is laborious in the vaccine clinics. This apporach offers a method to automatically tick the boxes.
 
 ## How it works
