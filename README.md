@@ -16,7 +16,7 @@ Looking up patients in Outcomes4Health takes so long many vaccine sites are pre-
 ##  Testing
 There is a [dummy patient csv](https://raw.githubusercontent.com/DrMikeyS/COVIDVaccinePatientSlips/main/dummy-patient-list.csv) file you can download here to try it.
 
-## Run On You Computer
+## Run On Your Computer
 
  - [Download](https://github.com/DrMikeyS/COVIDVaccinePatientSlips/archive/main.zip) the file package
  - Open "index.html" in Chrome, Firefox or Safari 
