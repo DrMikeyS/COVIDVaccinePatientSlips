@@ -13,9 +13,8 @@ Looking up patients in Outcomes4Health takes so long many vaccine sites are pre-
 ## Video Demo
 [See this video](https://www.youtube.com/watch?v=pA-5K7eZB7Q) for how the process works in detail. 
 
-##  Web Version (for testing)
-
-[Use the web based version](https://durhamstudenthealth.co.uk/qr) of the system to test the tool. There is a [dummy patient csv](https://raw.githubusercontent.com/DrMikeyS/COVIDVaccinePatientSlips/main/dummy-patient-list.csv) file you can download here to try it.
+##  Testing
+There is a [dummy patient csv](https://raw.githubusercontent.com/DrMikeyS/COVIDVaccinePatientSlips/main/dummy-patient-list.csv) file you can download here to try it.
 
 ## Run On You Computer
 
