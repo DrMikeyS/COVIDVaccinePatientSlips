@@ -19,7 +19,7 @@ There is a [dummy patient csv](https://raw.githubusercontent.com/DrMikeyS/COVIDV
 ## Run On Your Computer
 
  - [Download](https://github.com/DrMikeyS/COVIDVaccinePatientSlips/archive/main.zip) the file package
- - Extract the zip file
+ - Extract the zip file (right click on the file->Extract All). This step is very important as it will not run if opened from double clicking on the zip file.
  - Open "index.html" in Chrome, Firefox or Safari 
  - Follow the on-screen instructions
  - Print out the patient slips
