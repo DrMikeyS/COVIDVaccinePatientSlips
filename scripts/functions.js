@@ -163,6 +163,8 @@ function genPatientStickersHTML(csvResult, keys,batchNumber,vaccineType) {
 function genPatientSlipSegmentHTML(csvResult, keys) {
     var i = 0;
     var fullhtml = '';
+    bookingText = ``;
+    bookingQR = ``;
     
     csvResult.forEach(function (patient, index) {
         if(!patient[keys['name']]){
@@ -173,7 +175,7 @@ function genPatientSlipSegmentHTML(csvResult, keys) {
         } else {
             start = '';
         }
-        if (i == 3) {
+        if (i == 7) {
             end = `</div><div class="page-break-clear"></div><div class="page-break">&nbsp;</div>`;
             i = 0;
         } else {
@@ -188,6 +190,11 @@ function genPatientSlipSegmentHTML(csvResult, keys) {
         if (patient.StartTime !== undefined) {
             sessiontime=patient.StartTime;
         }
+        if(csvResult[0].bookingNumber!== undefined){
+            bookingText = `<td>BookingNo: ` + patient.bookingNumber + `</td>`;
+            bookingQR = `<td><div class="qr-code" id="booking-qr-` + index + `"></div></td>`;
+        }
+
         html = start + `<div class="col-print-6">
           <h1>` + patient[keys['name']] + `</h1>
           <p>Session Date: ` + sessiondate + `</p>
@@ -196,10 +203,12 @@ function genPatientSlipSegmentHTML(csvResult, keys) {
           <tr>
           <td>DOB: ` + formatDate(patient[keys['dob']]) + `</td>
           <td>NHS: ` + patient[keys['nhsno']] + `</td>
+          `+bookingText+`
           </tr>
           <tr>
           <td><div class="qr-code" id="dob-qr-` + index + `"></div></td>
           <td><div class="qr-code" id="nhs-qr-` + index + `"></div></td>
+          `+bookingQR+`
           </tr>
           </table>
           <div class="qr-code single-qr" id="single-qr-` + index + `"></div>
@@ -215,20 +224,18 @@ function genQRCodes(csvResult, keys,type) {
             return; //exit loop if no DOB
         }
         //Generate double QR style
-        if(type=="two"){
         $('#dob-qr-' + index).qrcode({
             text: formatDate(patient[keys['dob']])
         });
         $('#nhs-qr-' + index).qrcode({
             text: patient[keys['nhsno']]
-        });}else if(type=="single"){
-            //Generate single QR style
-            const POWERSHELL_SCRIPT_2 =
-        `$ws = New-Object -ComObject wscript.shell;$ws.SendKeys('%{TAB}');sleep -s 1;For($i=1;$i-le12;$i++){$ws.SendKeys(@{TAB}@)};$ws.SendKeys(@ @);For($i=1;$i-le5;$i++){$ws.SendKeys(@{TAB}@)};$ws.SendKeys(@` + formatDate(patient[keys['dob']]) + `{TAB}` +patient[keys['nhsno']] + `{TAB} @);sleep -s 3;$ws.SendKeys(@{TAB}{TAB} @);sleep -s 1;$ws.SendKeys(@{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{TAB}{LEFT}{TAB}{TAB}{TAB}{LEFT}@);`;
-        $(".single-qr").css('display', 'block');
-        $('#single-qr-' + index).qrcode({
-            text: POWERSHELL_SCRIPT_2
-        });}
+        });
+        if(type=="three"){
+            $('#booking-qr-' + index).qrcode({
+                text: patient.bookingNumber
+            });
+        }
+
     });
 }
 

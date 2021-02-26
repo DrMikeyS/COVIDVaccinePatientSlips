@@ -24,7 +24,7 @@
         <div id="page-1">
             <h1>COVID Vaccine QR Generator</h1>
             <p>A free tool that allows you to convert a CSV list of patients into a printable pack of patient slips to make using Pinnacle a breeze.</p>
-
+            <p><i>Release Version: 26 Feb 2021</i></p>
             <p><button type="button" class="btn btn-primary btn-block my-4" id="get-started">Get Started</button></p>
 
             <div class="card">
@@ -70,25 +70,7 @@
             </div>
         </div>
 
-            <div class="card">
-                <div class="card-body">
-            <p><span style="color:red">Beta Testing Option</span></p>
-            <p>The single QR option is slightly more tricky to use, but could save more time. <a href="https://youtu.be/18Ch_6xFHbo#t=39">This video</a> demonstrates how ti can be used.</p>
-            <p>This is very much in testing mode at the moment, for a busy clinic, I suggest sticking to the default option.</p>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="qr-type-two" checked>
-                <label class="form-check-label" for="qr-type-two">
-                  2 QR codes for DOB and NHS number (default)
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="flexRadioDefault" id="qr-type-single">
-                <label class="form-check-label" for="qr-type-single">
-                    Single QR Code to use with Powershell
-                </label>
-              </div>
-            </div>
-            </div>
+          
         </div>
         <div id="page-2a">
             <div class="progress mb-3">
@@ -144,6 +126,7 @@
                                     <th>Name</th>
                                     <th>NHS Number</th>
                                     <th>Date Of Birth</th>
+                                    <th>bookingNumber*</th>
                                     <th>StartTime*</th>
                                     <th>SessionDate*</th>
                                     </tr>
@@ -151,13 +134,14 @@
                                         <td>Bloggs, Joe</td>
                                         <td>123 456 1234</td>
                                         <td>12/01/1956</td>
+                                        <td>123456</td>
                                         <td>18:30</td>
                                         <td>08/01/2021</td>
                                     </tr>
                         </table>
                     </p>
                     <p>*Optional</p>
-                    <p>All fields except "StartTime" and "SessionDate" will be soft matched. This means the column names or date formats do not need to be exactly as above. Dates can be in any format.</p>
+                    <p>All fields except "StartTime", "SessionDate" and "bookingNumber" will be soft matched. This means the column names or date formats do not need to be exactly as above. Dates can be in any format.</p>
                 <p>Additional fields can be included but will be ignored.</p>    
                 </div>
                     </div>
@@ -232,7 +216,7 @@
         }
 
         $("#filename").change(function (e) {
-            var type="two";
+            var type="";
             if($('#qr-type-single').is(':checked')) { type="single"; }
             
             var ext = $("input#filename").val().split(".").pop().toLowerCase();
@@ -256,9 +240,11 @@
                     if (formStyle == 'full-page') {
                         var fullhtml = genFormHTML(csvResult, keys,batchNumber,vaccineType);
                     } else if(formStyle == 'sticker'){
-                        
                         var fullhtml = genPatientStickersHTML(csvResult, keys,batchNumber,vaccineType);
                     }else{
+                        if(csvResult[0].bookingNumber!== undefined){
+                            type="three"; //include booking number
+                        }
                         var fullhtml = genPatientSlipSegmentHTML(csvResult, keys);
                     }
                     $("#patient-list").append(fullhtml);
