@@ -1,81 +1,92 @@
 .col-print-6 {
-    width: 50%;
-    float: left;
-    height: 350px;
+  width: 50%;
+  float: left;
+  height: 350px;
 }
 
 .page-break-clear {
-    clear: both;
+  clear: both;
 }
 
 .page-break {
-    page-break-after: always;
-    /* depreciating, use break-after */
-    break-after: page;
-    height: 0px;
-    display: block !important;
+  page-break-after: always;
+  /* depreciating, use break-after */
+  break-after: page;
+  height: 0px;
+  display: block !important;
 }
 
 .qr-code canvas {
-    margin: 0 auto;
-    width: 100px;
-    height: 100px;
+  margin: 0 auto;
+  width: 100px;
+  height: 100px;
 }
-.single-qr{
-    text-align:center;
-    display:none;
+.single-qr {
+  text-align: center;
+  display: none;
 }
-
-
 
 table {
-    text-align: center;
-    width: 100%;
+  text-align: center;
+  width: 100%;
 }
 
 html,
 body {
-    height: 100%
+  height: 100%;
 }
 
-.vaccine-form table{
-    text-align: left;
+.vaccine-form table {
+  text-align: left;
 }
 
-#page-2,#page-3,#page-4, #page-2a{
-    display:none;
+#page-2,
+#page-3,
+#page-4,
+#page-2a,
+#page-2b {
+  display: none;
 }
 
 /*Stickers page*/
-.stickers{
-    margin-top:8px;
+.stickers {
+  margin-top: 8px;
 }
 .stickers .qr-code canvas {
-    width: 40px;
-    height: 40px;
+  width: 40px;
+  height: 40px;
 }
 
-.stickers html{
-    font-size:0.8em;
+.stickers html {
+  font-size: 0.8em;
 }
 
-.patientName{
-    font-weight:bold;
-    margin-bottom:0;
-    padding-top:10px;
+.patientName {
+  font-weight: bold;
+  margin-bottom: 0;
+  padding-top: 10px;
 }
 .stickers .col-sm-4 {
-    padding-left: 30px;
-    height: 265px;
-    max-height: 265px;
+  padding-left: 30px;
+  height: 265px;
+  max-height: 265px;
 }
-.sticker-qrs{
-    margin-top:8px;
-    font-size: 0.8em;
+.sticker-qrs {
+  margin-top: 8px;
+  font-size: 0.8em;
 }
-.second-dose{
-    text-align: left;
+.second-dose {
+  text-align: left;
 }
-.semi-bold{
-    font-weight: 500;
+.semi-bold {
+  font-weight: 500;
+}
+
+#second-dose-labels {
+  margin-top: 37px;
+}
+.tiny-stickers .col {
+  margin-right: 13px;
+  font-size: 0.6em;
+  height: 53.35px;
 }
