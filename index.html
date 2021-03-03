@@ -15,7 +15,6 @@
 
     <!--Custom scripts-->
     <link rel="stylesheet" href="scripts/style.css">
-    <script src="scripts/helperFunctions.js"></script>
     <script src="scripts/functions.js"></script>
 </head>
 
@@ -25,7 +24,7 @@
         <div id="page-1">
             <h1>COVID Vaccine QR Generator</h1>
             <p>A free tool that allows you to convert a CSV list of patients into a printable pack of patient slips to make using Pinnacle a breeze.</p>
-            <p><i>Release Version: Dev Branch</i></p>
+            <p><i>Release Version: 3 March 2021</i></p>
             <p><button type="button" class="btn btn-primary btn-block my-4" id="get-started">Get Started</button></p>
 
             <div class="card">
@@ -56,29 +55,23 @@
               </div>
             <h2>How do you want the list to look?</h2>
               <div class="row text-center">
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                 <p><img src="img/demo.jpg"/></p>
                 <p><button type="button" class="btn btn-primary" id="small-qr">Small QR Slips</button></p>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                 <p><img src="img/demo_full1.jpg"/></p>
                 <p><button type="button" class="btn btn-primary" id="full-page">Full Page Form</button></p>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                 <p><img src="img/demo_sticker.jpg"/></p>
                 <p><button type="button" class="btn btn-primary" id="sticker">Patient Stickers</button><br>
                     <i>To use on patient vaccine record cards.</i></p>
-            </div>
-            <div class="col-sm-3">
-                <p></p>
-                <p><button type="button" class="btn btn-primary" id="second-dose-labels">Second Dose Labels</button><br>
-                    <i>Tiny stickers to apply to patients who bring their first card.</i></p>
             </div>
         </div>
 
           
         </div>
-
         <div id="page-2a">
             <div class="progress mb-3">
                 <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 66%;" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
@@ -94,41 +87,8 @@
                 <option>AstraZeneca</option>
               </select></p>
             <p><label for="batch-number">Batch Number</label><input type="text" class="form-control" id="batch-number" placeholder="Batch Number"></p>
-            <p><div class="form-check">
-                <input class="form-check-input" type="radio" name="doseNumber" id="firstDose" checked>
-                <label class="form-check-label" for="firstDose">
-                  First Dose
-                </label><br> 
-                <input class="form-check-input" type="radio" name="doseNumber" id="secondDose">
-                <label class="form-check-label" for="secondDose">
-                  Second Dose
-                </label><br> 
-                <input class="form-check-input" type="radio" name="doseNumber" id="unspecifiedDose">
-                <label class="form-check-label" for="unspecifiedDose">
-                  Unspecified Dose (you can circle on sticker)
-                </label>
-              </div></p>
             <p><button type="button" class="btn btn-primary btn-block" id="continue">Continue</button></p>
         </div>
-
-        <div id="page-2b">
-            <div class="progress mb-3">
-                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 66%;" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
-              </div>
-              <p></p>
-            <h2>Information for the labels</h2>
-            <div class="alert alert-info" role="alert">
-                These fields can be left blank if desired.
-                <br>
-                    The system is designed to fit <a href="https://www.amazon.co.uk/gp/product/B000J6D39U/ref=ppx_yo_dt_b_asin_title_o01_s00?ie=UTF8&psc=1">these Avery J8658-25 tiny labels</a>.
-
-              </div>
-            <p><label for="batch-number-2b">Batch Number</label><input type="text" class="form-control" id="batch-number-2b" placeholder="Batch Number"></p>
-            <p><label for="session-date">Session Date</label><input type="text" class="form-control" id="session-date" placeholder="Session Date"></p>
-            <p><button type="button" class="btn btn-primary btn-block" id="continue-2b">Continue</button></p>
-        </div>
-
-
         <div id="page-3">
             <div class="progress mb-3">
                 <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 66%;" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
@@ -181,9 +141,8 @@
                         </table>
                     </p>
                     <p>*Optional</p>
-                    <p>All fields except "Name", "StartTime", "SessionDate" and "bookingNumber" will be soft matched. This means the column names or date formats do not need to be exactly as above. Dates can be in any format.</p>
+                    <p>All fields except "StartTime", "SessionDate" and "bookingNumber" will be soft matched. This means the column names or date formats do not need to be exactly as above. Dates can be in any format.</p>
                 <p>Additional fields can be included but will be ignored.</p>    
-                <p>If you are manually creating a CSV file rather than exporting from Accubook, it is best to use the dummy CSV file from the ZIP as a starting point.</p>
                 </div>
                     </div>
         </div>
@@ -231,23 +190,9 @@
             formStyle = 'sticker'
         });
 
-        $("#second-dose-labels").click(function () {
-            $("#page-2").hide();
-            $("#page-2b").show();
-            formStyle = 'second-dose-labels'
-        });
-
-        $("#continue-2b").click(function () {
-            batchNumber = $("#batch-number-2b").val();
-            sessionDate = $("#session-date").val();
-            $("#input-modal").hide();
-            $("#page-2b").hide();
-            $("#patient-list").append(generateSecondDoseLabels());
-        });
-
         $("#continue").click(function () {
-                $("#page-2a").hide();
-                $("#page-3").fadeIn();
+            $("#page-2a").hide();
+            $("#page-3").fadeIn();
         });
 
         $("#no-sort").click(function () {
@@ -270,12 +215,9 @@
             $(elementToAppendTo).prepend(alertHTML);
         }
 
-        //GLOBALS
-        var batchNumber,vaccineType,doseNumber=1,keys,type="",sessionDate;
-
         $("#filename").change(function (e) {
-            if($('#secondDose').is(':checked')) { doseNumber=2; }else 
-            if($('#unspecifiedDose').is(':checked')) { doseNumber=3; }
+            var type="";
+            if($('#qr-type-single').is(':checked')) { type="single"; }
             
             var ext = $("input#filename").val().split(".").pop().toLowerCase();
             if ($.inArray(ext, ["csv"]) == -1) {
@@ -288,26 +230,26 @@
                 reader.onload = function (e) {
                     csvResult = e.target.result;
                     csvResult = $.csv.toObjects(csvResult);
-                    keys = identifyCSVKeys(csvResult);
-                    batchNumber = $("#batch-number").val();
-                    vaccineType = $("select#vaccine-type option:checked").val();
+                    var keys = identifyCSVKeys(csvResult);
+                    var batchNumber = $("#batch-number").val();
+                    var vaccineType = $("select#vaccine-type option:checked").val();
 
                     if (sortAlphabetically) {
                         csvResult = sortAlphabetical(csvResult);
                     }
                     if (formStyle == 'full-page') {
-                        var fullhtml = genFormHTML();
+                        var fullhtml = genFormHTML(csvResult, keys,batchNumber,vaccineType);
                     } else if(formStyle == 'sticker'){
-                        var fullhtml = genPatientStickersHTML();
+                        var fullhtml = genPatientStickersHTML(csvResult, keys,batchNumber,vaccineType);
                     }else{
                         if(csvResult[0].bookingNumber!== undefined){
-                            type="incBookingNumber"; //include booking number
+                            type="three"; //include booking number
                         }
-                        var fullhtml = genPatientSlipSegmentHTML();
+                        var fullhtml = genPatientSlipSegmentHTML(csvResult, keys);
                     }
                     $("#patient-list").append(fullhtml);
 
-                    genQRCodes();
+                    genQRCodes(csvResult, keys,type);
                     window.print();
                 };
                 reader.readAsText(e.target.files.item(0));
