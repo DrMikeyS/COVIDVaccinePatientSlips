@@ -1,108 +1,4 @@
-//Warn user if using IE
-var isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
-if (isIE11) {
-    alert('This system does not work with Internet Explorer. Please use Google Chrome or Firefox.')
-}
-
-
-//Format date into the pinnacle format
-function getMonthFromString(mon) {
-    return new Date(Date.parse(mon + " 1, 2012")).getMonth() + 1
-}
-
-function formatDate(dateString) {
-    if (dateString.includes('-')) {
-        var splitDate = dateString.split('-');
-    } else if (dateString.includes('.')) {
-        var splitDate = dateString.split('.');
-    } else if (dateString.includes('/')) {
-        var splitDate = dateString.split('/');
-    }
-    //Seperate out month and year
-    var month = splitDate[1];
-    var year = splitDate[2];
-    if(year.length==2){
-    	year = '19'+year;
-    }
-    //Convert text month to int
-    var regExp = /[a-zA-Z]/g;
-    if (regExp.test(month)) {
-        month = getMonthFromString(month)
-    }
-    month = month - 1 //Javascript months are 0-11
-    var fomattedDate = new Date()
-    fomattedDate.setFullYear(year)
-    fomattedDate.setMonth(month)
-    fomattedDate.setDate(splitDate[0])
-    
-    return fomattedDate.toLocaleDateString(
-        'en-gb', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric'
-        }
-    ).replace(/ /g, '-').replace("Sept", "Sep")
-}
-
-//Sort list of patients alphabetically
-function sortAlphabetical(objArray) {
-    function compare(a, b) {
-        if (a.Name.toLowerCase() < b.Name.toLowerCase()) {
-            return -1;
-        }
-        if (a.Name.toLowerCase() > b.Name.toLowerCase()) {
-            return 1;
-        }
-        return 0;
-    }
-
-    objArray.sort(compare);
-    return objArray;
-}
-
-//Identify the column names
-function identifyCSVKeys(CSVArray) {
-    var keys = Object.keys(CSVArray[0]);
-    var nhsno_key, dob_key, name_key,address_key;
-    keys.forEach(function (key) {
-        lkey = key.toLowerCase();
-        if (lkey.includes('nhs')) {
-            nhsno_key = key;
-        }
-        if (lkey.includes('address')) {
-            if(lkey.includes('organisation')){}else
-            if(lkey.includes('organization')){}else
-            if(lkey.includes('practice')){}else
-            if(lkey.includes('pcn')){}else{
-                address_key = key;
-            }
-        }
-        if (lkey.includes('dob')) {
-            dob_key = key;
-        } else if (lkey.includes('birth')) {
-            dob_key = key;
-        }
-        if (lkey.includes('name')) {
-            //do not include if the column name has a "name" that is referencing something other than patient
-            if(lkey.includes('organisation')){}else
-            if(lkey.includes('organization')){}else
-            if(lkey.includes('practice')){}else
-            if(lkey.includes('first')){}else
-            if(lkey.includes('sur')){}else
-            if(lkey.includes('pcn')){}else{
-            name_key = key;
-        }
-        }
-    });
-    return {
-        dob: dob_key,
-        name: name_key,
-        nhsno: nhsno_key,
-        address: address_key
-    };
-}
-
-function genPatientStickersHTML(csvResult, keys,batchNumber,vaccineType) {
+function genPatientStickersHTML() {
     var i = 0;
     var fullhtml = '';
     
@@ -130,19 +26,53 @@ function genPatientStickersHTML(csvResult, keys,batchNumber,vaccineType) {
         if (patient.StartTime !== undefined) {
             sessiontime=patient.StartTime;
         }
+        if(doseNumber==1){
+            doseHTML = `
+            <span class="semi-bold">First Dose</span>:  ` + sessiondate + ` ` + sessiontime + ` 
+            <br>Batch: `+batchNumber+`
+            <table class="second-dose">
+                <tr>
+                    <td colspan="2" class="semi-bold">Second Dose </td>
+                </tr>
+                <tr>
+                    <td>Date:</td>
+                    <td>Batch:</td>
+                </tr>
+            </table>`
+        }else if(doseNumber==2){
+            doseHTML = `
+            <table class="second-dose">
+                <tr>
+                    <td colspan="2" class="semi-bold">First Dose </td>
+                </tr>
+                <tr>
+                    <td>Date:</td>
+                    <td>Batch:</td>
+                </tr>
+            </table>
+            <span class="semi-bold">Second Dose</span>:  ` + sessiondate + ` ` + sessiontime + ` 
+            <br>Batch: `+batchNumber+`
+            `
+        }else{
+            doseHTML = `
+            <span class="semi-bold">Dose Given</span>:  ` + sessiondate + ` ` + sessiontime + ` 
+            <br>Batch: `+batchNumber+`
+            <table class="text-left">
+                <tr>
+                <td><strong>Dose:</strong></td>
+                    <td>First</td>
+                    <td>Second</td>
+                </tr>
+            </table>
+            `
+        }
+
+
         html = start + `<div class="col-sm-4">
           <p class="patientName">` + patient[keys['name']] + `</p>
-          Vaccine Type: <strong>`+vaccineType+`</strong><br>
-          <span class="semi-bold">First Dose</span>:  ` + sessiondate + ` ` + sessiontime + ` <br>Batch: `+batchNumber+`
-          <table class="second-dose">
-          <tr>
-          <td colspan="2" class="semi-bold">Second Dose </td>
-            </tr>
-            <tr>
-            <td>Date:</td>
-            <td>Batch:</td>
-            </tr></table>
-          <table class="sticker-qrs">
+          Vaccine Type: <strong>`+vaccineType+`</strong><br>`
+          +doseHTML+
+          `<table class="sticker-qrs">
           <tr>
           <td>DOB:` + formatDate(patient[keys['dob']]) + `</td>
           <td>NHS No:` + patient[keys['nhsno']] + `</td>
@@ -160,7 +90,7 @@ function genPatientStickersHTML(csvResult, keys,batchNumber,vaccineType) {
 }
 
 
-function genPatientSlipSegmentHTML(csvResult, keys) {
+function genPatientSlipSegmentHTML() {
     var i = 0;
     var fullhtml = '';
     bookingText = ``;
@@ -218,41 +148,22 @@ function genPatientSlipSegmentHTML(csvResult, keys) {
     return fullhtml;
 }
 
-function genQRCodes(csvResult, keys,type) {
-    csvResult.forEach(function (patient, index) {
-        if(!patient[keys['dob']]){
-            return; //exit loop if no DOB
-        }
-        //Generate double QR style
-        $('#dob-qr-' + index).qrcode({
-            text: formatDate(patient[keys['dob']])
-        });
-        $('#nhs-qr-' + index).qrcode({
-            text: patient[keys['nhsno']]
-        });
-        if(type=="three"){
-            $('#booking-qr-' + index).qrcode({
-                text: patient.bookingNumber
-            });
-        }
 
-    });
-}
-
-function genFormHTML(csvResult, keys,batchNumber,vaccineType) {
+//Form
+function genFormHTML() {
     var fullhtml = '';
     csvResult.forEach(function (patient, index) {
         if(!patient[keys['name']]){
             return;
         }
-        html = genFullPageHTML(patient, index, keys,batchNumber,vaccineType);
+        html = genFullPageHTML(patient, index);
         fullhtml = fullhtml + html;
     });
     return fullhtml;
 }
 
-
-function genFullPageHTML(patient, index, keys,batchNumber,vaccineType) {
+//FullPage
+function genFullPageHTML(patient, index) {
     var address='';
     if (patient[keys['address']] !== undefined) {
         address=patient[keys['address']];
@@ -414,3 +325,38 @@ function genFullPageHTML(patient, index, keys,batchNumber,vaccineType) {
     </div>
     <div class="page-break-clear"></div><div class="page-break">&nbsp;</div>`;
 }
+
+//QR Generator
+function genQRCodes() {
+    csvResult.forEach(function (patient, index) {
+        if(!patient[keys['dob']]){
+            return; //exit loop if no DOB
+        }
+        //Generate double QR style
+        $('#dob-qr-' + index).qrcode({
+            text: formatDate(patient[keys['dob']])
+        });
+        $('#nhs-qr-' + index).qrcode({
+            text: patient[keys['nhsno']]
+        });
+        if(type=="incBookingNumber"){
+            $('#booking-qr-' + index).qrcode({
+                text: patient.bookingNumber
+            });
+        }
+
+    });
+}
+
+function generateSecondDoseLabels() {
+    html = `<div id="second-dose-labels"><div class="position-fixed" style="top: 0;left: 30%;">Print using "A4" paper size in Chrome</div>`;
+    var i,j;
+    for (i = 0; i < 27; i++) {
+      html = html + `<div class="row tiny-stickers">`;
+      for (j = 0; j < 7; j++) {
+        html = html +  `<div class="col"><strong>Second Dose</strong><br>Date: `+sessionDate+` <br>Batch: `+batchNumber+`</div>`
+      }
+      html = html + `</div></div>`;
+    }
+    return html;
+  }
