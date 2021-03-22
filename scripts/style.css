@@ -4,6 +4,11 @@
   height: 350px;
 }
 
+.col-print-6 .under-18{
+	font-size: 0.9rem;
+	font-weight: bold;
+}
+
 .page-break-clear {
   clear: both;
 }
@@ -66,6 +71,13 @@ body {
   margin-bottom: 0;
   padding-top: 10px;
 }
+
+.stickers .under-18{
+	font-size: 0.9rem;
+	font-weight: bold;
+	margin-bottom: 0;
+}
+
 .stickers .col-sm-4 {
   padding-left: 30px;
   height: 265px;
