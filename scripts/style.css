@@ -4,9 +4,9 @@
   height: 350px;
 }
 
-.col-print-6 .under-18{
-	font-size: 0.9rem;
-	font-weight: bold;
+.col-print-6 .under-18 {
+  font-size: 0.9rem;
+  font-weight: bold;
 }
 
 .page-break-clear {
@@ -26,6 +26,7 @@
   width: 100px;
   height: 100px;
 }
+
 .single-qr {
   text-align: center;
   display: none;
@@ -57,7 +58,9 @@ body {
 .stickers {
   margin-top: 8px;
 }
-.stickers .qr-code canvas {
+
+.stickers .qr-code canvas,
+.full-clinic-list .qr-code canvas {
   width: 40px;
   height: 40px;
 }
@@ -72,10 +75,10 @@ body {
   padding-top: 10px;
 }
 
-.stickers .under-18{
-	font-size: 0.9rem;
-	font-weight: bold;
-	margin-bottom: 0;
+.stickers .under-18 {
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-bottom: 0;
 }
 
 .stickers .col-sm-4 {
@@ -83,13 +86,16 @@ body {
   height: 265px;
   max-height: 265px;
 }
+
 .sticker-qrs {
   margin-top: 8px;
   font-size: 0.8em;
 }
+
 .second-dose {
   text-align: left;
 }
+
 .semi-bold {
   font-weight: 500;
 }
@@ -97,8 +103,13 @@ body {
 #second-dose-labels {
   margin-top: 37px;
 }
+
 .tiny-stickers .col {
   margin-right: 13px;
   font-size: 0.6em;
   height: 53.35px;
+}
+
+#page-2 #second-dose-labels {
+  margin-top: 0px;
 }

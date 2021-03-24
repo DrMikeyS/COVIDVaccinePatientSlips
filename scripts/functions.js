@@ -1,9 +1,9 @@
 function genPatientStickersHTML() {
     var i = 0;
     var fullhtml = '';
-    
+
     csvResult.forEach(function (patient, index) {
-        if(!patient[keys['name']]){
+        if (!patient[keys['name']]) {
             return;
         }
         if (i == 0) {
@@ -20,21 +20,21 @@ function genPatientStickersHTML() {
         }
         sessiondate = '';
         if (patient.SessionDate !== undefined) {
-            sessiondate=patient.SessionDate;
+            sessiondate = patient.SessionDate;
         }
         sessiontime = '';
         if (patient.StartTime !== undefined) {
-            sessiontime=patient.StartTime;
+            sessiontime = patient.StartTime;
         }
-		age = getAge(patient[keys['dob']]);
-		ageHTML = ""
-		if(age<18){
-		ageHTML = '<p class="under-18">This patient is under 18</p>'
-		}		
-        if(doseNumber==1){
+        age = getAge(patient[keys['dob']]);
+        ageHTML = ""
+        if (age < 18) {
+            ageHTML = '<p class="under-18">This patient is under 18</p>'
+        }
+        if (doseNumber == 1) {
             doseHTML = `
             <span class="semi-bold">First Dose</span>:  ` + sessiondate + ` ` + sessiontime + ` 
-            <br>Batch: `+batchNumber+`
+            <br>Batch: ` + batchNumber + `
             <table class="second-dose">
                 <tr>
                     <td colspan="2" class="semi-bold">Second Dose </td>
@@ -44,7 +44,7 @@ function genPatientStickersHTML() {
                     <td>Batch:</td>
                 </tr>
             </table>`
-        }else if(doseNumber==2){
+        } else if (doseNumber == 2) {
             doseHTML = `
             <table class="second-dose">
                 <tr>
@@ -56,12 +56,12 @@ function genPatientStickersHTML() {
                 </tr>
             </table>
             <span class="semi-bold">Second Dose</span>:  ` + sessiondate + ` ` + sessiontime + ` 
-            <br>Batch: `+batchNumber+`
+            <br>Batch: ` + batchNumber + `
             `
-        }else{
+        } else {
             doseHTML = `
             <span class="semi-bold">Dose Given</span>:  ` + sessiondate + ` ` + sessiontime + ` 
-            <br>Batch: `+batchNumber+`
+            <br>Batch: ` + batchNumber + `
             <table class="text-left">
                 <tr>
                 <td><strong>Dose:</strong></td>
@@ -74,11 +74,11 @@ function genPatientStickersHTML() {
 
 
         html = start + `<div class="col-sm-4">
-          <p class="patientName">` + patient[keys['name']] + `</p>`
-          +ageHTML+
-          `Vaccine Type: <strong>`+vaccineType+`</strong><br>`
-          +doseHTML+
-          `<table class="sticker-qrs">
+          <p class="patientName">` + patient[keys['name']] + `</p>` +
+            ageHTML +
+            `Vaccine Type: <strong>` + vaccineType + `</strong><br>` +
+            doseHTML +
+            `<table class="sticker-qrs">
           <tr>
           <td>DOB:` + formatDate(patient[keys['dob']]) + `</td>
           <td>NHS No:` + patient[keys['nhsno']] + `</td>
@@ -101,9 +101,9 @@ function genPatientSlipSegmentHTML() {
     var fullhtml = '';
     bookingText = ``;
     bookingQR = ``;
-    
+
     csvResult.forEach(function (patient, index) {
-        if(!patient[keys['name']]){
+        if (!patient[keys['name']]) {
             return;
         }
         if (i == 0) {
@@ -120,36 +120,36 @@ function genPatientSlipSegmentHTML() {
         }
         sessiondate = '';
         if (patient.SessionDate !== undefined) {
-            sessiondate=patient.SessionDate;
+            sessiondate = patient.SessionDate;
         }
         sessiontime = '';
         if (patient.StartTime !== undefined) {
-            sessiontime=patient.StartTime;
+            sessiontime = patient.StartTime;
         }
-        if(csvResult[0].bookingNumber!== undefined){
+        if (csvResult[0].bookingNumber !== undefined) {
             bookingText = `<td>BookingNo: ` + patient.bookingNumber + `</td>`;
             bookingQR = `<td><div class="qr-code" id="booking-qr-` + index + `"></div></td>`;
         }
-		age = getAge(patient[keys['dob']]);
-		ageHTML = ""
-		if(age<18){
-		ageHTML = '<h2 class="under-18">This patient is under 18</h2>'
-		}	
+        age = getAge(patient[keys['dob']]);
+        ageHTML = ""
+        if (age < 18) {
+            ageHTML = '<h2 class="under-18">This patient is under 18</h2>'
+        }
         html = start + `<div class="col-print-6">
-          <h1>` + patient[keys['name']] + `</h1>`
-          +ageHTML+
-          `<p>Session Date: ` + sessiondate + `</p>
+          <h1>` + patient[keys['name']] + `</h1>` +
+            ageHTML +
+            `<p>Session Date: ` + sessiondate + `</p>
           <p>Session Time: ` + sessiontime + `</p>
           <table>
           <tr>
           <td>DOB: ` + formatDate(patient[keys['dob']]) + `</td>
           <td>NHS: ` + patient[keys['nhsno']] + `</td>
-          `+bookingText+`
+          ` + bookingText + `
           </tr>
           <tr>
           <td><div class="qr-code" id="dob-qr-` + index + `"></div></td>
           <td><div class="qr-code" id="nhs-qr-` + index + `"></div></td>
-          `+bookingQR+`
+          ` + bookingQR + `
           </tr>
           </table>
           <div class="qr-code single-qr" id="single-qr-` + index + `"></div>
@@ -164,7 +164,7 @@ function genPatientSlipSegmentHTML() {
 function genFormHTML() {
     var fullhtml = '';
     csvResult.forEach(function (patient, index) {
-        if(!patient[keys['name']]){
+        if (!patient[keys['name']]) {
             return;
         }
         html = genFullPageHTML(patient, index);
@@ -175,27 +175,27 @@ function genFormHTML() {
 
 //FullPage
 function genFullPageHTML(patient, index) {
-    var address='';
+    var address = '';
     if (patient[keys['address']] !== undefined) {
-        address=patient[keys['address']];
+        address = patient[keys['address']];
     }
     var sessiondate = '';
     if (patient.SessionDate !== undefined) {
-        sessiondate=patient.SessionDate;
+        sessiondate = patient.SessionDate;
     }
     var sessiontime = '';
     if (patient.StartTime !== undefined) {
-        sessiontime=patient.StartTime;
+        sessiontime = patient.StartTime;
     }
     var RegisteredPracticeName = '';
     if (patient.RegisteredPracticeName !== undefined) {
-        RegisteredPracticeName=patient.RegisteredPracticeName;
+        RegisteredPracticeName = patient.RegisteredPracticeName;
     }
-	age = getAge(patient[keys['dob']]);
-	ageHTML = ""
-	if(age<18){
-	ageHTML = ' (Under 18)'
-	}    
+    age = getAge(patient[keys['dob']]);
+    ageHTML = ""
+    if (age < 18) {
+        ageHTML = ' (Under 18)'
+    }
 
     return `<div class="vaccine-form"><h1>Vaccine Record Form</h1>
 <table class="table table-bordered">
@@ -224,7 +224,7 @@ function genFullPageHTML(patient, index) {
     <tr>
         
         <td>GP Practice</td>
-        <td>`+RegisteredPracticeName+`</td>
+        <td>` + RegisteredPracticeName + `</td>
         <td></td>
         <td></td>
     </tr>
@@ -311,13 +311,13 @@ function genFullPageHTML(patient, index) {
         </tr>
         <tr>
             <td>Time of Vaccination (24hr)</td>
-            <td>`+sessiontime+`</td>
+            <td>` + sessiontime + `</td>
             <td>Date of Vaccination</td>
             <td>` + sessiondate + `</td>
         </tr>
         <tr>
             <td colspan="2">Vaccine Brand and Batch Number</td>
-            <td colspan="2">`+vaccineType+` `+batchNumber+`</td>
+            <td colspan="2">` + vaccineType + ` ` + batchNumber + `</td>
         </tr>
         <tr>
             <td colspan="2">Administration Site</td>
@@ -344,7 +344,7 @@ function genFullPageHTML(patient, index) {
 //QR Generator
 function genQRCodes() {
     csvResult.forEach(function (patient, index) {
-        if(!patient[keys['dob']]){
+        if (!patient[keys['dob']]) {
             return; //exit loop if no DOB
         }
         //Generate double QR style
@@ -354,7 +354,7 @@ function genQRCodes() {
         $('#nhs-qr-' + index).qrcode({
             text: patient[keys['nhsno']]
         });
-        if(type=="incBookingNumber"){
+        if (type == "incBookingNumber") {
             $('#booking-qr-' + index).qrcode({
                 text: patient.bookingNumber
             });
@@ -365,13 +365,44 @@ function genQRCodes() {
 
 function generateSecondDoseLabels() {
     html = `<div id="second-dose-labels"><div class="position-fixed" style="top: 0;left: 30%;">Print using "A4" paper size in Chrome</div>`;
-    var i,j;
+    var i, j;
     for (i = 0; i < 27; i++) {
-      html = html + `<div class="row tiny-stickers">`;
-      for (j = 0; j < 7; j++) {
-        html = html +  `<div class="col"><strong>Second Dose</strong><br>Date: `+sessionDate+` <br>Batch: `+batchNumber+`</div>`
-      }
-      html = html + `</div></div>`;
+        html = html + `<div class="row tiny-stickers">`;
+        for (j = 0; j < 7; j++) {
+            html = html + `<div class="col"><strong>Second Dose</strong><br>Date: ` + sessionDate + ` <br>Batch: ` + batchNumber + `</div>`
+        }
+        html = html + `</div></div>`;
     }
     return html;
-  }
+}
+
+
+function generateFullClinicList() {
+    var fullhtml = '<div class="full-clinic-list">';
+    bookingText = ``;
+    bookingQR = ``;
+
+    csvResult.forEach(function (patient, index) {
+        if (!patient[keys['name']]) {
+            return;
+        }
+
+        if (csvResult[0].bookingNumber !== undefined) {
+            bookingQR = `<div class="col-3">Bookeing ref:<div class="qr-code" id="booking-qr-` + index + `"></div></div>`;
+        }
+        age = getAge(patient[keys['dob']]);
+        ageHTML = ""
+        if (age < 18) {
+            ageHTML = '<strong> Under 18</strong>'
+        }
+        html = `<div class="row">
+        <div class="col-4">` + patient[keys['name']] + ageHTML + `</div>
+        <div class="col-3 text-right">DOB: ` + formatDate(patient[keys['dob']]) + `</div><div class="col-1"><div class="qr-code" id="dob-qr-` + index + `"></div></div>
+        <div class="col-3 text-right">NHS: ` + patient[keys['nhsno']] + `</div><div class="col-1"><div class="qr-code" id="nhs-qr-` + index + `"></div></div>
+          ` + bookingQR + `
+          </div>`;
+        fullhtml = fullhtml + html;
+    });
+    fullhtml = fullhtml + '</div>';
+    return fullhtml;
+}
