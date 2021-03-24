@@ -37,6 +37,19 @@ function formatDate(dateString) {
     ).replace(/ /g, '-').replace("Sept", "Sep")
 }
 
+//Get age from formatDate
+function getAge(dateString) {
+	var dateString = formatDate(dateString);
+    var today = new Date();
+    var birthDate = new Date(dateString);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
+}
+
 //Sort list of patients alphabetically
 function sortAlphabetical(objArray) {
     function compare(a, b) {

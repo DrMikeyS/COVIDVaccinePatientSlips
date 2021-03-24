@@ -26,6 +26,11 @@ function genPatientStickersHTML() {
         if (patient.StartTime !== undefined) {
             sessiontime=patient.StartTime;
         }
+		age = getAge(patient[keys['dob']]);
+		ageHTML = ""
+		if(age<18){
+		ageHTML = '<p class="under-18">This patient is under 18</p>'
+		}		
         if(doseNumber==1){
             doseHTML = `
             <span class="semi-bold">First Dose</span>:  ` + sessiondate + ` ` + sessiontime + ` 
@@ -69,8 +74,9 @@ function genPatientStickersHTML() {
 
 
         html = start + `<div class="col-sm-4">
-          <p class="patientName">` + patient[keys['name']] + `</p>
-          Vaccine Type: <strong>`+vaccineType+`</strong><br>`
+          <p class="patientName">` + patient[keys['name']] + `</p>`
+          +ageHTML+
+          `Vaccine Type: <strong>`+vaccineType+`</strong><br>`
           +doseHTML+
           `<table class="sticker-qrs">
           <tr>
@@ -124,11 +130,16 @@ function genPatientSlipSegmentHTML() {
             bookingText = `<td>BookingNo: ` + patient.bookingNumber + `</td>`;
             bookingQR = `<td><div class="qr-code" id="booking-qr-` + index + `"></div></td>`;
         }
-
+		age = getAge(patient[keys['dob']]);
+		ageHTML = ""
+		if(age<18){
+		ageHTML = '<h2 class="under-18">This patient is under 18</h2>'
+		}	
         html = start + `<div class="col-print-6">
-          <h1>` + patient[keys['name']] + `</h1>
-          <p>Session Date: ` + sessiondate + `</p>
-            <p>Session Time: ` + sessiontime + `</p>
+          <h1>` + patient[keys['name']] + `</h1>`
+          +ageHTML+
+          `<p>Session Date: ` + sessiondate + `</p>
+          <p>Session Time: ` + sessiontime + `</p>
           <table>
           <tr>
           <td>DOB: ` + formatDate(patient[keys['dob']]) + `</td>
@@ -180,7 +191,11 @@ function genFullPageHTML(patient, index) {
     if (patient.RegisteredPracticeName !== undefined) {
         RegisteredPracticeName=patient.RegisteredPracticeName;
     }
-    
+	age = getAge(patient[keys['dob']]);
+	ageHTML = ""
+	if(age<18){
+	ageHTML = ' (Under 18)'
+	}    
 
     return `<div class="vaccine-form"><h1>Vaccine Record Form</h1>
 <table class="table table-bordered">
@@ -193,7 +208,7 @@ function genFullPageHTML(patient, index) {
     <tr>
         
         <td>DOB</td>
-        <td>` + formatDate(patient[keys['dob']]) + `</td>
+        <td>` + formatDate(patient[keys['dob']]) + ageHTML + `</td>
         <td>NHS No.</td>
         <td>` + patient[keys['nhsno']] + `</td>
     </tr>
