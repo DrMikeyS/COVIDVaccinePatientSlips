@@ -69,7 +69,7 @@ function sortAlphabetical(objArray) {
 //Identify the column names
 function identifyCSVKeys(CSVArray) {
     var keys = Object.keys(CSVArray[0]);
-    var nhsno_key, dob_key, name_key,address_key;
+    var nhsno_key, dob_key, name_key,address_key,firstdose_type,firstdose_batch,firstdose_date;
     keys.forEach(function (key) {
         lkey = key.toLowerCase();
         if (lkey.includes('nhs')) {
@@ -97,13 +97,27 @@ function identifyCSVKeys(CSVArray) {
             if(lkey.includes('sur')){}else
             if(lkey.includes('pcn')){}else{
             name_key = key;
-        }
-        }
+			}
+		}
+		if (lkey.includes('first')) {
+			if (lkey.includes('date')) {
+				firstdose_date = key;
+			}
+			if (lkey.includes('type')) {
+				firstdose_type = key;
+			}
+			if (lkey.includes('batch')) {
+				firstdose_batch = key;
+			}
+		}
     });
     return {
         dob: dob_key,
         name: name_key,
         nhsno: nhsno_key,
-        address: address_key
+        address: address_key,
+		firstdose_batch: firstdose_batch,
+		firstdose_date: firstdose_date,
+		firstdose_type: firstdose_type
     };
 }

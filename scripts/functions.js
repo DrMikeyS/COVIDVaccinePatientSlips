@@ -45,19 +45,37 @@ function genPatientStickersHTML() {
                 </tr>
             </table>`
         } else if (doseNumber == 2) {
-            doseHTML = `
-            <table class="second-dose">
-                <tr>
-                    <td colspan="2" class="semi-bold">First Dose </td>
-                </tr>
-                <tr>
-                    <td>Date:</td>
-                    <td>Batch:</td>
-                </tr>
-            </table>
-            <span class="semi-bold">Second Dose</span>:  ` + sessiondate + ` ` + sessiontime + ` 
-            <br>Batch: ` + batchNumber + `
-            `
+			if (patient[keys['firstdose_batch']] !== "" || patient[keys['firstdose_type']] !== "" || patient[keys['firstdose_date']] !== "") {
+				//First dose infomation in CSV - prepopulate first dose section
+				doseHTML = `
+				<table class="second-dose">
+					<tr>
+						<td colspan="2" class="semi-bold">` + ["First Dose", patient[keys['firstdose_type']]].filter(Boolean).join(" - ") + ` </td>
+					</tr>
+					<tr>
+						<td>Date: ` + patient[keys['firstdose_date']] + `</td>
+						<td>Batch: ` + patient[keys['firstdose_batch']] + `</td>
+					</tr>
+				</table>
+				<span class="semi-bold">Second Dose</span>:  ` + sessiondate + ` ` + sessiontime + ` 
+				<br>Batch: ` + batchNumber + `
+				`
+			}else{
+				//No first dose infomation - print black first dose section
+				doseHTML = `
+				<table class="second-dose">
+					<tr>
+						<td colspan="2" class="semi-bold">First Dose </td>
+					</tr>
+					<tr>
+						<td>Date:</td>
+						<td>Batch:</td>
+					</tr>
+				</table>
+				<span class="semi-bold">Second Dose</span>:  ` + sessiondate + ` ` + sessiontime + ` 
+				<br>Batch: ` + batchNumber + `
+				`
+			}
         } else {
             doseHTML = `
             <span class="semi-bold">Dose Given</span>:  ` + sessiondate + ` ` + sessiontime + ` 
@@ -131,16 +149,50 @@ function genPatientSlipSegmentHTML() {
             bookingQR = `<td><div class="qr-code" id="booking-qr-` + index + `"></div></td>`;
         }
         age = getAge(patient[keys['dob']]);
-        ageHTML = ""
+        ageHTML = "";
         if (age < 18) {
             ageHTML = '<h2 class="under-18">This patient is under 18</h2>'
         }
+		firstdoselabels = "";
+		firstdosedetails = "";
+		if (patient[keys['firstdose_batch']] !== "" || patient[keys['firstdose_type']] !== "" || patient[keys['firstdose_date']] !== "") {
+			//First dose details in CSV
+			
+			//Start table rows
+            firstdoselabels = '<tr class="table_left"><td>';
+			firstdosedetails = '<tr class="table_left"><td>';
+							
+			if(patient[keys['firstdose_type']] !== "" || patient[keys['firstdose_batch']] !== ""){
+			//If first dose type or batch exists then add to first column	
+            firstdoselabels = firstdoselabels + 'First Dose:';
+			firstdosedetails = firstdosedetails + [patient[keys['firstdose_type']], patient[keys['firstdose_batch']]].filter(Boolean).join(" - ");	
+			}
+						
+			if(patient[keys['firstdose_date']] !== ""){
+			//If first date exists then add to next avalible column
+			if(patient[keys['firstdose_batch']] !== "" || patient[keys['firstdose_type']] !== ""){
+				//Type or batch exists - close first column and start second
+				firstdoselabels = firstdoselabels + '</td><td>First Dose Date:</td></tr>';
+				firstdosedetails = firstdosedetails + '</td><td>' + patient[keys['firstdose_date']] + '</td></tr>';
+			}else{
+				//No type or batch - date in first column and blank second column
+				firstdoselabels = firstdoselabels + 'First Dose Date:</td><td></td></tr>';
+				firstdosedetails = firstdosedetails + patient[keys['firstdose_date']] + '</td><td></td></tr>';
+			}
+			}else{
+				//No date - blank second column
+				firstdoselabels = firstdoselabels + '</td><td></td></tr>';
+				firstdosedetails = firstdosedetails + '</td><td></td></tr>';
+			}
+		}
         html = start + `<div class="col-print-6">
           <h1>` + patient[keys['name']] + `</h1>` +
             ageHTML +
-            `<p>Session Date: ` + sessiondate + `</p>
-          <p>Session Time: ` + sessiontime + `</p>
-          <table>
+		  `<table>
+		  <tr class="table_left">
+          <td>Session Date: ` + sessiondate + `</td>
+          <td>Session Time: ` + sessiontime + `</td>
+          
           <tr>
           <td>DOB: ` + formatDate(patient[keys['dob']]) + `</td>
           <td>NHS: ` + patient[keys['nhsno']] + `</td>
@@ -151,6 +203,7 @@ function genPatientSlipSegmentHTML() {
           <td><div class="qr-code" id="nhs-qr-` + index + `"></div></td>
           ` + bookingQR + `
           </tr>
+		  ` + firstdoselabels + firstdosedetails + `
           </table>
           <div class="qr-code single-qr" id="single-qr-` + index + `"></div>
           </div>` + end;
@@ -196,6 +249,19 @@ function genFullPageHTML(patient, index) {
     if (age < 18) {
         ageHTML = ' (Under 18)'
     }
+	
+	if (doseNumber == 1) {
+	doseHTML = ` First`
+	} else if (doseNumber == 2) {
+		if (patient[keys['firstdose_batch']] !== "" || patient[keys['firstdose_type']] !== "" || patient[keys['firstdose_date']] !== "") {
+			doseHTML = ` Second  (First dose: ` + [patient[keys['firstdose_type']], patient[keys['firstdose_batch']], patient[keys['firstdose_date']]].filter(Boolean).join(" - ") + `)`;
+		}else{
+			doseHTML = ` Second`
+		}
+	} else {
+	doseHTML = ` First    |    Second`
+}
+
 
     return `<div class="vaccine-form"><h1>Vaccine Record Form</h1>
 <table class="table table-bordered">
@@ -307,7 +373,7 @@ function genFullPageHTML(patient, index) {
         </tr>
         <tr>
         <td colspan="2">Dose Round</td>
-        <td colspan="2"> First    |    Second</td>
+        <td colspan="2">` + doseHTML + `</td>
         </tr>
         <tr>
             <td>Time of Vaccination (24hr)</td>

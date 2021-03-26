@@ -37,6 +37,11 @@ table {
   width: 100%;
 }
 
+.table_left{
+  text-align: left;
+  padding-bottom: 10px;
+}
+
 html,
 body {
   height: 100%;
@@ -48,7 +53,8 @@ body {
 
 #page-2,
 #page-3,
-#page-4,
+#page-4a,
+#page-4b,
 #page-2a,
 #page-2b {
   display: none;
