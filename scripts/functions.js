@@ -61,7 +61,7 @@ function genPatientStickersHTML() {
 				<br>Batch: ` + batchNumber + `
 				`
 			}else{
-				//No first dose infomation - print black first dose section
+				//No first dose infomation - print blank first dose section
 				doseHTML = `
 				<table class="second-dose">
 					<tr>
@@ -76,7 +76,39 @@ function genPatientStickersHTML() {
 				<br>Batch: ` + batchNumber + `
 				`
 			}
-        } else {
+        }else if(doseNumber==4){
+        //Hybride dose    
+      
+        // check is first vaccine columns exist in the file
+        if(patient[keys['firstdose_batch']] !== "" || patient[keys['firstdose_type']] !== "" || patient[keys['firstdose_date']] !== ""){
+			line1 = ``
+			line2 = `<td> &nbsp; &nbsp; Date: ` + patient[keys['firstdose_date']] + 
+					  `</td><td> Batch: ` + [patient[keys['firstdose_type']], patient[keys['firstdose_batch']]].filter(Boolean).join(" - ") + `</td>`;
+			line3 = `<span class="semi-bold-highlight">SECOND DOSE: </span>` + sessiondate + ` at <span class="semi-bold"> ` + sessiontime + `</span>` ;   
+			line4 = `<td>  &nbsp; &nbsp; Batch: ` + batchNumber + `</td>`
+        }else{  // if no first batch then use the current batch
+			line1 =  sessiondate + ` at <span class="semi-bold">` + sessiontime  + `</span>` ; 
+			line2 = `<td> &nbsp; &nbsp;  Batch: ` + batchNumber + `</td>`;
+			line3 = `<span class="semi-bold">Second Dose:</span>` ;   
+			line4 = `<td> &nbsp; &nbsp; Date:</td><td> Batch: </td>`
+        }
+            doseHTML = `
+            <table class="second-dose">
+                <tr>
+                    <td colspan="2"><span class="semi-bold">First Dose:</span> ` + line1 + `</td>
+                </tr>
+                <tr>`  + line2 + ` </tr>
+            </table>
+            
+            <table class="second-dose">
+                <tr>
+                    <td colspan="2">` + line3 + `</td>
+                </tr>
+                <tr>`  + line4 + ` </tr>
+            </table>`
+
+        }else {
+			//First dose
             doseHTML = `
             <span class="semi-bold">Dose Given</span>:  ` + sessiondate + ` ` + sessiontime + ` 
             <br>Batch: ` + batchNumber + `
@@ -249,17 +281,25 @@ function genFullPageHTML(patient, index) {
     if (age < 18) {
         ageHTML = ' (Under 18)'
     }
-	
+	firstdoseHTML = ``;
 	if (doseNumber == 1) {
-	doseHTML = ` First`
+	doseHTML = ` First`;
 	} else if (doseNumber == 2) {
 		if (patient[keys['firstdose_batch']] !== "" || patient[keys['firstdose_type']] !== "" || patient[keys['firstdose_date']] !== "") {
-			doseHTML = ` Second  (First dose: ` + [patient[keys['firstdose_type']], patient[keys['firstdose_batch']], patient[keys['firstdose_date']]].filter(Boolean).join(" - ") + `)`;
+			doseHTML = ` Second`;
+			firstdoseHTML = ` (First dose: ` + [patient[keys['firstdose_type']], patient[keys['firstdose_batch']], patient[keys['firstdose_date']]].filter(Boolean).join(" - ") + `)`;
 		}else{
 			doseHTML = ` Second`
 		}
-	} else {
-	doseHTML = ` First    |    Second`
+	} else if (doseNumber == 4) {
+		if (patient[keys['firstdose_batch']] !== "" || patient[keys['firstdose_type']] !== "" || patient[keys['firstdose_date']] !== "") {
+			doseHTML = ` Second`;
+			firstdoseHTML = ` (First dose: ` + [patient[keys['firstdose_type']], patient[keys['firstdose_batch']], patient[keys['firstdose_date']]].filter(Boolean).join(" - ") + `)`;
+		}else{
+			doseHTML = ` First`;
+		}
+	}else {
+	doseHTML = ` First    |    Second`;
 }
 
 
@@ -383,7 +423,7 @@ function genFullPageHTML(patient, index) {
         </tr>
         <tr>
             <td colspan="2">Vaccine Brand and Batch Number</td>
-            <td colspan="2">` + vaccineType + ` ` + batchNumber + `</td>
+            <td colspan="2">` + vaccineType + ` ` + batchNumber + firstdoseHTML + `</td>
         </tr>
         <tr>
             <td colspan="2">Administration Site</td>

@@ -121,6 +121,10 @@
                     <label class="form-check-label" for="secondDose">
                         Second Dose
                     </label><br>
+					<input class="form-check-input" type="radio" name="doseNumber" id="hybrid">
+					<label class="form-check-label" for="hybrid">
+						Hybrid (For mixed 1st/2nd dose clinics - if the patient has first dose information in the CSV file it will assume this is second dose, if no record of first dose exists it will assume this is the patients first dose)
+					</label><br> 
                     <input class="form-check-input" type="radio" name="doseNumber" id="unspecifiedDose">
                     <label class="form-check-label" for="unspecifiedDose">
                         Unspecified Dose (you can circle on sticker)
@@ -344,7 +348,7 @@
         $("#no-sort").click(function () {
 			$("#page-3").hide();
 			sortAlphabetically = false;
-			if(formStyle == 'small-qr' || $('#secondDose').is(':checked')){
+			if(formStyle == 'small-qr' || $('#secondDose').is(':checked') || $('#hybrid').is(':checked')){
 				$("#page-4b").fadeIn();
 			}else{
 				$("#page-4a").fadeIn();
@@ -354,7 +358,7 @@
         $("#sort-alphabetical").click(function () {
             $("#page-3").hide();
 			sortAlphabetically = true;
-            if(formStyle == 'small-qr' || $('#secondDose').is(':checked')){
+            if(formStyle == 'small-qr' || $('#secondDose').is(':checked') || $('#hybrid').is(':checked')){
 				$("#page-4b").fadeIn();
 			}else{
 				$("#page-4a").fadeIn();
@@ -390,6 +394,9 @@
             if ($('#unspecifiedDose').is(':checked')) {
                 doseNumber = 3;
             }
+			if($('#hybrid').is(':checked')) {
+				doseNumber=4; 
+			}
 
             var ext = $("input#filename"+form_version).val().split(".").pop().toLowerCase();
             if ($.inArray(ext, ["csv"]) == -1) {
