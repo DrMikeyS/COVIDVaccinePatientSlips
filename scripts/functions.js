@@ -45,20 +45,70 @@ function genPatientStickersHTML() {
                 </tr>
             </table>`
         } else if (doseNumber == 2) {
+            if (firstDoseInformationExists(patient)) {
+                //First dose infomation in CSV - prepopulate first dose section
+                doseHTML = `
+				<table class="second-dose">
+					<tr>
+						<td colspan="2" class="semi-bold">` + ["First Dose", patient[keys['firstdose_type']]].filter(Boolean).join(" - ") + ` </td>
+					</tr>
+					<tr>
+						<td>Date: ` + patient[keys['firstdose_date']] + `</td>
+						<td>Batch: ` + patient[keys['firstdose_batch']] + `</td>
+					</tr>
+				</table>
+				<span class="semi-bold">Second Dose</span>:  ` + sessiondate + ` ` + sessiontime + ` 
+				<br>Batch: ` + batchNumber + `
+				`
+            } else {
+                //No first dose infomation - print blank first dose section
+                doseHTML = `
+				<table class="second-dose">
+					<tr>
+						<td colspan="2" class="semi-bold">First Dose </td>
+					</tr>
+					<tr>
+						<td>Date:</td>
+						<td>Batch:</td>
+					</tr>
+				</table>
+				<span class="semi-bold">Second Dose</span>:  ` + sessiondate + ` ` + sessiontime + ` 
+				<br>Batch: ` + batchNumber + `
+				`
+            }
+        } else if (doseNumber == 4) {
+            //Hybrid dose    
+
+            // check is first vaccine columns exist in the file
+            if (firstDoseInformationExists(patient)) {
+                line1 = ``
+                line2 = `<td> &nbsp; &nbsp; Date: ` + patient[keys['firstdose_date']] +
+                    `</td><td> Batch: ` + [patient[keys['firstdose_type']], patient[keys['firstdose_batch']]].filter(Boolean).join(" - ") + `</td>`;
+                line3 = `<span class="semi-bold">Second Dose: </span>` + sessiondate + ` at <span class="semi-bold"> ` + sessiontime + `</span>`;
+                line4 = `<td>  &nbsp; &nbsp; Batch: ` + batchNumber + `</td>`
+            } else { // if no first batch then use the current batch
+                line1 = sessiondate + ` at <span class="semi-bold">` + sessiontime + `</span>`;
+                line2 = `<td> &nbsp; &nbsp;  Batch: ` + batchNumber + `</td>`;
+                line3 = `<span class="semi-bold">Second Dose:</span>`;
+                line4 = `<td> &nbsp; &nbsp; Date:</td><td> Batch: </td>`
+            }
             doseHTML = `
             <table class="second-dose">
                 <tr>
-                    <td colspan="2" class="semi-bold">First Dose </td>
+                    <td colspan="2"><span class="semi-bold">First Dose:</span> ` + line1 + `</td>
                 </tr>
-                <tr>
-                    <td>Date:</td>
-                    <td>Batch:</td>
-                </tr>
+                <tr>` + line2 + ` </tr>
             </table>
-            <span class="semi-bold">Second Dose</span>:  ` + sessiondate + ` ` + sessiontime + ` 
-            <br>Batch: ` + batchNumber + `
-            `
+            
+            <table class="second-dose">
+                <tr>
+                    <td colspan="2">` + line3 + `</td>
+                </tr>
+                <tr>` + line4 + ` </tr>
+            </table>`
+
         } else {
+            //Undefined dose
             doseHTML = `
             <span class="semi-bold">Dose Given</span>:  ` + sessiondate + ` ` + sessiontime + ` 
             <br>Batch: ` + batchNumber + `
@@ -128,16 +178,50 @@ function genPatientSlipSegmentHTML() {
             bookingQR = `<td><div class="qr-code" id="booking-qr-` + index + `"></div></td>`;
         }
         age = getAge(patient[keys['dob']]);
-        ageHTML = ""
+        ageHTML = "";
         if (age < 18) {
             ageHTML = '<h2 class="under-18">This patient is under 18</h2>'
+        }
+        firstdoselabels = "";
+        firstdosedetails = "";
+        if (firstDoseInformationExists(patient)) {
+            //First dose details in CSV
+
+            //Start table rows
+            firstdoselabels = '<tr class="table_left"><td>';
+            firstdosedetails = '<tr class="table_left"><td>';
+
+            if (firstDoseBatchDetailsExist(patient)) {
+                //If first dose type or batch exists then add to first column	
+                firstdoselabels = firstdoselabels + 'First Dose:';
+                firstdosedetails = firstdosedetails + [patient[keys['firstdose_type']], patient[keys['firstdose_batch']]].filter(Boolean).join(" - ");
+            }
+
+            if (firstDoseDateExists(patient)) {
+                //If first date exists then add to next avalible column
+                if (firstDoseBatchDetailsExist(patient)) {
+                    //Type or batch exists - close first column and start second
+                    firstdoselabels = firstdoselabels + '</td><td>First Dose Date:</td></tr>';
+                    firstdosedetails = firstdosedetails + '</td><td>' + patient[keys['firstdose_date']] + '</td></tr>';
+                } else {
+                    //No type or batch - date in first column and blank second column
+                    firstdoselabels = firstdoselabels + 'First Dose Date:</td><td></td></tr>';
+                    firstdosedetails = firstdosedetails + patient[keys['firstdose_date']] + '</td><td></td></tr>';
+                }
+            } else {
+                //No date - blank second column
+                firstdoselabels = firstdoselabels + '</td><td></td></tr>';
+                firstdosedetails = firstdosedetails + '</td><td></td></tr>';
+            }
         }
         html = start + `<div class="col-print-6">
           <h1>` + patient[keys['name']] + `</h1>` +
             ageHTML +
-            `<p>Session Date: ` + sessiondate + `</p>
-          <p>Session Time: ` + sessiontime + `</p>
-          <table>
+            `<table>
+		  <tr class="table_left">
+          <td>Session Date: ` + sessiondate + `</td>
+          <td>Session Time: ` + sessiontime + `</td>
+          
           <tr>
           <td>DOB: ` + formatDate(patient[keys['dob']]) + `</td>
           <td>NHS: ` + patient[keys['nhsno']] + `</td>
@@ -148,6 +232,7 @@ function genPatientSlipSegmentHTML() {
           <td><div class="qr-code" id="nhs-qr-` + index + `"></div></td>
           ` + bookingQR + `
           </tr>
+		  ` + firstdoselabels + firstdosedetails + `
           </table>
           <div class="qr-code single-qr" id="single-qr-` + index + `"></div>
           </div>` + end;
@@ -193,6 +278,27 @@ function genFullPageHTML(patient, index) {
     if (age < 18) {
         ageHTML = ' (Under 18)'
     }
+    firstdoseHTML = ``;
+    if (doseNumber == 1) {
+        doseHTML = ` First`;
+    } else if (doseNumber == 2) {
+        if (firstDoseInformationExists(patient)) {
+            doseHTML = ` Second`;
+            firstdoseHTML = ` (First dose: ` + [patient[keys['firstdose_type']], patient[keys['firstdose_batch']], patient[keys['firstdose_date']]].filter(Boolean).join(" - ") + `)`;
+        } else {
+            doseHTML = ` Second`
+        }
+    } else if (doseNumber == 4) {
+        if (firstDoseInformationExists(patient)) {
+            doseHTML = ` Second`;
+            firstdoseHTML = ` (First dose: ` + [patient[keys['firstdose_type']], patient[keys['firstdose_batch']], patient[keys['firstdose_date']]].filter(Boolean).join(" - ") + `)`;
+        } else {
+            doseHTML = ` First`;
+        }
+    } else {
+        doseHTML = ` First    |    Second`;
+    }
+
 
     return `<div class="vaccine-form"><h1>Vaccine Record Form</h1>
 <table class="table table-bordered">
@@ -304,7 +410,7 @@ function genFullPageHTML(patient, index) {
         </tr>
         <tr>
         <td colspan="2">Dose Round</td>
-        <td colspan="2"> First    |    Second</td>
+        <td colspan="2">` + doseHTML + `</td>
         </tr>
         <tr>
             <td>Time of Vaccination (24hr)</td>
@@ -314,7 +420,7 @@ function genFullPageHTML(patient, index) {
         </tr>
         <tr>
             <td colspan="2">Vaccine Brand and Batch Number</td>
-            <td colspan="2">` + vaccineType + ` ` + batchNumber + `</td>
+            <td colspan="2">` + vaccineType + ` ` + batchNumber + firstdoseHTML + `</td>
         </tr>
         <tr>
             <td colspan="2">Administration Site</td>
