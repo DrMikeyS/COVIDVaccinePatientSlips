@@ -122,6 +122,19 @@ function genPatientStickersHTML() {
             `
         }
 
+        if (singleQRMode) {
+            qrHTML = `<td>DOB:` + formatDate(patient[keys['dob']]) + ` <br>
+          NHS No:` + patient[keys['nhsno']] + `</td>
+          <td ><div class="qr-code" id="ptid-qr-` + index + `"></div></td>`
+        } else {
+            qrHTML = `<td>DOB:` + formatDate(patient[keys['dob']]) + `</td>
+          <td>NHS No:` + patient[keys['nhsno']] + `</td>
+          </tr>
+          <tr>
+          <td><div class="qr-code" id="dob-qr-` + index + `"></div></td>
+          <td><div class="qr-code" id="nhs-qr-` + index + `"></div></td>`
+        }
+
 
         html = start + `<div class="col-sm-4">
           <p class="patientName">` + patient[keys['name']] + `</p>` +
@@ -130,12 +143,7 @@ function genPatientStickersHTML() {
             doseHTML +
             `<table class="sticker-qrs">
           <tr>
-          <td>DOB:` + formatDate(patient[keys['dob']]) + `</td>
-          <td>NHS No:` + patient[keys['nhsno']] + `</td>
-          </tr>
-          <tr>
-          <td><div class="qr-code" id="dob-qr-` + index + `"></div></td>
-          <td><div class="qr-code" id="nhs-qr-` + index + `"></div></td>
+            ` + qrHTML + `
           </tr>
           </table>
           <div class="qr-code single-qr" id="single-qr-` + index + `"></div>
@@ -453,21 +461,30 @@ function genQRCodes() {
         if (!patient[keys['dob']]) {
             return; //exit loop if no DOB
         }
-        //Generate double QR style
-        $('#dob-qr-' + index).qrcode({
-            text: formatDate(patient[keys['dob']])
-        });
-        $('#nhs-qr-' + index).qrcode({
-            text: patient[keys['nhsno']]
-        });
+        if (singleQRMode) {
+            //Generate double QR style
+            $('#ptid-qr-' + index).qrcode({
+                text: formatDate(patient[keys['dob']]) + String.fromCharCode(09) + patient[keys['nhsno']] + String.fromCharCode(09)
+            });
+        } else {
+            //generate two seperate qr codes
+            $('#dob-qr-' + index).qrcode({
+                text: formatDate(patient[keys['dob']])
+            });
+            $('#nhs-qr-' + index).qrcode({
+                text: patient[keys['nhsno']]
+            });
+        }
         if (type == "incBookingNumber") {
             $('#booking-qr-' + index).qrcode({
                 text: patient.bookingNumber
             });
         }
 
+
     });
 }
+
 
 function generateSecondDoseLabels() {
     html = `<div id="second-dose-labels"><div class="position-fixed" style="top: 0;left: 30%;">Print using "A4" paper size in Chrome</div>`;

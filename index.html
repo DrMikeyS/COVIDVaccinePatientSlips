@@ -26,9 +26,13 @@
             <h1>COVID Vaccine QR Generator</h1>
             <p>A free tool that allows you to convert a CSV list of patients into a printable pack of patient slips to
                 make using Pinnacle a breeze.</p>
-            <p><i>Release Version: 24 Mar 2021</i></p>
+            <p><i>Release Version: 29 Mar 2021</i></p>
             <p><button type="button" class="btn btn-primary btn-block my-4" id="get-started">Get Started</button></p>
-
+            <div class="custom-control custom-switch">
+                <p> <input type="checkbox" class="custom-control-input" id="singleQRModeSwtich">
+                    <label class="custom-control-label" for="singleQRModeSwtich">Single QR Mode <small><a href="zebraSetup.html">Setup instructions</a></small></label>
+                </p>
+            </div>
             <div class="card">
                 <div class="card-body">
                     <h3>Background Information</h3>
@@ -37,15 +41,13 @@
                         This will not run in Internet Explorer. All other browsers should be fine.
                     </div>
                     <h4>Stickers</h4>
-                    <p>To print at the right size, use Google Chrome and 18 per sheet stickers (e.g. <a
-                            href="https://www.aosonline.co.uk/office-supplies-equipment/avery-labels-printer-labels/multipurpose-printer-labels/q-connect-multi-purpose-label-63-5x46-5mm-18-per-a4-sheet-pk-100-white">Qconnect
+                    <p>To print at the right size, use Google Chrome and 18 per sheet stickers (e.g. <a href="https://www.aosonline.co.uk/office-supplies-equipment/avery-labels-printer-labels/multipurpose-printer-labels/q-connect-multi-purpose-label-63-5x46-5mm-18-per-a4-sheet-pk-100-white">Qconnect
                             KF26052</a>)</p>
                     <p>The bottom row is intentionally blank.</p>
                     <p>Set your print letter size in Chrome is <a href="img/print_settings.png">"Letter" and not
                             "A4"</a></p>
                     <h4>Updates and download</h4>
-                    <p>The latest version can be downloaded from the <a
-                            href="https://github.com/DrMikeyS/COVIDVaccinePatientSlips">GitHub repo.</a></p>
+                    <p>The latest version can be downloaded from the <a href="https://github.com/DrMikeyS/COVIDVaccinePatientSlips">GitHub repo.</a></p>
                     <h4>Video Guide</h4>
                     <p><a href="https://www.youtube.com/watch?v=pA-5K7eZB7Q" rel="nofollow">See this
                             video</a>&nbsp;for how the process works in detail.</p>
@@ -53,14 +55,15 @@
                     <p>No data is transferred anywhere when using this tool, all the process is done in your web
                         browser. The tool uses some open source libraries to work. Using the tool is entirely at your
                         own risk. It is provided under an MIT License.</p>
+                    <h4>Credits</h4>
+                    <p>The project was developed originally by Mike Smith, but has been contributed to by others, including: <a href="https://github.com/Richard1793">Richard1793</a>, <a href="https://github.com/bunit17">bunit17</a> and <a href="https://github.com/tfechtner">tfechtner</a></p>
                 </div>
             </div>
         </div>
 
         <div id="page-2">
             <div class="progress mb-3">
-                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 33%;"
-                    aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 33%;" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <h2>How do you want the list to look?</h2>
             <div class="row text-center">
@@ -75,19 +78,22 @@
                 <div class="col-sm-4">
                     <p><img src="img/demo_sticker.jpg" /></p>
                     <p><button type="button" class="btn btn-primary" id="sticker">Patient Stickers</button><br>
-                        <i>To use on patient vaccine record cards.</i></p>
+                        <i>To use on patient vaccine record cards.</i>
+                    </p>
                 </div>
 
             </div>
             <div class="row text-center">
                 <div class="col-sm-4">
                     <p><button type="button" class="btn btn-primary" id="full-clinic-list">Full Clinic List</button><br>
-                        <i>A full list for simple check-in/out.</i></p>
+                        <i>A full list for simple check-in/out.</i>
+                    </p>
                 </div>
                 <div class="col-sm-4">
                     <p><button type="button" class="btn btn-primary" id="second-dose-labels">Second Dose
                             Labels</button><br>
-                        <i>Tiny stickers to apply to patients who bring their first card.</i></p>
+                        <i>Tiny stickers to apply to patients who bring their first card.</i>
+                    </p>
                 </div>
             </div>
 
@@ -96,8 +102,7 @@
 
         <div id="page-2a">
             <div class="progress mb-3">
-                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 66%;"
-                    aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 66%;" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <p></p>
             <h2>Information for the cards</h2>
@@ -109,58 +114,52 @@
                     <option>Pfizer-BioNTech</option>
                     <option>AstraZeneca</option>
                 </select></p>
-            <p><label for="batch-number">Batch Number</label><input type="text" class="form-control" id="batch-number"
-                    placeholder="Batch Number"></p>
+            <p><label for="batch-number">Batch Number</label><input type="text" class="form-control" id="batch-number" placeholder="Batch Number"></p>
             <p>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="doseNumber" id="firstDose" checked>
-                    <label class="form-check-label" for="firstDose">
-                        First Dose
-                    </label><br>
-                    <input class="form-check-input" type="radio" name="doseNumber" id="secondDose">
-                    <label class="form-check-label" for="secondDose">
-                        Second Dose
-                    </label><br>
-					<input class="form-check-input" type="radio" name="doseNumber" id="hybrid">
-					<label class="form-check-label" for="hybrid">
-						Hybrid (For mixed 1st/2nd dose clinics - if the patient has first dose information in the CSV file it will assume this is second dose, if no record of first dose exists it will assume this is the patients first dose)
-					</label><br> 
-                    <input class="form-check-input" type="radio" name="doseNumber" id="unspecifiedDose">
-                    <label class="form-check-label" for="unspecifiedDose">
-                        Unspecified Dose (you can circle on sticker)
-                    </label>
-                </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="doseNumber" id="firstDose" checked>
+                <label class="form-check-label" for="firstDose">
+                    First Dose
+                </label><br>
+                <input class="form-check-input" type="radio" name="doseNumber" id="secondDose">
+                <label class="form-check-label" for="secondDose">
+                    Second Dose
+                </label><br>
+                <input class="form-check-input" type="radio" name="doseNumber" id="hybrid">
+                <label class="form-check-label" for="hybrid">
+                    Hybrid (For mixed 1st/2nd dose clinics - if the patient has first dose information in the CSV file it will assume this is second dose, if no record of first dose exists it will assume this is the patients first dose)
+                </label><br>
+                <input class="form-check-input" type="radio" name="doseNumber" id="unspecifiedDose">
+                <label class="form-check-label" for="unspecifiedDose">
+                    Unspecified Dose (you can circle on sticker)
+                </label>
+            </div>
             </p>
             <p><button type="button" class="btn btn-primary btn-block" id="continue">Continue</button></p>
         </div>
 
         <div id="page-2b">
             <div class="progress mb-3">
-                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 66%;"
-                    aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 66%;" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <p></p>
             <h2>Information for the labels</h2>
             <div class="alert alert-info" role="alert">
                 These fields can be left blank if desired.
                 <br>
-                The system is designed to fit <a
-                    href="https://www.amazon.co.uk/gp/product/B000J6D39U/ref=ppx_yo_dt_b_asin_title_o01_s00?ie=UTF8&psc=1">these
+                The system is designed to fit <a href="https://www.amazon.co.uk/gp/product/B000J6D39U/ref=ppx_yo_dt_b_asin_title_o01_s00?ie=UTF8&psc=1">these
                     Avery J8658-25 tiny labels</a>.
 
             </div>
-            <p><label for="batch-number-2b">Batch Number</label><input type="text" class="form-control"
-                    id="batch-number-2b" placeholder="Batch Number"></p>
-            <p><label for="session-date">Session Date</label><input type="text" class="form-control" id="session-date"
-                    placeholder="Session Date"></p>
+            <p><label for="batch-number-2b">Batch Number</label><input type="text" class="form-control" id="batch-number-2b" placeholder="Batch Number"></p>
+            <p><label for="session-date">Session Date</label><input type="text" class="form-control" id="session-date" placeholder="Session Date"></p>
             <p><button type="button" class="btn btn-primary btn-block" id="continue-2b">Continue</button></p>
         </div>
 
 
         <div id="page-3">
             <div class="progress mb-3">
-                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 66%;"
-                    aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 66%;" aria-valuenow="66" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <p></p>
             <h2>How do you want to sort the results?</h2>
@@ -176,8 +175,7 @@
         </div>
         <div id="page-4a">
             <div class="progress mb-3">
-                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 100%;"
-                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <h2>Add your CSV File</h2>
 
@@ -186,30 +184,30 @@
             <label class="btn btn-primary btn-block my-4">
                 Choose File <input type="file" name="filenamea" id="filenamea" type="file" hidden>
             </label>
-			
+
             <div class="card">
                 <div class="card-body">
                     <h3>What should the .csv file Look Like?</h3>
                     <p>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>NHS Number</th>
-                                    <th>Date Of Birth</th>
-                                    <th>bookingNumber*</th>
-                                    <th>StartTime*</th>
-                                    <th>SessionDate*</th>
-								</tr>
-								<tr>
-									<td>Bloggs, Joe</td>
-									<td>123 456 1234</td>
-									<td>12/01/1956</td>
-									<td>123456</td>
-									<td>18:30</td>
-									<td>08/01/2021</td>
-                                </tr>
-                        </table>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>NHS Number</th>
+                                <th>Date Of Birth</th>
+                                <th>bookingNumber*</th>
+                                <th>StartTime*</th>
+                                <th>SessionDate*</th>
+                            </tr>
+                            <tr>
+                                <td>Bloggs, Joe</td>
+                                <td>123 456 1234</td>
+                                <td>12/01/1956</td>
+                                <td>123456</td>
+                                <td>18:30</td>
+                                <td>08/01/2021</td>
+                            </tr>
+                    </table>
                     </p>
                     <p>*Optional</p>
                     <p>All fields except "Name", "StartTime", "SessionDate" and "bookingNumber" will be soft matched.
@@ -221,10 +219,9 @@
                 </div>
             </div>
         </div>
-		        <div id="page-4b">
+        <div id="page-4b">
             <div class="progress mb-3">
-                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 100%;"
-                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <h2>Add your CSV File</h2>
 
@@ -233,43 +230,42 @@
             <label class="btn btn-primary btn-block my-4">
                 Choose File <input type="file" name="filenameb" id="filenameb" type="file" hidden>
             </label>
-			
+
             <div class="card">
                 <div class="card-body">
                     <h3>What should the .csv file Look Like?</h3>
                     <p>
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>NHS Number</th>
-                                    <th>Date Of Birth</th>
-                                    <th>bookingNumber*</th>
-                                    <th>StartTime*</th>
-                                    <th>SessionDate*</th>
-									<th>FirstDate*</th>
-									<th>Firsttype*</th>
-									<th>FirstBatch*</th>
-								</tr>
-								<tr>
-									<td>Bloggs, Joe</td>
-									<td>123 456 1234</td>
-									<td>12/01/1956</td>
-									<td>123456</td>
-									<td>18:30</td>
-									<td>08/01/2021</td>
-									<td>08/12/2020</td>
-									<td>Pfizer-BioNTech</td>
-									<td>654321</td>
-                                </tr>
-                        </table>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Name</th>
+                            <th>NHS Number</th>
+                            <th>Date Of Birth</th>
+                            <th>bookingNumber*</th>
+                            <th>StartTime*</th>
+                            <th>SessionDate*</th>
+                            <th>FirstDate*</th>
+                            <th>Firsttype*</th>
+                            <th>FirstBatch*</th>
+                        </tr>
+                        <tr>
+                            <td>Bloggs, Joe</td>
+                            <td>123 456 1234</td>
+                            <td>12/01/1956</td>
+                            <td>123456</td>
+                            <td>18:30</td>
+                            <td>08/01/2021</td>
+                            <td>08/12/2020</td>
+                            <td>Pfizer-BioNTech</td>
+                            <td>654321</td>
+                        </tr>
+                    </table>
                     </p>
                     <p>*Optional</p>
                     <p>All fields except "Name", "StartTime", "SessionDate" and "bookingNumber" will be soft matched.
                         This means the column names or date formats do not need to be exactly as above. Dates can be in
                         any format.</p>
                     <p>Details of a patients first dose can be included using "FirstDate", "FirstType" and "FirstBatch", if included in the CSV this will be printed on the slips to ensure the patient receives the correct second dose.</p>
-					<p>Additional fields can be included but will be ignored.</p>
+                    <p>Additional fields can be included but will be ignored.</p>
                     <p>If you are manually creating a CSV file rather than exporting from Accubook, it is best to use
                         the dummy CSV file from the ZIP as a starting point.</p>
                 </div>
@@ -281,7 +277,7 @@
     </div>
     <script>
         //Error logging
-        window.onerror = function (error) {
+        window.onerror = function(error) {
             $("#patient-list").append(`<div class="alert alert-warning" role="alert">
                 <strong>Error:</strong> ` + error + `
                 <p>Please try the following:</p>
@@ -295,44 +291,49 @@
               </div>`);
         };
 
-        var formStyle, sortAlphabetically;
-        $("#get-started").click(function () {
+        var formStyle, sortAlphabetically, singleQRMode = false;
+
+        $('#singleQRModeSwtich').click(function() {
+            singleQRMode = this.checked;
+        });
+
+        $("#get-started").click(function() {
             $("#page-1").hide();
             $("#page-2").fadeIn();
         });
 
-        $("#small-qr").click(function () {
+        $("#small-qr").click(function() {
             $("#page-2").hide();
             $("#page-3").fadeIn();
             formStyle = 'small-qr'
         });
 
-        $("#full-page").click(function () {
+        $("#full-page").click(function() {
             $("#page-2").hide();
             $("#page-2a").fadeIn();
             formStyle = 'full-page'
         });
 
-        $("#sticker").click(function () {
+        $("#sticker").click(function() {
             $("#page-2").hide();
             $("#page-2a").fadeIn();
             formStyle = 'sticker'
         });
 
-        $("#second-dose-labels").click(function () {
+        $("#second-dose-labels").click(function() {
             $("#page-2").hide();
             $("#page-2b").fadeIn();
             formStyle = 'second-dose-labels'
         });
 
-        $("#full-clinic-list").click(function () {
+        $("#full-clinic-list").click(function() {
             $("#page-2").hide();
             $("#page-4a").fadeIn();
             sortAlphabetically = true;
             formStyle = 'full-clinic-list'
         });
 
-        $("#continue-2b").click(function () {
+        $("#continue-2b").click(function() {
             batchNumber = $("#batch-number-2b").val();
             sessionDate = $("#session-date").val();
             $("#input-modal").hide();
@@ -340,29 +341,29 @@
             $("#patient-list").append(generateSecondDoseLabels());
         });
 
-        $("#continue").click(function () {
+        $("#continue").click(function() {
             $("#page-2a").hide();
             $("#page-3").fadeIn();
         });
 
-        $("#no-sort").click(function () {
-			$("#page-3").hide();
-			sortAlphabetically = false;
-			if(formStyle == 'small-qr' || $('#secondDose').is(':checked') || $('#hybrid').is(':checked')){
-				$("#page-4b").fadeIn();
-			}else{
-				$("#page-4a").fadeIn();
-			}
+        $("#no-sort").click(function() {
+            $("#page-3").hide();
+            sortAlphabetically = false;
+            if (formStyle == 'small-qr' || $('#secondDose').is(':checked') || $('#hybrid').is(':checked')) {
+                $("#page-4b").fadeIn();
+            } else {
+                $("#page-4a").fadeIn();
+            }
         });
 
-        $("#sort-alphabetical").click(function () {
+        $("#sort-alphabetical").click(function() {
             $("#page-3").hide();
-			sortAlphabetically = true;
-            if(formStyle == 'small-qr' || $('#secondDose').is(':checked') || $('#hybrid').is(':checked')){
-				$("#page-4b").fadeIn();
-			}else{
-				$("#page-4a").fadeIn();
-			}
+            sortAlphabetically = true;
+            if (formStyle == 'small-qr' || $('#secondDose').is(':checked') || $('#hybrid').is(':checked')) {
+                $("#page-4b").fadeIn();
+            } else {
+                $("#page-4a").fadeIn();
+            }
         });
 
         function generateAlert(text, elementToAppendTo, type = 'danger') {
@@ -378,35 +379,35 @@
             keys, type = "",
             sessionDate;
 
-        $("#filenamea").change(function (e) {
-			loadFile(e,"a")
-		});
-		
-		$("#filenameb").change(function (e) {
-			loadFile(e,"b")
-		});
-		
-		
-		function loadFile(e,form_version){
+        $("#filenamea").change(function(e) {
+            loadFile(e, "a")
+        });
+
+        $("#filenameb").change(function(e) {
+            loadFile(e, "b")
+        });
+
+
+        function loadFile(e, form_version) {
             if ($('#secondDose').is(':checked')) {
                 doseNumber = 2;
             } else
             if ($('#unspecifiedDose').is(':checked')) {
                 doseNumber = 3;
             }
-			if($('#hybrid').is(':checked')) {
-				doseNumber=4; 
-			}
+            if ($('#hybrid').is(':checked')) {
+                doseNumber = 4;
+            }
 
-            var ext = $("input#filename"+form_version).val().split(".").pop().toLowerCase();
+            var ext = $("input#filename" + form_version).val().split(".").pop().toLowerCase();
             if ($.inArray(ext, ["csv"]) == -1) {
-                generateAlert('Error: The file type is not CSV.', '#page-4'+form_version)
+                generateAlert('Error: The file type is not CSV.', '#page-4' + form_version)
                 return false;
             }
             if (e.target.files != undefined) {
                 $("#input-modal").css('display', 'none');
                 var reader = new FileReader();
-                reader.onload = function (e) {
+                reader.onload = function(e) {
                     csvResult = e.target.result;
                     csvResult = $.csv.toObjects(csvResult);
                     keys = identifyCSVKeys(csvResult);
@@ -437,6 +438,7 @@
             }
             return false;
         };
+
     </script>
 </body>
 
