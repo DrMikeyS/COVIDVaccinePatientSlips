@@ -80,13 +80,10 @@ function genPatientStickersHTML() {
             doseHTML +
             `<table class="sticker-qrs">
           <tr>
-          <td>DOB:` + formatDate(patient[keys['dob']]) + `</td>
-          <td>NHS No:` + patient[keys['nhsno']] + `</td>
-          </tr>
-          <tr>
-          <td><div class="qr-code" id="dob-qr-` + index + `"></div></td>
-          <td><div class="qr-code" id="nhs-qr-` + index + `"></div></td>
-          </tr>
+          <td>DOB:` + formatDate(patient[keys['dob']]) + ` <br>
+          NHS No:` + patient[keys['nhsno']] + `</td>
+          <td ><div class="qr-code" id="ptid-qr-` + index + `"></div></td>
+            </tr>
           </table>
           <div class="qr-code single-qr" id="single-qr-` + index + `"></div>
           </div>` + end;
@@ -348,8 +345,8 @@ function genQRCodes() {
             return; //exit loop if no DOB
         }
         //Generate double QR style
-        $('#dob-qr-' + index).qrcode({
-            text: formatDate(patient[keys['dob']])
+        $('#ptid-qr-' + index).qrcode({
+            text: formatDate(patient[keys['dob']]) + String.fromCharCode(09) + patient[keys['nhsno']] + String.fromCharCode(09) 
         });
         $('#nhs-qr-' + index).qrcode({
             text: patient[keys['nhsno']]
