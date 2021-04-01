@@ -38,6 +38,7 @@ function formatDate(dateString) {
 }
 
 //Get age from formatDate
+// RH -  Note this only work in chromium browsers.  Firefox will give the result in days not years!
 function getAge(dateString) {
     var dateString = formatDate(dateString);
     var today = new Date();
@@ -124,7 +125,7 @@ function identifyCSVKeys(CSVArray) {
 
 
 function firstDoseInformationExists(patient) {
-    if (typeof patient[keys['firstdose_batch']] !== "undefined" || typeof patient[keys['firstdose_type']] !== "undefined" || typeof patient[keys['firstdose_date']] !== "undefined") {
+    if ( patient[keys['firstdose_batch']] !== "" ||  patient[keys['firstdose_type']] !== "" ||  patient[keys['firstdose_date']] !== "") {
         return true;
     } else {
         return false;

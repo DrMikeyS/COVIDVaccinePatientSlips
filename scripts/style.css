@@ -7,6 +7,7 @@
 .col-print-6 .under-18 {
   font-size: 0.9rem;
   font-weight: bold;
+  background-color: violet;
 }
 
 .page-break-clear {
@@ -85,6 +86,7 @@ body {
   font-size: 0.9rem;
   font-weight: bold;
   margin-bottom: 0;
+  background-color: violet;
 }
 
 .stickers .col-sm-4 {
