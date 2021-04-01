@@ -69,7 +69,7 @@ function sortAlphabetical(objArray) {
 
 //Identify the column names
 function identifyCSVKeys(CSVArray, doseNumber) {
-    var firstdosecol = false
+    var firstdosemissing = true
     var keys = Object.keys(CSVArray[0]);
     var nhsno_key, dob_key, name_key, address_key, firstdose_type, firstdose_batch, firstdose_date;
     keys.forEach(function (key) {
@@ -111,12 +111,12 @@ function identifyCSVKeys(CSVArray, doseNumber) {
             if (lkey.includes('batch')) {
                 firstdose_batch = key;
             }
-        var firstdosecol = true;
+            firstdosemissing = false
         }
 
     });
-     if (doseNumber == 4 && firstdosecol !== true ) 
-        {alert ("You selected hybrid mode.  This is for clinics with a mix of first & second dose patients.\n\nYour CSV file does not contain columns for first dose information so stickers will be printed with this batch as the first dose./n")}
+     if (doseNumber == 4 && firstdosemissing ) 
+        {alert ("You selected hybrid mode.  This is for clinics with a mix of first & second dose patients.\n\nYour CSV file does not contain columns for first dose information so the stickers will be printed with this batch as the first dose.")}
     
     return {
         dob: dob_key,
