@@ -410,7 +410,7 @@
                 reader.onload = function(e) {
                     csvResult = e.target.result;
                     csvResult = $.csv.toObjects(csvResult);
-                    keys = identifyCSVKeys(csvResult);
+                    keys = identifyCSVKeys(csvResult, doseNumber);
                     batchNumber = $("#batch-number").val();
                     vaccineType = $("select#vaccine-type option:checked").val();
 

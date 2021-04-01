@@ -68,7 +68,8 @@ function sortAlphabetical(objArray) {
 }
 
 //Identify the column names
-function identifyCSVKeys(CSVArray) {
+function identifyCSVKeys(CSVArray, doseNumber) {
+    var firstdosecol = false
     var keys = Object.keys(CSVArray[0]);
     var nhsno_key, dob_key, name_key, address_key, firstdose_type, firstdose_batch, firstdose_date;
     keys.forEach(function (key) {
@@ -110,8 +111,13 @@ function identifyCSVKeys(CSVArray) {
             if (lkey.includes('batch')) {
                 firstdose_batch = key;
             }
+        var firstdosecol = true;
         }
+
     });
+     if (doseNumber == 4 && firstdosecol !== true ) 
+        {alert ("You selected hybrid mode.  This is for clinics with a mix of first & second dose patients.\n\nYour CSV file does not contain columns for first dose information so stickers will be printed with this batch as the first dose./n")}
+    
     return {
         dob: dob_key,
         name: name_key,
@@ -125,7 +131,15 @@ function identifyCSVKeys(CSVArray) {
 
 
 function firstDoseInformationExists(patient) {
-    if ( patient[keys['firstdose_batch']] !== "" ||  patient[keys['firstdose_type']] !== "" ||  patient[keys['firstdose_date']] !== "") {
+    // Checks the relevent columns exist and that they have content for this patient.
+    
+    if ( typeof patient[keys['firstdose_batch']] == "undefined" || typeof patient[keys['firstdose_type']] == "undefined" || typeof patient[keys['firstdose_date']] == "undefined"
+    ){
+        return false;
+    }
+    
+    else if ( patient[keys['firstdose_batch']] !== "" ||  patient[keys['firstdose_type']] !== "" ||  patient[keys['firstdose_date']] !== "" 
+    ) {
         return true;
     } else {
         return false;
