@@ -84,8 +84,8 @@ function genPatientStickersHTML() {
                 line1 = ``
                 line2 = `<td> &nbsp; &nbsp; Date: ` + patient[keys['firstdose_date']] +
                     `</td><td> Batch: ` + [patient[keys['firstdose_type']], patient[keys['firstdose_batch']]].filter(Boolean).join(" - ") + `</td>`;
-                line3 = `<span class="semi-bold">Second Dose: </span>` + sessiondate + ` at <span class="semi-bold"> ` + sessiontime + `</span>`;
-                line4 = `<td>  &nbsp; &nbsp; Batch: ` + batchNumber + `</td>`
+                line3 = `<span class="semi-bold-highlight">Second Dose: </span>` + sessiondate + ` at <span class="semi-bold"> ` + sessiontime + `</span>`;
+                line4 = `<td class="semi-bold">  &nbsp; &nbsp; Batch: ` + batchNumber + `</td>`
             } else { // if no first batch then use the current batch
                 line1 = sessiondate + ` at <span class="semi-bold">` + sessiontime + `</span>`;
                 line2 = `<td> &nbsp; &nbsp;  Batch: ` + batchNumber + `</td>`;
@@ -137,7 +137,7 @@ function genPatientStickersHTML() {
 
 
         html = start + `<div class="col-sm-4">
-          <p class="patientName">` + patient[keys['name']] + `</p>` +
+          <p class="patientName">` + patient[keys['name']] + `</p>` + 
             ageHTML +
             `Vaccine Type: <strong>` + vaccineType + `</strong><br>` +
             doseHTML +

@@ -7,6 +7,7 @@
 .col-print-6 .under-18 {
   font-size: 0.9rem;
   font-weight: bold;
+  background-color: violet;
 }
 
 .page-break-clear {
