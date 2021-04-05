@@ -133,11 +133,7 @@
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="doseNumber" id="firstDose" checked>
                     <label class="form-check-label" for="firstDose">
-                        First Dose
-                    </label><br>
-                    <input class="form-check-input" type="radio" name="doseNumber" id="secondDose">
-                    <label class="form-check-label" for="secondDose">
-                        Second Dose
+                        Autodetect Dose
                     </label><br>
                     <input class="form-check-input" type="radio" name="doseNumber" id="hybrid">
                     <label class="form-check-label" for="hybrid">
@@ -145,10 +141,7 @@
                         file it will assume this is second dose, if no record of first dose exists it will assume this
                         is the patients first dose)
                     </label><br>
-                    <input class="form-check-input" type="radio" name="doseNumber" id="unspecifiedDose">
-                    <label class="form-check-label" for="unspecifiedDose">
-                        Unspecified Dose (you can circle on sticker)
-                    </label>
+
                 </div>
             </p>
             <p><button type="button" class="btn btn-primary btn-block" id="continue">Continue</button></p>
@@ -370,7 +363,7 @@
         $("#no-sort").click(function () {
             $("#page-3").hide();
             sortAlphabetically = false;
-            if (formStyle == 'small-qr' || $('#secondDose').is(':checked') || $('#hybrid').is(':checked')) {
+            if (formStyle == 'small-qr' || $('#hybrid').is(':checked')) {
                 $("#page-4b").fadeIn();
             } else {
                 $("#page-4a").fadeIn();
@@ -380,7 +373,7 @@
         $("#sort-alphabetical").click(function () {
             $("#page-3").hide();
             sortAlphabetically = true;
-            if (formStyle == 'small-qr' || $('#secondDose').is(':checked') || $('#hybrid').is(':checked')) {
+            if (formStyle == 'small-qr' || $('#hybrid').is(':checked')) {
                 $("#page-4b").fadeIn();
             } else {
                 $("#page-4a").fadeIn();
@@ -410,12 +403,6 @@
 
 
         function loadFile(e, form_version) {
-            if ($('#secondDose').is(':checked')) {
-                doseNumber = 2;
-            } else
-            if ($('#unspecifiedDose').is(':checked')) {
-                doseNumber = 3;
-            }
             if ($('#hybrid').is(':checked')) {
                 doseNumber = 4;
             }

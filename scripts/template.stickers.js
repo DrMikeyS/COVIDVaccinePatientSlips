@@ -26,119 +26,117 @@ function genPatientStickersHTML() {
         if (patient.StartTime !== undefined) {
             sessiontime = patient.StartTime;
         }
+        csvVaccineDose = false;
+        if (patient.VaccineDose !== undefined) {
+            csvVaccineDose = patient.VaccineDose;
+        }
+
         age = getAge(patient[keys['dob']]);
         ageHTML = ""
         if (age < 18) {
             ageHTML = '<p class="under-18">This patient is under 18</p>'
         }
         if (doseNumber == 1) {
-            doseHTML = `
-            <span class="semi-bold">First Dose</span>:  ` + sessiondate + ` ` + sessiontime + ` 
-            <br>Batch: ` + batchNumber + `
-            <table class="second-dose">
-                <tr>
-                    <td colspan="2" class="semi-bold">Second Dose </td>
-                </tr>
-                <tr>
-                    <td>Date:</td>
-                    <td>Batch:</td>
-                </tr>
-            </table>`
+            //Default dose detection
+            if (csvVaccineDose == "First") {
+                //First Dose
+                doseHTML = generateFirstDoseHTML(sessiondate, sessiontime, batchNumber);
+            } else if (csvVaccineDose == "Second") {
+                //Second dose only
+                doseHTML = generateSecondDoseHTML(sessiondate, sessiontime, batchNumber);
+            } else {
+                //No vaccine dose in CSV file, revert to unspecified
+                doseHTML = generateUnspecifiedDoseHTML(sessiondate, sessiontime, batchNumber);
+            }
+
         } else if (doseNumber == 2) {
+            //Second dose only
             if (firstDoseInformationExists(patient)) {
                 //First dose infomation in CSV - prepopulate first dose section
-                doseHTML = `
-				<table class="second-dose">
-					<tr>
-						<td colspan="2" class="semi-bold">` + ["First Dose", patient[keys['firstdose_type']]].filter(Boolean).join(" - ") + ` </td>
-					</tr>
-					<tr>
-						<td>Date: ` + patient[keys['firstdose_date']] + `</td>
-						<td>Batch: ` + patient[keys['firstdose_batch']] + `</td>
-					</tr>
-				</table>
-				<span class="semi-bold">Second Dose</span>:  ` + sessiondate + ` ` + sessiontime + ` 
-				<br>Batch: ` + batchNumber + `
-				`
+                doseHTML = generateSecondDoseHTML(sessiondate, sessiontime, batchNumber, patient[keys['firstdose_date']], patient[keys['firstdose_batch']]);
             } else {
-                //No first dose infomation - print blank first dose section
-                doseHTML = `
-				<table class="second-dose">
-					<tr>
-						<td colspan="2" class="semi-bold">First Dose </td>
-					</tr>
-					<tr>
-						<td>Date:</td>
-						<td>Batch:</td>
-					</tr>
-				</table>
-				<span class="semi-bold">Second Dose</span>:  ` + sessiondate + ` ` + sessiontime + ` 
-				<br>Batch: ` + batchNumber + `
-				`
+                //No first dose infomation
+                doseHTML = generateSecondDoseHTML(sessiondate, sessiontime, batchNumber);
             }
         } else if (doseNumber == 4) {
             //Hybrid dose    
 
             // check is first vaccine columns exist in the file
             if (firstDoseInformationExists(patient)) {
-                line1 = ``
-                line2 = `<td> &nbsp; &nbsp; Date: ` + patient[keys['firstdose_date']] +
-                    `</td><td> Batch: ` + [patient[keys['firstdose_type']], patient[keys['firstdose_batch']]].filter(Boolean).join(" - ") + `</td>`;
-                line3 = `<span class="semi-bold-highlight">Second Dose: </span>` + sessiondate + ` at <span class="semi-bold"> ` + sessiontime + `</span>`;
-                line4 = `<td class="semi-bold">  &nbsp; &nbsp; Batch: ` + batchNumber + `</td>`
+                doseHTML = generateSecondDoseHTML(sessiondate, sessiontime, batchNumber, patient[keys['firstdose_date']], patient[keys['firstdose_batch']]);
             } else { // if no first batch then use the current batch
-                line1 = sessiondate + ` at <span class="semi-bold">` + sessiontime + `</span>`;
-                line2 = `<td> &nbsp; &nbsp;  Batch: ` + batchNumber + `</td>`;
-                line3 = `<span class="semi-bold">Second Dose:</span>`;
-                line4 = `<td> &nbsp; &nbsp; Date:</td><td> Batch: </td>`
+                doseHTML = generateFirstDoseHTML(sessiondate, sessiontime, batchNumber);
             }
-            doseHTML = `
-            <table class="second-dose">
-                <tr>
-                    <td colspan="2"><span class="semi-bold">First Dose:</span> ` + line1 + `</td>
-                </tr>
-                <tr>` + line2 + ` </tr>
-            </table>
-            
-            <table class="second-dose">
-                <tr>
-                    <td colspan="2">` + line3 + `</td>
-                </tr>
-                <tr>` + line4 + ` </tr>
-            </table>`
-
-        } else {
-            //Undefined dose
-            doseHTML = `
-            <span class="semi-bold">Dose Given</span>:  ` + sessiondate + ` ` + sessiontime + ` 
-            <br>Batch: ` + batchNumber + `
-            <table class="text-left">
-                <tr>
-                <td><strong>Dose:</strong></td>
-                    <td>First</td>
-                    <td>Second</td>
-                </tr>
-            </table>
-            `
         }
 
-        qrHTML = `<td>DOB:` + formatDate(patient[keys['dob']]) + ` <br>
-          NHS No:` + patient[keys['nhsno']] + `</td>
-          <td ><div class="qr-code" id="ptid-qr-` + index + `"></div></td>`
-
         html = start + `<div class="col-sm-4">
-          <p class="patientName">` + patient[keys['name']] + `</p>` +
+            <p class="patientName">` + capitaliseName(patient[keys['name']]) + `</p>` +
             ageHTML +
-            `Vaccine Type: <strong>` + vaccineType + `</strong><br>` +
-            doseHTML +
-            `<table class="sticker-qrs">
-          <tr>
-            ` + qrHTML + `
-          </tr>
-          </table>
-          <div class="qr-code single-qr" id="single-qr-` + index + `"></div>
+            `<table>
+                <tr>
+                    <td>
+                        DOB: <strong>` + formatDate(patient[keys['dob']]) + `</strong><br>
+                        NHS: <strong>` + patient[keys['nhsno']] + `</strong><br>
+                    </td>
+                    <td class="text-center">
+                        <div class="qr-code" id="ptid-qr-` + index + `"></div>
+                    <td>
+                </tr>
+                <tr><td>Vaccine: ` + vaccineType + `</td></tr>
+            </table>
+            <table class="dose-details">
+                <tr><td colspan="2"><i>Dose Details</i></td></tr>
+                ` + doseHTML + `
+            </table>
           </div>` + end;
         fullhtml = fullhtml + html;
     });
     return fullhtml;
+}
+
+function generateFirstDoseHTML(sessiondate, sessiontime, batchNumber) {
+    return `
+            
+            <tr>
+                <td><strong>First</strong>: ` + sessiondate + ` ` + sessiontime + `</td>
+                <td>Batch: ` + batchNumber + `</td>
+            </tr>
+            <tr>
+                <td>Second: </td>
+                <td>Batch: </td>
+            </tr>`;
+}
+
+function generateSecondDoseHTML(sessiondate, sessiontime, batchNumber, firstDoseDate = false, firstDoseBatch = false) {
+    secondDoseHTML = sessiondate + ` ` + sessiontime + `</td>
+        <td>Batch: ` + batchNumber + `</td>
+    </tr>`;
+
+    if (firstDoseDate) {
+        fullHTML = `
+        <tr>
+            <td>First: ` + firstDoseDate + `</td>
+            <td>Batch: ` + firstDoseBatch + `</td>
+        </tr>
+        <tr>
+            <td>Second: `;
+    } else {
+        firstDoseHTML = `
+            <tr>
+                <td><strong>Second</strong>: `
+    }
+
+    return firstDoseHTML + secondDoseHTML;
+}
+
+function generateUnspecifiedDoseHTML(sessiondate, sessiontime, batchNumber) {
+    return `
+            <tr>
+                <td>Date: ` + sessiondate + ` ` + sessiontime + `</td>
+                <td>Batch: ` + batchNumber + `</td>
+            </tr>
+            <tr class="text-center">
+                <td colspan="2">First Dose | Second Dose<br>
+                <small>Circle as applicable</small></td>
+            </tr>`;
 }
