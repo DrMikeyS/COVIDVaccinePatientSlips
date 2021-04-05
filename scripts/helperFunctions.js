@@ -1,33 +1,3 @@
-//QR Generator
-function genQRCodes() {
-    csvResult.forEach(function (patient, index) {
-        if (!patient[keys['dob']]) {
-            return; //exit loop if no DOB
-        }
-        if (singleQRMode) {
-            //Generate double QR style
-            $('#ptid-qr-' + index).qrcode({
-                text: formatDate(patient[keys['dob']]) + String.fromCharCode(09) + patient[keys['nhsno']] + String.fromCharCode(09)
-            });
-        } else {
-            //generate two seperate qr codes
-            $('#dob-qr-' + index).qrcode({
-                text: formatDate(patient[keys['dob']])
-            });
-            $('#nhs-qr-' + index).qrcode({
-                text: patient[keys['nhsno']]
-            });
-        }
-        if (type == "incBookingNumber") {
-            $('#booking-qr-' + index).qrcode({
-                text: patient.bookingNumber
-            });
-        }
-
-
-    });
-}
-
 //Format date into the pinnacle format
 function getMonthFromString(mon) {
     return new Date(Date.parse(mon + " 1, 2012")).getMonth() + 1
@@ -145,10 +115,9 @@ function identifyCSVKeys(CSVArray, doseNumber) {
         }
 
     });
-    if (doseNumber == 4 && firstdosemissing) {
-        alert("You selected hybrid mode.  This is for clinics with a mix of first & second dose patients.\n\nYour CSV file does not contain columns for first dose information so the stickers will be printed with this batch as the first dose.")
-    }
-
+     if (doseNumber == 4 && firstdosemissing ) 
+        {alert ("You selected hybrid mode.  This is for clinics with a mix of first & second dose patients.\n\nYour CSV file does not contain columns for first dose information so the stickers will be printed with this batch as the first dose.")}
+    
     return {
         dob: dob_key,
         name: name_key,
@@ -163,10 +132,14 @@ function identifyCSVKeys(CSVArray, doseNumber) {
 
 function firstDoseInformationExists(patient) {
     // Checks the relevent columns exist and that they have content for this patient.
-
-    if (typeof patient[keys['firstdose_batch']] == "undefined" || typeof patient[keys['firstdose_type']] == "undefined" || typeof patient[keys['firstdose_date']] == "undefined") {
+    
+    if ( typeof patient[keys['firstdose_batch']] == "undefined" || typeof patient[keys['firstdose_type']] == "undefined" || typeof patient[keys['firstdose_date']] == "undefined"
+    ){
         return false;
-    } else if (patient[keys['firstdose_batch']] !== "" || patient[keys['firstdose_type']] !== "" || patient[keys['firstdose_date']] !== "") {
+    }
+    
+    else if ( patient[keys['firstdose_batch']] !== "" ||  patient[keys['firstdose_type']] !== "" ||  patient[keys['firstdose_date']] !== "" 
+    ) {
         return true;
     } else {
         return false;
