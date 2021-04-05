@@ -4,20 +4,17 @@ function genQRCodes() {
         if (!patient[keys['dob']]) {
             return; //exit loop if no DOB
         }
-        if (singleQRMode) {
-            //Generate double QR style
-            $('#ptid-qr-' + index).qrcode({
-                text: formatDate(patient[keys['dob']]) + String.fromCharCode(09) + patient[keys['nhsno']] + String.fromCharCode(09)
-            });
-        } else {
-            //generate two seperate qr codes
-            $('#dob-qr-' + index).qrcode({
-                text: formatDate(patient[keys['dob']])
-            });
-            $('#nhs-qr-' + index).qrcode({
-                text: patient[keys['nhsno']]
-            });
-        }
+        //Generate double QR style
+        $('#ptid-qr-' + index).qrcode({
+            text: formatDate(patient[keys['dob']]) + String.fromCharCode(09) + patient[keys['nhsno']] + String.fromCharCode(09)
+        });
+        //generate two seperate qr codes
+        $('#dob-qr-' + index).qrcode({
+            text: formatDate(patient[keys['dob']])
+        });
+        $('#nhs-qr-' + index).qrcode({
+            text: patient[keys['nhsno']]
+        });
         if (type == "incBookingNumber") {
             $('#booking-qr-' + index).qrcode({
                 text: patient.bookingNumber

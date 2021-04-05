@@ -122,19 +122,9 @@ function genPatientStickersHTML() {
             `
         }
 
-        if (singleQRMode) {
-            qrHTML = `<td>DOB:` + formatDate(patient[keys['dob']]) + ` <br>
+        qrHTML = `<td>DOB:` + formatDate(patient[keys['dob']]) + ` <br>
           NHS No:` + patient[keys['nhsno']] + `</td>
           <td ><div class="qr-code" id="ptid-qr-` + index + `"></div></td>`
-        } else {
-            qrHTML = `<td>DOB:` + formatDate(patient[keys['dob']]) + `</td>
-          <td>NHS No:` + patient[keys['nhsno']] + `</td>
-          </tr>
-          <tr>
-          <td><div class="qr-code" id="dob-qr-` + index + `"></div></td>
-          <td><div class="qr-code" id="nhs-qr-` + index + `"></div></td>`
-        }
-
 
         html = start + `<div class="col-sm-4">
           <p class="patientName">` + patient[keys['name']] + `</p>` +

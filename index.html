@@ -32,13 +32,7 @@
                 make using Pinnacle a breeze.</p>
             <p><i>Release Version: 29 Mar 2021</i></p>
             <p><button type="button" class="btn btn-primary btn-block my-4" id="get-started">Get Started</button></p>
-            <div class="custom-control custom-switch">
-                <p> <input type="checkbox" class="custom-control-input" id="singleQRModeSwtich">
-                    <label class="custom-control-label" for="singleQRModeSwtich">Single QR Mode - See scanner setup
-                        notes below.</label>
 
-                </p>
-            </div>
             <div class="card">
                 <div class="card-body">
                     <h3>Background Information</h3>
@@ -55,8 +49,7 @@
                             "A4"</a></p>
                     <h4>Zebra QR Scanners Setup</h4>
                     <p>The Zebra QR scanners supplied by the NHS to vaccination sites can be progammed for how they
-                        process the QR code information. You MUST do this to use the "Single QR mode". You can also
-                        change the volume and tone of the beeps. <br>
+                        process the QR code information. You can also change the volume and tone of the beeps. <br>
                         <a target="_blank" href="zebraSetup.html">Click here for setup instructions</a></small>
 
                         <h4>Updates and download</h4>
@@ -323,11 +316,7 @@
               </div>`);
         };
 
-        var formStyle, sortAlphabetically, singleQRMode = false;
-
-        $('#singleQRModeSwtich').click(function () {
-            singleQRMode = this.checked;
-        });
+        var formStyle, sortAlphabetically;
 
         $("#get-started").click(function () {
             $("#page-1").hide();
