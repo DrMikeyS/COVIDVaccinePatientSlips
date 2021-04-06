@@ -6,7 +6,7 @@ function genQRCodes() {
         }
         //Generate double QR style
         $('#ptid-qr-' + index).qrcode({
-            text: formatDate(patient[keys['dob']]) + String.fromCharCode(09) + patient[keys['nhsno']] + String.fromCharCode(09)
+            text: formatDate(patient[keys['dob']]) + String.fromCharCode(09) + patient[keys['nhsno']] + String.fromCharCode(09) + String.fromCharCode(32)
         });
         //generate two seperate qr codes
         $('#dob-qr-' + index).qrcode({
