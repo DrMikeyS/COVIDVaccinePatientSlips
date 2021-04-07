@@ -192,3 +192,26 @@ function capitaliseName(str) {
     });
     return str;
 }
+
+function generateAlert(text, elementToAppendTo, type = 'danger') {
+    var alertHTML = `<div class="alert alert-` + type + `" role="alert">
+        ` + text + `
+        </div>`;
+    console.log(alertHTML);
+    $(elementToAppendTo).prepend(alertHTML);
+}
+
+//Error logging
+window.onerror = function (error) {
+    $("#patient-list").append(`<div class="alert alert-warning" role="alert">
+        <strong>Error:</strong> ` + error + `
+        <p>Please try the following:</p>
+        <ul>
+            
+            <li>Try the dummy patient csv file in the package. If that works, the problem is in your CSV file</li>
+                <li>Try and reformat your CSV file so it matches the dummy file</li>
+                    <li>Check there are no blank lines in the CSV file</li>
+            </ul>
+        If this fails, contact mike@mikedavidsmith.com if you keep getting this error for support.
+      </div>`);
+};

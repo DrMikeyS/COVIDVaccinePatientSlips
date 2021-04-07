@@ -15,12 +15,8 @@
 
     <!--Custom scripts-->
     <link rel="stylesheet" href="scripts/style.css">
-    <script src="scripts/helperFunctions.js"></script>
-    <script src="scripts/template.form.js"></script>
-    <script src="scripts/template.fullClinic.js"></script>
-    <script src="scripts/template.secondDoseLabels.js"></script>
-    <script src="scripts/template.slips.js"></script>
-    <script src="scripts/template.stickers.js"></script>
+
+
 </head>
 
 <body>
@@ -293,160 +289,14 @@
     <div class="container-fluid" id="patient-list">
 
     </div>
-    <script>
-        //Error logging
-        window.onerror = function (error) {
-            $("#patient-list").append(`<div class="alert alert-warning" role="alert">
-                <strong>Error:</strong> ` + error + `
-                <p>Please try the following:</p>
-                <ul>
-                    
-                    <li>Try the dummy patient csv file in the package. If that works, the problem is in your CSV file</li>
-                        <li>Try and reformat your CSV file so it matches the dummy file</li>
-                            <li>Check there are no blank lines in the CSV file</li>
-                    </ul>
-                If this fails, contact mike@mikedavidsmith.com if you keep getting this error for support.
-              </div>`);
-        };
-
-        var formStyle, sortAlphabetically;
-
-        $("#get-started").click(function () {
-            $("#page-1").hide();
-            $("#page-2").fadeIn();
-        });
-
-        $("#small-qr").click(function () {
-            $("#page-2").hide();
-            $("#page-3").fadeIn();
-            formStyle = 'small-qr'
-        });
-
-        $("#full-page").click(function () {
-            $("#page-2").hide();
-            $("#page-2a").fadeIn();
-            formStyle = 'full-page'
-        });
-
-        $("#sticker").click(function () {
-            $("#page-2").hide();
-            $("#page-2a").fadeIn();
-            formStyle = 'sticker'
-        });
-
-        $("#second-dose-labels").click(function () {
-            $("#page-2").hide();
-            $("#page-2b").fadeIn();
-            formStyle = 'second-dose-labels'
-        });
-
-        $("#full-clinic-list").click(function () {
-            $("#page-2").hide();
-            $("#page-4a").fadeIn();
-            sortAlphabetically = true;
-            formStyle = 'full-clinic-list'
-        });
-
-        $("#continue-2b").click(function () {
-            batchNumber = $("#batch-number-2b").val();
-            sessionDate = $("#session-date").val();
-            $("#input-modal").hide();
-            $("#page-2b").hide();
-            $("#patient-list").append(generateSecondDoseLabels());
-        });
-
-        $("#continue").click(function () {
-            $("#page-2a").hide();
-            $("#page-3").fadeIn();
-        });
-
-        $("#no-sort").click(function () {
-            $("#page-3").hide();
-            sortAlphabetically = false;
-            if (formStyle == 'small-qr' || $('#hybrid').is(':checked')) {
-                $("#page-4b").fadeIn();
-            } else {
-                $("#page-4a").fadeIn();
-            }
-        });
-
-        $("#sort-alphabetical").click(function () {
-            $("#page-3").hide();
-            sortAlphabetically = true;
-            if (formStyle == 'small-qr' || $('#hybrid').is(':checked')) {
-                $("#page-4b").fadeIn();
-            } else {
-                $("#page-4a").fadeIn();
-            }
-        });
-
-        function generateAlert(text, elementToAppendTo, type = 'danger') {
-            var alertHTML = `<div class="alert alert-` + type + `" role="alert">
-                ` + text + `
-                </div>`;
-            console.log(alertHTML);
-            $(elementToAppendTo).prepend(alertHTML);
-        }
-
-        //GLOBALS
-        var batchNumber, vaccineType, doseNumber = 1,
-            keys, type = "",
-            sessionDate;
-
-        $("#filenamea").change(function (e) {
-            loadFile(e, "a")
-        });
-
-        $("#filenameb").change(function (e) {
-            loadFile(e, "b")
-        });
-
-
-        function loadFile(e, form_version) {
-            if ($('#hybrid').is(':checked')) {
-                doseNumber = 4;
-            }
-
-            var ext = $("input#filename" + form_version).val().split(".").pop().toLowerCase();
-            if ($.inArray(ext, ["csv"]) == -1) {
-                generateAlert('Error: The file type is not CSV.', '#page-4' + form_version)
-                return false;
-            }
-            if (e.target.files != undefined) {
-                $("#input-modal").css('display', 'none');
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    csvResult = e.target.result;
-                    csvResult = $.csv.toObjects(csvResult);
-                    keys = identifyCSVKeys(csvResult, doseNumber);
-                    batchNumber = $("#batch-number").val();
-                    vaccineType = $("select#vaccine-type option:checked").val();
-
-                    if (sortAlphabetically) {
-                        csvResult = sortAlphabetical(csvResult);
-                    }
-                    if (formStyle == 'full-page') {
-                        var fullhtml = genFormHTML();
-                    } else if (formStyle == 'sticker') {
-                        var fullhtml = genPatientStickersHTML();
-                    } else if (formStyle == 'full-clinic-list') {
-                        var fullhtml = generateFullClinicList();
-                    } else {
-                        if (csvResult[0].bookingNumber !== undefined) {
-                            type = "incBookingNumber"; //include booking number
-                        }
-                        var fullhtml = genPatientSlipSegmentHTML();
-                    }
-                    $("#patient-list").append(fullhtml);
-
-                    genQRCodes();
-                    window.print();
-                };
-                reader.readAsText(e.target.files.item(0));
-            }
-            return false;
-        };
-    </script>
+    <script src="scripts/helperFunctions.js"></script>
+    <script src="scripts/template.form.js"></script>
+    <script src="scripts/template.fullClinic.js"></script>
+    <script src="scripts/template.secondDoseLabels.js"></script>
+    <script src="scripts/template.slips.js"></script>
+    <script src="scripts/template.stickers.js"></script>
+    <script src="scripts/coreFunctions.js"></script>
+    <script src="scripts/navigation.js"></script>
 </body>
 
 </html>
