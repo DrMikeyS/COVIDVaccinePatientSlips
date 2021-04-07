@@ -19,6 +19,17 @@ function genQRCodes() {
     });
 }
 
+function generateAgeAlertsHTML(patient) {
+    age = getAge(patient[keys['dob']]);
+    patientAlertHTML = "";
+    if (age < 18) {
+        patientAlertHTML = patientAlertHTML + '<p class="patient-alert">This patient is under 18</p>'
+    } else if (age < 30) {
+        patientAlertHTML = patientAlertHTML + '<p class="patient-alert">This patient is under 30</p>'
+    }
+    return patientAlertHTML;
+}
+
 //Format date into the pinnacle format
 function getMonthFromString(mon) {
     return new Date(Date.parse(mon + " 1, 2012")).getMonth() + 1

@@ -31,11 +31,6 @@ function genPatientStickersHTML() {
             csvVaccineDose = patient.VaccineDose;
         }
 
-        age = getAge(patient[keys['dob']]);
-        patientAlertHTML = ""
-        if (age < 18) {
-            patientAlertHTML = patientAlertHTML + '<p class="patient-alert">This patient is under 18</p>'
-        }
         if (doseNumber == 1) {
             //Default dose detection
             if (csvVaccineDose == "First") {
@@ -88,7 +83,7 @@ function genPatientStickersHTML() {
                 ` + doseHTML + `
             </table>
             ` +
-            patientAlertHTML +
+            generateAgeAlertsHTML(patient) +
             `
           </div>` + end;
         fullhtml = fullhtml + html;
