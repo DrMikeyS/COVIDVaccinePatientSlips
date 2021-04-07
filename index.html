@@ -23,30 +23,40 @@
 
     <div id="input-modal" class="container mt-5">
         <div id="page-1">
-            <h1>COVID Vaccine QR Generator</h1>
-            <p>A free tool that allows you to convert a CSV list of patients into a printable pack of patient slips to
+            <h1>COVID Vaccine QR Generator 2.0</h1>
+            <p>An open-source tool that allows you to convert a CSV list of patients into a printable pack of patient
+                slips to
                 make using Pinnacle a breeze.</p>
-            <p><i>Release Version: 29 Mar 2021</i></p>
+            <p><i>Release Date: Dev</i></p>
+            <div class="alert alert-warning" role="alert">
+                <h4>What's New</h4>
+                <p>This new release contains some changes you need to know about:</p>
+                <ol>
+                    <li>There is now only one QR code. You therefore must <a href="zebraSetup.html">change your scanner
+                            settings</a>.</li>
+                    <li>The printer setting for stickers is now UK A4. As a consequence, you will get an extra
+                        row of stickers per sheet.</li>
+                    <li>Moderna has been added as a vaccine type.</li>
+                    <li>The system will autodetect and highlight which dose the patient is attending for.</li>
+                </ol>
+            </div>
             <p><button type="button" class="btn btn-primary btn-block my-4" id="get-started">Get Started</button></p>
 
             <div class="card">
                 <div class="card-body">
-                    <h3>Background Information</h3>
+                    <h3>More Information</h3>
                     <hr>
-                    <div class="alert alert-info" role="alert">
-                        This will not run in Internet Explorer. All other browsers should be fine.
-                    </div>
-                    <h4>Stickers</h4>
+
+                    <h4>Sticker Sizes</h4>
                     <p>To print at the right size, use Google Chrome and 18 per sheet stickers (e.g. <a
                             href="https://www.aosonline.co.uk/office-supplies-equipment/avery-labels-printer-labels/multipurpose-printer-labels/q-connect-multi-purpose-label-63-5x46-5mm-18-per-a4-sheet-pk-100-white">Qconnect
                             KF26052</a>)</p>
-                    <p>The bottom row is intentionally blank.</p>
-                    <p>Set your print letter size in Chrome is <a href="img/print_settings.png">"Letter" and not
-                            "A4"</a></p>
+                    <h4>Browser Compatibility</h4>
+                    <p>The system requires Google Chrome. Other web browsers probably will not work.</p>
                     <h4>Zebra QR Scanners Setup</h4>
                     <p>The Zebra QR scanners supplied by the NHS to vaccination sites can be progammed for how they
                         process the QR code information. You can also change the volume and tone of the beeps. <br>
-                        <a target="_blank" href="zebraSetup.html">Click here for setup instructions</a></small>
+                        <a href="zebraSetup.html">Click here for setup instructions</a></small>
 
                         <h4>Updates and download</h4>
                         <p>The latest version can be downloaded from the <a
@@ -75,30 +85,21 @@
             </div>
             <h2>How do you want the list to look?</h2>
             <div class="row text-center">
-                <div class="col-sm-4">
-                    <p><img src="img/demo.jpg" /></p>
-                    <p><button type="button" class="btn btn-primary" id="small-qr">Small QR Slips</button></p>
-                </div>
-                <div class="col-sm-4">
-                    <p><img src="img/demo_full1.jpg" /></p>
-                    <p><button type="button" class="btn btn-primary" id="full-page">Full Page Form</button></p>
-                </div>
-                <div class="col-sm-4">
-                    <p><img src="img/demo_sticker.jpg" /></p>
+                <div class="col">
+                    <p><img src="img/SampleSticker.png" id="sample-sticker" /></p>
                     <p><button type="button" class="btn btn-primary" id="sticker">Patient Stickers</button><br>
                         <i>To use on patient vaccine record cards.</i>
                     </p>
                 </div>
+            </div>
+            <h3>Other Options</h3>
+            <p><button type="button" class="btn btn-primary" id="small-qr">Small QR Slips</button></p>
+            <p><button type="button" class="btn btn-primary" id="full-page">Full Page Form</button></p>
+            <p><button type="button" class="btn btn-primary" id="second-dose-labels">Second Dose
+                    Labels</button><br>
+                <i>Tiny stickers to apply to patients who bring their first card.</i>
+            </p>
 
-            </div>
-            <div class="row text-center">
-                <div class="col-sm-4">
-                    <p><button type="button" class="btn btn-primary" id="second-dose-labels">Second Dose
-                            Labels</button><br>
-                        <i>Tiny stickers to apply to patients who bring their first card.</i>
-                    </p>
-                </div>
-            </div>
 
 
         </div>
@@ -117,6 +118,7 @@
                     <option></option>
                     <option>Pfizer-BioNTech</option>
                     <option>AstraZeneca</option>
+                    <option>Moderna</option>
                 </select></p>
             <p><label for="batch-number">Batch Number</label><input type="text" class="form-control" id="batch-number"
                     placeholder="Batch Number"></p>
@@ -204,6 +206,7 @@
                                     <th>bookingNumber*</th>
                                     <th>StartTime*</th>
                                     <th>SessionDate*</th>
+                                    <th>VaccineDose*</th>
                                 </tr>
                                 <tr>
                                     <td>Bloggs, Joe</td>
@@ -212,11 +215,13 @@
                                     <td>123456</td>
                                     <td>18:30</td>
                                     <td>08/01/2021</td>
+                                    <td>Second</td>
                                 </tr>
                         </table>
                     </p>
                     <p>*Optional</p>
-                    <p>All fields except "Name", "StartTime", "SessionDate" and "bookingNumber" will be soft matched.
+                    <p>All fields except "Name", "StartTime", "SessionDate", "bookingNumber" and "VaccineDose" will be
+                        soft matched.
                         This means the column names or date formats do not need to be exactly as above. Dates can be in
                         any format.</p>
                     <p>Additional fields can be included but will be ignored.</p>

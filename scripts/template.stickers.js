@@ -32,9 +32,9 @@ function genPatientStickersHTML() {
         }
 
         age = getAge(patient[keys['dob']]);
-        ageHTML = ""
+        patientAlertHTML = ""
         if (age < 18) {
-            ageHTML = '<p class="under-18">This patient is under 18</p>'
+            patientAlertHTML = patientAlertHTML + '<p class="patient-alert">This patient is under 18</p>'
         }
         if (doseNumber == 1) {
             //Default dose detection
@@ -70,9 +70,8 @@ function genPatientStickersHTML() {
         }
 
         html = start + `<div class="col-sm-4">
-            <p class="patientName">` + capitaliseName(patient[keys['name']]) + `</p>` +
-            ageHTML +
-            `<table>
+            <p class="patientName">` + capitaliseName(patient[keys['name']]) + `</p>
+            <table>
                 <tr>
                     <td>
                         DOB: <strong>` + formatDate(patient[keys['dob']]) + `</strong><br>
@@ -88,6 +87,9 @@ function genPatientStickersHTML() {
                 <tr><td colspan="2"><i>Dose Details</i></td></tr>
                 ` + doseHTML + `
             </table>
+            ` +
+            patientAlertHTML +
+            `
           </div>` + end;
         fullhtml = fullhtml + html;
     });

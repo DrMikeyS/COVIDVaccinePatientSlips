@@ -130,3 +130,17 @@ body {
 .dose-details {
   font-size: 0.8em;
 }
+
+#sample-sticker {
+  height: 100px;
+  border: 1px solid black;
+}
+
+.patient-alert {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 2px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: bold;
+}
