@@ -8,13 +8,7 @@ function genQRCodes() {
         $('#ptid-qr-' + index).qrcode({
             text: formatDate(patient[keys['dob']]) + String.fromCharCode(09) + patient[keys['nhsno']] + String.fromCharCode(09) + String.fromCharCode(32)
         });
-        //generate two seperate qr codes
-        $('#dob-qr-' + index).qrcode({
-            text: formatDate(patient[keys['dob']])
-        });
-        $('#nhs-qr-' + index).qrcode({
-            text: patient[keys['nhsno']]
-        });
+
         if (type == "incBookingNumber") {
             $('#booking-qr-' + index).qrcode({
                 text: patient.bookingNumber

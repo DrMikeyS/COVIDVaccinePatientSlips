@@ -27,13 +27,6 @@ $("#second-dose-labels").click(function () {
     formStyle = 'second-dose-labels'
 });
 
-$("#full-clinic-list").click(function () {
-    $("#page-2").hide();
-    $("#page-4a").fadeIn();
-    sortAlphabetically = true;
-    formStyle = 'full-clinic-list'
-});
-
 $("#continue-2b").click(function () {
     batchNumber = $("#batch-number-2b").val();
     sessionDate = $("#session-date").val();

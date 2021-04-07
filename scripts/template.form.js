@@ -61,31 +61,26 @@ function genFullPageHTML(patient, index) {
     <tr>
         <td>Name</td>
         <td>` + patient[keys['name']] + `</td>
-        <td>Address</td>
-        <td>` + address + `</td>
+        <td rowspan=3 colspan=2 class="text-center">
+            <div class="qr-code" id="ptid-qr-` + index + `"></div>
+        </td> 
+        
     </tr>
     <tr>
         
         <td>DOB</td>
         <td>` + formatDate(patient[keys['dob']]) + ageHTML + `</td>
-        <td>NHS No.</td>
-        <td>` + patient[keys['nhsno']] + `</td>
-    </tr>
-    <tr>
-    <td></td>
-        <td><div class="qr-code" id="dob-qr-` + index + `"></div>
-        <div class="qr-code single-qr" id="single-qr-` + index + `"></div>
-        </td>
-        <td></td>
-        <td><div class="qr-code" id="nhs-qr-` + index + `"></div></td>
         
     </tr>
     <tr>
-        
+    <td>NHS No.</td>
+    <td>` + patient[keys['nhsno']] + `</td>
+    </tr>
+    <tr>
+    <td>Address</td>
+    <td>` + address + `</td>
         <td>GP Practice</td>
         <td>` + RegisteredPracticeName + `</td>
-        <td></td>
-        <td></td>
     </tr>
 </table>
 

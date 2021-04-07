@@ -38,8 +38,6 @@ function loadFile(e, form_version) {
                 var fullhtml = genFormHTML();
             } else if (formStyle == 'sticker') {
                 var fullhtml = genPatientStickersHTML();
-            } else if (formStyle == 'full-clinic-list') {
-                var fullhtml = generateFullClinicList();
             } else {
                 if (csvResult[0].bookingNumber !== undefined) {
                     type = "incBookingNumber"; //include booking number

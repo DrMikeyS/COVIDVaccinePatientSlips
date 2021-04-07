@@ -83,13 +83,11 @@ function genPatientSlipSegmentHTML() {
           ` + bookingText + `
           </tr>
           <tr>
-          <td><div class="qr-code" id="dob-qr-` + index + `"></div></td>
-          <td><div class="qr-code" id="nhs-qr-` + index + `"></div></td>
+          <td colspan=2 class="text-center"><div class="qr-code" id="ptid-qr-` + index + `"></div></td>
           ` + bookingQR + `
           </tr>
 		  ` + firstdoselabels + firstdosedetails + `
           </table>
-          <div class="qr-code single-qr" id="single-qr-` + index + `"></div>
           </div>` + end;
         fullhtml = fullhtml + html;
     });
