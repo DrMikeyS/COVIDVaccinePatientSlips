@@ -11,7 +11,7 @@ function genPatientStickersHTML() {
         } else {
             start = '';
         }
-        if (i == 14) {
+        if (i == 17) {
             end = `</div><div class="page-break-clear"></div><div class="page-break">&nbsp;</div>`;
             i = 0;
         } else {
