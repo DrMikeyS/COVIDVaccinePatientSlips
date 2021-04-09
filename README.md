@@ -3,12 +3,11 @@
 A free tool that allows you to convert a CSV list of patients into a printable pack of patient slips to make using Pinnacle a breeze.
 
 <p align="center">
+ Single QR Code:<br>
 <a href="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/archive/refs/tags/2.0.zip"><img src="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/blob/dev/img/downloadlatest.png?raw=true"></a>
 <br>
-Uses single QR code
-<br>
-<a href="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/archive/refs/tags/1.0.zip"><img src="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/blob/dev/img/downloadolder.png?raw=true"></a><br>
-Uses two QR codes, one for DOB and one for NHS no.
+ Two QR Codes:<br>
+<a href="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/archive/refs/tags/1.0.zip"><img src="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/blob/dev/img/downloadolder.png?raw=true"></a>
 </p>
 
 ## Why Use It?
