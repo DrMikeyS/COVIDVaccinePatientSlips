@@ -22,7 +22,7 @@ The project is constantly evolving to the needs of vaccine clinics. If you want 
 ##  Testing
 There is a dummy patient csv file included in the ZIP file to test the system before using real patient data.
 
-## Run On Your Computer
+## Instructions For Use
 
  - [Download](https://github.com/DrMikeyS/COVIDVaccinePatientSlips/archive/refs/tags/1.0.zip) the file package
  - Extract the zip file (right click on the file->Extract All). This step is **very important** as it will not run if opened by double clicking on the zip file.
