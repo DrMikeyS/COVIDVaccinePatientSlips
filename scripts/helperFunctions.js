@@ -55,11 +55,11 @@ function formatDate(dateString) {
         month = getMonthFromString(month)
     }
     month = month - 1 //Javascript months are 0-11
+    //Must be year-month-date
     var fomattedDate = new Date()
     fomattedDate.setFullYear(year)
     fomattedDate.setMonth(month)
     fomattedDate.setDate(splitDate[0])
-
 
     return fomattedDate.toLocaleDateString(
         'en-gb', {
