@@ -23,10 +23,11 @@ function formatDate(dateString) {
         month = getMonthFromString(month)
     }
     month = month - 1 //Javascript months are 0-11
+    //Must be year-month-date
     var fomattedDate = new Date()
     fomattedDate.setFullYear(year)
-    fomattedDate.setDate(splitDate[0])
     fomattedDate.setMonth(month)
+    fomattedDate.setDate(splitDate[0])
 
     return fomattedDate.toLocaleDateString(
         'en-gb', {
@@ -115,9 +116,10 @@ function identifyCSVKeys(CSVArray, doseNumber) {
         }
 
     });
-     if (doseNumber == 4 && firstdosemissing ) 
-        {alert ("You selected hybrid mode.  This is for clinics with a mix of first & second dose patients.\n\nYour CSV file does not contain columns for first dose information so the stickers will be printed with this batch as the first dose.")}
-    
+    if (doseNumber == 4 && firstdosemissing) {
+        alert("You selected hybrid mode.  This is for clinics with a mix of first & second dose patients.\n\nYour CSV file does not contain columns for first dose information so the stickers will be printed with this batch as the first dose.")
+    }
+
     return {
         dob: dob_key,
         name: name_key,
@@ -132,14 +134,10 @@ function identifyCSVKeys(CSVArray, doseNumber) {
 
 function firstDoseInformationExists(patient) {
     // Checks the relevent columns exist and that they have content for this patient.
-    
-    if ( typeof patient[keys['firstdose_batch']] == "undefined" || typeof patient[keys['firstdose_type']] == "undefined" || typeof patient[keys['firstdose_date']] == "undefined"
-    ){
+
+    if (typeof patient[keys['firstdose_batch']] == "undefined" || typeof patient[keys['firstdose_type']] == "undefined" || typeof patient[keys['firstdose_date']] == "undefined") {
         return false;
-    }
-    
-    else if ( patient[keys['firstdose_batch']] !== "" ||  patient[keys['firstdose_type']] !== "" ||  patient[keys['firstdose_date']] !== "" 
-    ) {
+    } else if (patient[keys['firstdose_batch']] !== "" || patient[keys['firstdose_type']] !== "" || patient[keys['firstdose_date']] !== "") {
         return true;
     } else {
         return false;
