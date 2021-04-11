@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Patient List</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Libraries-->
+    <link rel="stylesheet" href="../scripts/libraries/css/bootstrap.min.css">
+
+    <script src="../scripts/libraries/js/jquery-3.5.1.min.js"></script>
+    <script src="../scripts/libraries/js/bootstrap.bundle.min.js"></script>
+    <script src="../scripts/libraries/js/jquery.csv.min.js"></script>
+    <script src="../scripts/libraries/js/jquery.qrcode.min.js"></script>
+
+    <!--Custom scripts-->
+    <link rel="stylesheet" href="../scripts/style.css">
+    <script src="../scripts/helperFunctions.js"></script>
+    <script src="../scripts/template.form.js"></script>
+    <script src="../scripts/template.secondDoseLabels.js"></script>
+    <script src="../scripts/template.slips.js"></script>
+    <script src="../scripts/template.stickers.js"></script>
+</head>
+
+<body>
+    <label class="btn btn-primary btn-block my-4">
+        Choose File <input type="file" name="filenamea" id="filenamea" type="file" hidden>
+    </label>
+
+    <script>
+        $("#filenamea").change(function(e) {
+            loadFile1(e)
+        });
+
+        function loadFile1(e) {
+
+            if (e.target.files != undefined) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    console.log(e)
+                    csvResult = e.target.result;
+
+                    csvResult = $.csv.toObjects(csvResult);
+
+                    csvResult.forEach(function(patient, index) {
+                        console.log('here')
+                        console.log(patient[keys['dob']] + ' - ' + formatDate(patient[keys['dob']]))
+                    });
+                    reader.readAsText(e.target.files.item(0));
+                }
+                return false;
+            };
+        }
+
+    </script>
+</body>
+
+</html>

@@ -1,3 +1,35 @@
+//QR Generator
+function genQRCodes() {
+    csvResult.forEach(function (patient, index) {
+        if (!patient[keys['dob']]) {
+            return; //exit loop if no DOB
+        }
+        //Generate double QR style
+        $('#ptid-qr-' + index).qrcode({
+            text: formatDate(patient[keys['dob']]) + String.fromCharCode(09) + patient[keys['nhsno']] + String.fromCharCode(09) + String.fromCharCode(32)
+        });
+
+        if (type == "incBookingNumber") {
+            $('#booking-qr-' + index).qrcode({
+                text: patient.bookingNumber
+            });
+        }
+
+
+    });
+}
+
+function generateAgeAlertsHTML(patient) {
+    age = getAge(patient[keys['dob']]);
+    patientAlertHTML = "";
+    if (age < 18) {
+        patientAlertHTML = patientAlertHTML + '<p class="patient-alert">This patient is under 18</p>'
+    } else if (age < 30) {
+        patientAlertHTML = patientAlertHTML + '<p class="patient-alert">This patient is under 30</p>'
+    }
+    return patientAlertHTML;
+}
+
 //Format date into the pinnacle format
 function getMonthFromString(mon) {
     return new Date(Date.parse(mon + " 1, 2012")).getMonth() + 1
@@ -159,3 +191,33 @@ function firstDoseBatchDetailsExist(patient) {
         return false
     }
 }
+
+function capitaliseName(str) {
+    str = str.toLowerCase().replace(/\b[a-z]/g, function (letter) {
+        return letter.toUpperCase();
+    });
+    return str;
+}
+
+function generateAlert(text, elementToAppendTo, type = 'danger') {
+    var alertHTML = `<div class="alert alert-` + type + `" role="alert">
+        ` + text + `
+        </div>`;
+    console.log(alertHTML);
+    $(elementToAppendTo).prepend(alertHTML);
+}
+
+//Error logging
+window.onerror = function (error) {
+    $("#patient-list").append(`<div class="alert alert-warning" role="alert">
+        <strong>Error:</strong> ` + error + `
+        <p>Please try the following:</p>
+        <ul>
+            
+            <li>Try the dummy patient csv file in the package. If that works, the problem is in your CSV file</li>
+                <li>Try and reformat your CSV file so it matches the dummy file</li>
+                    <li>Check there are no blank lines in the CSV file</li>
+            </ul>
+        If this fails, contact mike@mikedavidsmith.com if you keep getting this error for support.
+      </div>`);
+};

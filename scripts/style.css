@@ -34,11 +34,10 @@
 }
 
 table {
-  text-align: center;
   width: 100%;
 }
 
-.table_left{
+.table_left {
   text-align: left;
   padding-bottom: 10px;
 }
@@ -68,8 +67,8 @@ body {
 
 .stickers .qr-code canvas,
 .full-clinic-list .qr-code canvas {
-  width: 40px;
-  height: 40px;
+  width: 75px;
+  height: 75px;
 }
 
 .stickers html {
@@ -80,6 +79,8 @@ body {
   font-weight: bold;
   margin-bottom: 0;
   padding-top: 10px;
+  font-size: 1.1em;
+  text-transform: capitalize;
 }
 
 .stickers .under-18 {
@@ -90,8 +91,8 @@ body {
 
 .stickers .col-sm-4 {
   padding-left: 30px;
-  height: 265px;
-  max-height: 265px;
+  height: 250px;
+  max-height: 250px;
 }
 
 .sticker-qrs {
@@ -108,8 +109,8 @@ body {
 }
 
 .semi-bold-highlight {
-font-weight: 500;
-background-color: yellow;
+  font-weight: 500;
+  background-color: yellow;
 }
 
 #second-dose-labels {
@@ -124,4 +125,22 @@ background-color: yellow;
 
 #page-2 #second-dose-labels {
   margin-top: 0px;
+}
+
+.dose-details {
+  font-size: 0.8em;
+}
+
+#sample-sticker {
+  height: 100px;
+  border: 1px solid black;
+}
+
+.patient-alert {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 2px;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: bold;
 }
