@@ -22,9 +22,12 @@ function genQRCodes() {
 function generateAgeAlertsHTML(patient) {
     age = getAge(patient[keys['dob']]);
     patientAlertHTML = "";
-    if (age < 18) {
+    console.log(vaccineType)
+    if (age < 16) {
+        patientAlertHTML = patientAlertHTML + '<p class="patient-alert">This patient is under 16</p>'
+    } else if (age < 18 && vaccineType != "Pfizer-BioNTech") {
         patientAlertHTML = patientAlertHTML + '<p class="patient-alert">This patient is under 18</p>'
-    } else if (age < 30) {
+    } else if (age < 30 && vaccineType == "AstraZeneca") {
         patientAlertHTML = patientAlertHTML + '<p class="patient-alert">This patient is under 30</p>'
     }
     return patientAlertHTML;
