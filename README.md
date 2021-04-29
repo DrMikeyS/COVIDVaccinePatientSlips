@@ -24,7 +24,7 @@ There is a dummy patient csv file included in the ZIP file to test the system be
 
 ## Instructions For Use
 
- - [Download](https://github.com/DrMikeyS/COVIDVaccinePatientSlips/archive/refs/tags/2.0b.zip) the file package
+ - [Download](https://github.com/DrMikeyS/COVIDVaccinePatientSlips/releases) the file package
  - Extract the zip file (right click on the file->Extract All). This step is **very important** as it will not run if opened by double clicking on the zip file.
  - Open "index.html" in Chrome
  - Follow the on-screen instructions
