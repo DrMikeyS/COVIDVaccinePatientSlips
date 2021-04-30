@@ -48,6 +48,7 @@ function formatDate(dateString) {
     }
     //Seperate out month and year
     var month = splitDate[1];
+
     var year = splitDate[2];
     if (year.length == 2) {
         year = '19' + year;
@@ -58,19 +59,21 @@ function formatDate(dateString) {
         month = getMonthFromString(month)
     }
     month = month - 1 //Javascript months are 0-11
-    //Must be year-month-date
+
+    //Must be year-day-month
     var fomattedDate = new Date()
     fomattedDate.setFullYear(year)
-    fomattedDate.setMonth(month)
     fomattedDate.setDate(splitDate[0])
+    fomattedDate.setMonth(month)
 
-    return fomattedDate.toLocaleDateString(
+    var out = fomattedDate.toLocaleDateString(
         'en-gb', {
             year: 'numeric',
             month: 'short',
             day: 'numeric'
         }
     ).replace(/ /g, '-').replace("Sept", "Sep")
+    return out;
 }
 
 //Get age from formatDate
