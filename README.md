@@ -4,7 +4,7 @@ A free tool that allows you to convert a CSV list of patients into a printable p
 
 <p align="center">
  Single QR Code:<br>
-<a href="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/archive/refs/tags/2.1.zip"><img src="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/blob/dev/img/downloadlatest.png?raw=true"></a>
+<a href="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/releases"><img src="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/blob/dev/img/downloadlatest.png?raw=true"></a>
 <br>
  Two QR Codes:<br>
 <a href="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/archive/refs/tags/1.1.zip"><img src="https://github.com/DrMikeyS/COVIDVaccinePatientSlips/blob/dev/img/downloadolder.png?raw=true"></a>
