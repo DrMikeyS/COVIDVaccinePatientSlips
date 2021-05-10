@@ -30,7 +30,7 @@ function genPatientStickersHTML() {
         if (patient.VaccineDose !== undefined) {
             csvVaccineDose = patient.VaccineDose;
         }
-
+        
         if (doseNumber == 1) {
             //Default dose detection
             if (csvVaccineDose == "First") {
@@ -55,15 +55,17 @@ function genPatientStickersHTML() {
             }
         } else if (doseNumber == 4) {
             //Hybrid dose    
-
+            
             // check is first vaccine columns exist in the file
             if (firstDoseInformationExists(patient)) {
                 doseHTML = generateSecondDoseHTML(sessiondate, sessiontime, batchNumber, patient[keys['firstdose_date']], patient[keys['firstdose_batch']]);
+                
             } else { // if no first batch then use the current batch
+                
                 doseHTML = generateFirstDoseHTML(sessiondate, sessiontime, batchNumber);
             }
         }
-
+        
         html = start + `<div class="col-sm-4">
             <p class="patientName">` + capitaliseName(patient[keys['name']]) + `</p>
             <table>
@@ -83,19 +85,22 @@ function genPatientStickersHTML() {
                 ` + doseHTML + `
             </table>
             ` +
+            
             generateAgeAlertsHTML(patient) +
             `
           </div>` + end;
-        fullhtml = fullhtml + html;
+         fullhtml = fullhtml + html;
+        
     });
-    return fullhtml;
+    
+    return fullhtml
 }
 
 function generateFirstDoseHTML(sessiondate, sessiontime, batchNumber) {
     return `
             
-            <tr>
-                <td><strong>First</strong>: ` + sessiondate + ` ` + sessiontime + `</td>
+            <tr class = "semi-bold-highlight">
+                <td >FIRST: ` + sessiondate + ` ` + sessiontime + `</td>
                 <td>Batch: ` + batchNumber + `</td>
             </tr>
             <tr>
@@ -104,26 +109,30 @@ function generateFirstDoseHTML(sessiondate, sessiontime, batchNumber) {
             </tr>`;
 }
 
-function generateSecondDoseHTML(sessiondate, sessiontime, batchNumber, firstDoseDate = false, firstDoseBatch = false) {
-    secondDoseHTML = sessiondate + ` ` + sessiontime + `</td>
+function generateSecondDoseHTML(sessiondate, sessiontime, batchNumber, firstDoseDate  , firstDoseBatch ) {
+          secondDoseHTML = sessiondate + ` ` + sessiontime + `</td>
         <td>Batch: ` + batchNumber + `</td>
     </tr>`;
-
+    
     if (firstDoseDate) {
+        
         firstDoseHTML = `
         <tr>
             <td>First: ` + firstDoseDate + `</td>
             <td>Batch: ` + firstDoseBatch + `</td>
         </tr>
-        <tr>
-            <td>Second: `;
+        <tr class = "semi-bold-highlight">
+            <td>SECOND: `;
+            
     } else {
+        
         firstDoseHTML = `
             <tr>
                 <td><strong>Second</strong>: `
     }
 
     return firstDoseHTML + secondDoseHTML;
+
 }
 
 function generateUnspecifiedDoseHTML(sessiondate, sessiontime, batchNumber) {
