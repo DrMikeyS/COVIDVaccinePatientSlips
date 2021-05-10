@@ -110,7 +110,7 @@ function generateSecondDoseHTML(sessiondate, sessiontime, batchNumber, firstDose
     </tr>`;
 
     if (firstDoseDate) {
-        fullHTML = `
+        firstDoseHTML = `
         <tr>
             <td>First: ` + firstDoseDate + `</td>
             <td>Batch: ` + firstDoseBatch + `</td>
