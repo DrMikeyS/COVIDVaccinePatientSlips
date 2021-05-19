@@ -9,7 +9,7 @@ $("#filenameb").change(function (e) {
 //GLOBALS
 var batchNumber, vaccineType, doseNumber = 1,
     keys, type = "",
-    sessionDate, formStyle, sortAlphabetically;
+    sessionDate, formStyle, sortAlphabetically, csvVaccineDose;
 
 function loadFile(e, form_version) {
     if ($('#hybrid').is(':checked')) {
