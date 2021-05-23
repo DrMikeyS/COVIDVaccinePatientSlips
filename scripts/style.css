@@ -53,8 +53,7 @@ body {
 
 #page-2,
 #page-3,
-#page-4a,
-#page-4b,
+#page-4,
 #page-2a,
 #page-2b {
   display: none;
@@ -143,4 +142,8 @@ body {
   text-align: center;
   font-size: 0.9rem;
   font-weight: bold;
+}
+
+.batchOnRecord {
+  color: grey;
 }
