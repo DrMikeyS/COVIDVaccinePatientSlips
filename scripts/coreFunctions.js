@@ -2,19 +2,14 @@ $("#filenamea").change(function (e) {
     loadFile(e, "a")
 });
 
-$("#filenameb").change(function (e) {
-    loadFile(e, "b")
-});
 
 //GLOBALS
-var batchNumber, vaccineType, doseNumber = 1,
+var batchNumber, vaccineType,
     keys, type = "",
     sessionDate, formStyle, sortAlphabetically, csvVaccineDose;
 
 function loadFile(e, form_version) {
-    if ($('#hybrid').is(':checked')) {
-        doseNumber = 4;
-    }
+
 
     var ext = $("input#filename" + form_version).val().split(".").pop().toLowerCase();
     if ($.inArray(ext, ["csv"]) == -1) {
@@ -27,7 +22,7 @@ function loadFile(e, form_version) {
         reader.onload = function (e) {
             csvResult = e.target.result;
             csvResult = $.csv.toObjects(csvResult);
-            keys = identifyCSVKeys(csvResult, doseNumber);
+            keys = identifyCSVKeys(csvResult);
             batchNumber = $("#batch-number").val();
             vaccineType = $("select#vaccine-type option:checked").val();
 

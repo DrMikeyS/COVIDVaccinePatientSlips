@@ -23,7 +23,7 @@
 
     <div id="input-modal" class="container mt-5">
         <div id="page-1">
-            <h1>COVID Vaccine QR Generator 2</h1>
+            <h1>COVID Vaccine QR Generator 3</h1>
             <p>An open-source tool that allows you to convert a CSV list of patients into a printable pack of patient
                 slips to
                 make using Pinnacle a breeze.</p>
@@ -31,12 +31,7 @@
                 <h4>What's New</h4>
                 <p>This new release contains some changes you need to know about:</p>
                 <ol>
-                    <li>There is now only one QR code. You therefore must <a href="zebraSetup.html">change your scanner
-                            settings</a>.</li>
-                    <li>The printer setting for stickers is now UK A4. As a consequence, you will get an extra
-                        row of stickers per sheet.</li>
-                    <li>Moderna has been added as a vaccine type.</li>
-                    <li>The system will autodetect and highlight which dose the patient is attending for.</li>
+
                 </ol>
             </div>
             <p><button type="button" class="btn btn-primary btn-block my-4" id="get-started">Get Started</button></p>
@@ -92,14 +87,7 @@
                 </div>
             </div>
             <h3>Other Options</h3>
-            <p><button type="button" class="btn btn-primary" id="small-qr">Small QR Slips</button></p>
             <p><button type="button" class="btn btn-primary" id="full-page">Full Page Form</button></p>
-            <p><button type="button" class="btn btn-primary" id="second-dose-labels">Second Dose
-                    Labels</button><br>
-                <i>Tiny stickers to apply to patients who bring their first card.</i>
-            </p>
-
-
 
         </div>
 
@@ -122,19 +110,6 @@
             <p><label for="batch-number">Batch Number</label><input type="text" class="form-control" id="batch-number"
                     placeholder="Batch Number"></p>
             <p>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="doseNumber" id="firstDose" checked>
-                    <label class="form-check-label" for="firstDose">
-                        Autodetect Dose
-                    </label><br>
-                    <input class="form-check-input" type="radio" name="doseNumber" id="hybrid">
-                    <label class="form-check-label" for="hybrid">
-                        Hybrid (For mixed 1st/2nd dose clinics - if the patient has first dose information in the CSV
-                        file it will assume this is second dose, if no record of first dose exists it will assume this
-                        is the patients first dose)
-                    </label><br>
-
-                </div>
             </p>
             <p><button type="button" class="btn btn-primary btn-block" id="continue">Continue</button></p>
         </div>
@@ -179,7 +154,7 @@
             <p><button type="button" class="btn btn-primary btn-block" id="no-sort">No Sorting</button>
             </p>
         </div>
-        <div id="page-4a">
+        <div id="page-4">
             <div class="progress mb-3">
                 <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 100%;"
                     aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
@@ -229,69 +204,12 @@
                 </div>
             </div>
         </div>
-        <div id="page-4b">
-            <div class="progress mb-3">
-                <div class="progress-bar progress-bar-striped " role="progressbar" style="width: 100%;"
-                    aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            <h2>Add your CSV File</h2>
-
-            <p>For this final step, add your CSV file containing your patient list. The file is not uploaded anywhere
-                and is processed entirely within your web browser.</p>
-            <label class="btn btn-primary btn-block my-4">
-                Choose File <input type="file" name="filenameb" id="filenameb" type="file" hidden>
-            </label>
-
-            <div class="card">
-                <div class="card-body">
-                    <h3>What should the .csv file Look Like?</h3>
-                    <p>
-                        <table class="table table-bordered">
-                            <tr>
-                                <th>Name</th>
-                                <th>NHS Number</th>
-                                <th>Date Of Birth</th>
-                                <th>bookingNumber*</th>
-                                <th>StartTime*</th>
-                                <th>SessionDate*</th>
-                                <th>FirstDate*</th>
-                                <th>Firsttype*</th>
-                                <th>FirstBatch*</th>
-                            </tr>
-                            <tr>
-                                <td>Bloggs, Joe</td>
-                                <td>123 456 1234</td>
-                                <td>12/01/1956</td>
-                                <td>123456</td>
-                                <td>18:30</td>
-                                <td>08/01/2021</td>
-                                <td>08/12/2020</td>
-                                <td>Pfizer-BioNTech</td>
-                                <td>654321</td>
-                            </tr>
-                        </table>
-                    </p>
-                    <p>*Optional</p>
-                    <p>All fields except "Name", "StartTime", "SessionDate" and "bookingNumber" will be soft matched.
-                        This means the column names or date formats do not need to be exactly as above. Dates can be in
-                        any format.</p>
-                    <p>Details of a patients first dose can be included using "FirstDate", "FirstType" and "FirstBatch",
-                        if included in the CSV this will be printed on the slips to ensure the patient receives the
-                        correct second dose.</p>
-                    <p>Additional fields can be included but will be ignored.</p>
-                    <p>If you are manually creating a CSV file rather than exporting from Accubook, it is best to use
-                        the dummy CSV file from the ZIP as a starting point.</p>
-                </div>
-            </div>
-        </div>
     </div>
     <div class="container-fluid" id="patient-list">
 
     </div>
     <script src="scripts/helperFunctions.js"></script>
     <script src="scripts/template.form.js"></script>
-    <script src="scripts/template.secondDoseLabels.js"></script>
-    <script src="scripts/template.slips.js"></script>
     <script src="scripts/template.stickers.js"></script>
     <script src="scripts/coreFunctions.js"></script>
     <script src="scripts/navigation.js"></script>
