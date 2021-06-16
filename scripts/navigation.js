@@ -39,3 +39,15 @@ $("#sort-alphabetical").click(function () {
     sortAlphabetically = true;
     $("#page-4").fadeIn();
 });
+
+$("#outcomes4health").click(function () {
+    $("#page-4").hide();
+    pocSystem = 'outcomes4health';
+    $("#page-5").fadeIn();
+});
+
+$("#evacc").click(function () {
+    $("#page-4").hide();
+    pocSystem = 'evacc';
+    $("#page-5").fadeIn();
+});

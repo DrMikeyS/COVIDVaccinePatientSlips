@@ -1,17 +1,24 @@
 //QR Generator
 function genQRCodes() {
     csvResult.forEach(function (patient, index) {
-        if (!patient[keys['dob']]) {
-            return; //exit loop if no DOB
-        }
-        //Generate double QR style
-        $('#ptid-qr-' + index).qrcode({
-            text: formatDate(patient[keys['dob']]) + String.fromCharCode(09) + patient[keys['nhsno']] + String.fromCharCode(09) + String.fromCharCode(32)
-        });
+        if (pocSystem == "outcomes4health") {
+            if (!patient[keys['dob']]) {
+                return; //exit loop if no DOB
+            }
+            //Generate double QR style
+            $('#ptid-qr-' + index).qrcode({
+                text: formatDate(patient[keys['dob']]) + String.fromCharCode(09) + patient[keys['nhsno']] + String.fromCharCode(09) + String.fromCharCode(32)
+            });
 
-        if (type == "incBookingNumber") {
-            $('#booking-qr-' + index).qrcode({
-                text: patient.bookingNumber
+            if (type == "incBookingNumber") {
+                $('#booking-qr-' + index).qrcode({
+                    text: patient.bookingNumber
+                });
+            }
+        } else {
+            //NHS number only
+            $('#ptid-qr-' + index).qrcode({
+                text: patient[keys['nhsno']]
             });
         }
 
