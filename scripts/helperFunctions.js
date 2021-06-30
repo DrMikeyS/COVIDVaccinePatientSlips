@@ -66,11 +66,15 @@ function formatDate(dateString) {
     }
     month = month - 1 //Javascript months are 0-11
 
-    //Must be year-month-day
+
     var fomattedDate = new Date()
-    fomattedDate.setFullYear(year)
+    //Default to leap year and first of month
+    fomattedDate.setFullYear(2020)
+    fomattedDate.setDate(1)
+
     fomattedDate.setMonth(month)
     fomattedDate.setDate(splitDate[0])
+    fomattedDate.setFullYear(year)
 
     var out = fomattedDate.toLocaleDateString(
         'en-gb', {
