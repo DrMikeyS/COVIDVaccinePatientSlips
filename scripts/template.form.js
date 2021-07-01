@@ -35,25 +35,8 @@ function genFullPageHTML(patient, index) {
         ageHTML = ' (Under 18)'
     }
     firstdoseHTML = ``;
-    if (doseNumber == 1) {
-        doseHTML = ` First`;
-    } else if (doseNumber == 2) {
-        if (firstDoseInformationExists(patient)) {
-            doseHTML = ` Second`;
-            firstdoseHTML = ` (First dose: ` + [patient[keys['firstdose_type']], patient[keys['firstdose_batch']], patient[keys['firstdose_date']]].filter(Boolean).join(" - ") + `)`;
-        } else {
-            doseHTML = ` Second`
-        }
-    } else if (doseNumber == 4) {
-        if (firstDoseInformationExists(patient)) {
-            doseHTML = ` Second`;
-            firstdoseHTML = ` (First dose: ` + [patient[keys['firstdose_type']], patient[keys['firstdose_batch']], patient[keys['firstdose_date']]].filter(Boolean).join(" - ") + `)`;
-        } else {
-            doseHTML = ` First`;
-        }
-    } else {
-        doseHTML = ` First    |    Second`;
-    }
+    doseHTML = ` First    |    Second`;
+
 
 
     return `<div class="vaccine-form"><h1>Vaccine Record Form</h1>
